@@ -759,10 +759,11 @@ var Transformable = function (el, opts) {
     if (opts && opts.matrix) {
         var cscale = { x:1, y:1 }
         if (opts.computedsize && (opts.computedsize.width || opts.computedsize.Width)) {
+            // TO DO: Explain and document this...
             // we have a size to compare current computed size with
             // translation is in local pixels, and depends on current size of element in local pixels
             // if the current computed size is different, the translation will need 
-            // to be scaled so design looks the same when drawn at some other size
+            // to be scaled so relative size of elements look the same when drawn at some other size
             var precs = {
                 width: opts.computedsize.width || opts.computedsize.Width,
                 height: opts.computedsize.height || opts.computedsize.Height
