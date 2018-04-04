@@ -1,0 +1,106 @@
+﻿.transformable {
+    transform-origin: 0 0 !important;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    position: relative;
+    cursor: move; 
+}
+
+
+.transformable-resize-button {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s, width 0.25s, transform 0.25s;
+}
+
+.transformable-resize-over > .transformable-resize-button {
+    opacity: 1;
+    transition: opacity 0.5s, width 0.25s, transform 0.25s;
+    pointer-events: all;
+}
+
+.transformable-resize-button svg {
+    width: 100%;
+    height: 100%;
+}
+
+.transformable-resize-button.tl {
+    top: -1rem;
+    left: -1rem;
+}
+
+.transformable-resize-button.br {
+    bottom: -1rem;
+    right: -1rem;
+    cursor: nwse-resize;
+}
+.transformable-rotation-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 37.5%;
+    height: 2px;
+    z-index: 1;
+    background: repeating-linear-gradient( -90deg, #fff, #fff 3px, transparent 3px, transparent 4px );
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease 0s;
+}
+
+img.transformable, .editable-text.transformable {
+    cursor: move;
+}
+
+.transformable-over-active > .transformable-rotation-box {
+    opacity: 1;
+    transition: opacity 0.5s, width 0.25s;
+}
+
+.transformable-over-active.transformable-mousedown > .transformable-rotation-box {
+    opacity: 0;
+    transition: opacity 0.5s, width 0.25s;
+}
+.transformable-rotation-box svg {
+    position: absolute;
+    width: 2rem;
+}
+
+.transformable-over-active > .transformable-rotation-box svg {
+    pointer-events: all;
+}
+
+.transformable-over-active.transformable-mousedown > .transformable-rotation-box svg {
+    pointer-events: none;
+}
+
+.transformable-svg-rotator {
+    top: 0;
+    right: 0;
+    transform: translate(0%,-50% );
+    cursor: pointer;
+}
+
+.transformable-svg-anchor {
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    cursor: move;
+}
+
+.transformable-anchor-point {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0px;
+    height: 0px;
+}
+
+.transformable-wheel-active .transformable-rotation-box,
+.transformable-wheel-active.transformable-over-active .transformable-rotation-box {
+    pointer-events: none;
+    opacity: 0;
+}

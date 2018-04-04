@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>transformable examples</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Tahoma, sans-serif;
+            padding-bottom: 10rem;
+        }
+
+        .example {
+            background-color: #0094ff;
+            position: relative;
+            left: 1rem;
+            top: 1rem;
+            width: 10rem;
+            height: 6rem;
+        }
+
+        .example-row {
+            padding: 1rem;
+            border: 2px solid dashed;
+        }
+
+        .example-parent {
+            background: #ffefb3;
+            width: 50%;
+            height: 200px;
+        }
+
+        .example-parent-small {
+            background: #ffefb3;
+            width: 15rem;
+            height: 10rem;
+            position: relative;
+            margin: 2rem 4rem;
+        }
+
+        .example-contained, .example-nested {
+            background-color: #a92f65;
+            width: 150px;
+            height: 100px;
+        }
+        /*.example-ml { position: relative; top: 1rem; left: 25%; }*/
+        h1 {
+            background: #ebebeb;
+            padding: 0.5rem;
+            font-weight: normal;
+        }
+
+        code {
+            display: inline-block;
+            margin: 0;
+            background: #fff;
+            border-radius: 0.5rem;
+            padding: 0.25rem 0.5rem;
+        }
+
+        #three {
+            position: absolute;
+            width: 133%;
+            height: 133%;
+            left: -16.5%;
+            top: -16.5%;
+            background: rgba(0, 148, 255, 0.10);
+            box-shadow: 0 0 0 2px #0094ff;
+        }
+    </style>
+    <link rel="stylesheet" href="/css/transformable.css" />
+    <script src="/js/transformable.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <section>
+            <h1>Basic usage. <code>var t1 = new Transformable(element);</code></h1>
+            <div class="example-row">
+                <div id="one" class="example"></div>
+            </div>
+        </section>
+        <section>
+            <h1>Contained within parent <code>var t2 = new Transformable(element, { contain: 'enclose' });</code></h1>
+            <div class="example-row">
+                <div class="example-parent">
+                    <div id="two" class="example-contained example-ml"></div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h1>Contained to cover background of parent <code>var t3 = new Transformable(element, { contain: 'cover' });</code></h1>
+            <div class="example-row">
+                <div class="example-parent-small">
+                    <div id="three" class="example-contained example-ml"></div>
+                </div> 
+            </div>
+        </section>
+        <section>
+            <h1>Nested transformable elements <code>var parent = new Transformable(elementp), child = new Transformable(elementc, {contain: 'enclose'});</code></h1>
+            <div class="example-row">
+                <div id="four" class="example-parent">
+                    <div id="five" class="example-nested example-ml"></div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h1>Resizable. <code>var t1 = new Transformable(element, {resize: 'tl-br'});</code></h1>
+            <div class="example-row">
+                <div class="example-parent">
+                    <div id="six" class="example"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+    var examples = [
+        new Transformable(document.getElementById('one')),
+        new Transformable(document.getElementById('two'), { contain: 'enclose' }),
+        new Transformable(document.getElementById('three'), { contain: 'cover' }),
+        new Transformable(document.getElementById('four')),
+        new Transformable(document.getElementById('five'), { contain: 'enclose' }),
+        new Transformable(document.getElementById('six'), { contain: 'enclose', resize:'tl-br' }),
+    ];
+    </script>
+</body>
+</html>
