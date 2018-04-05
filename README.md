@@ -141,7 +141,7 @@ Undo the rotation making the element horizontal.
 ```
 myref.fittoparent();
 ```
-The element will scaled, centred and straightened so it fits entirely within its parent element.  
+The element will be scaled, centred and straightened so it fits entirely within its parent element.  
 ### `filltoparent()`
 ```
 myref.filltoparent();
@@ -207,7 +207,7 @@ If you provide a string as first argument, and there is a matching snapshot in t
 // redo last undone transformation/interaction
 myref.redo();
 ```
-### `.hashistorykey(snapshotKey)`
+### `.hasHistoryKey(snapshotKey)`
 ```
 myref.hasHistoryKey('myKey')
 ```
