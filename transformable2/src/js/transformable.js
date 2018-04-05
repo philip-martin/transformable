@@ -242,7 +242,7 @@ Transformable.prototype.createRotateHandles = function (typ) {
                     ds = 1 / pt.matrix.scaling();
 
                 if (rb) {
-                    var tsc = rb.matrix.scaling();
+                    var tsc = rb.matrix.scaling(); 
                     if (rb.dragging || rb.draggingrotate)
                         return;
 
