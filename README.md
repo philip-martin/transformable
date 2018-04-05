@@ -112,11 +112,10 @@ myref.zoom(3);
 This will zoom the element centrally within its parent element. Meaning the centre of the parent element will be the origin of the zoom. The parent element must have a height and width. 
 ### `.scale(origin, amount)`
 ```
-// Make 50% bigger from point 50, 100. Origin point is relative to top left 
-// of the element before any transformations are applied. Nothing to do with 
-// window/viewport coordinates
+// Make 50% bigger 
 myref.scale(new Point(50, 100), 1.5);
 ```
+First argument should be an instance of `Point` and is used as the origin for the scaling. The coordinates of the point are relative to top left of the element **before** any transformations are applied. It is not the window/viewport pixels.
 ### `.translate = function (x, y[, transition])`
 ```
 // translate left 50px and down 100px with smooth transition
@@ -125,15 +124,16 @@ myref.translate(50, 100);
 // translate left 50px and down 100px but don't use a smooth transition
 myref.translate(50, 100, false);
 ```
+`x` and `y` are relative to the top left of the element before any transformation is applied. It is not the window/viewport pixels. 
 ### `.rotate(origin, degrees, transition[, relativeToWindow])`
 ```
 // rotate 45 degrees clockwise with smooth transition
 myref.rotate(new Point(0, 0), 45, true);
 
-// Same but, rotated around the centre of the element
+// Same but, rotated around the centre
 myref.rotate(null, 45, true);
 ```
-Positive values for `degrees` will be clockwise rotations, negative will be anticlockwise
+Supply `null` as the first argument to rotate around the centre of the element. Positive values for `degrees` will be clockwise rotations, negative will be anticlockwise
 ### `.straighten()`
 ```
 myref.straighten()
