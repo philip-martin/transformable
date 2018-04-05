@@ -6,7 +6,7 @@ It works with mouse and touch events to scale, rotate or move elements. You can 
 
 Rotate handles allow you to rotate around the centre of the element (default) or you can move the rotation handle somewhere else to rotate about another point. Resize handles can be dragged to change the elements width/height.
 
-Transformable elements can be nested within each other and the depth/position in the node heirarchy won't matter.
+Transformable elements can be nested within each other and the depth/position in the node hierarchy won't matter.
 
 Examples coming soon!
 
