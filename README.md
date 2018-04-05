@@ -13,7 +13,7 @@ Examples coming soon!
 ## Loading
 
 You just need to include the stylesheet and one javascript file:
-```
+```Html
 <link rel="stylesheet" href="/css/transformable.css" />
 <script src="/js/transformable.js"></script>
 ```
@@ -21,14 +21,14 @@ There is a minified version created with uglifyjs (48Kb).
 
 ## Usage
 Create a new instance and pass in a single HTML element (not a jQuery object)
-```
+```JavaScript
 var myref = new Transformable(document.getElementById('one'));
 
 // pass options
 var myref2 = new Transformable(document.getElementById('two'), { contain: 'enclose', resize:'tl-br' });
 ```
 ## Options
-```
+```JavaScript
 opts = { 
   // Use to contain the transformable element within its parent element.
   // 'enclose' to keep an element within the parent.
@@ -99,7 +99,7 @@ opts = {
 Methods are chainable so you can call one then another.
 
 ### `.zoom(dir)`
-```
+```JavaScript
 // make bigger by 5%
 myref.zoom(1);
 
@@ -111,13 +111,13 @@ myref.zoom(3);
 ```
 This will zoom the element centrally within its parent element. Meaning the centre of the parent element will be the origin of the zoom. The parent element must have a height and width. 
 ### `.scale(origin, amount)`
-```
+```JavaScript
 // Make 50% bigger 
 myref.scale(new Point(50, 100), 1.5);
 ```
 First argument should be an instance of `Point` and is used as the origin for the scaling. The coordinates of the point are relative to top left of the element **before** any transformations are applied. It is not the window/viewport pixels.
 ### `.translate(x, y[, transition])`
-```
+```JavaScript
 // translate left 50px and down 100px with smooth transition
 myref.translate(50, 100);
 
@@ -126,7 +126,7 @@ myref.translate(50, 100, false);
 ```
 `x` and `y` are relative to the top left of the element before any transformation is applied. It is not the window/viewport pixels. 
 ### `.rotate(origin, degrees, transition[, relativeToWindow])`
-```
+```JavaScript
 // rotate 45 degrees clockwise with smooth transition
 myref.rotate(new Point(0, 0), 45, true);
 
@@ -135,22 +135,22 @@ myref.rotate(null, 45, true);
 ```
 Supply `null` as the first argument to rotate around the centre of the element. Positive values for `degrees` will be clockwise rotations, negative will be anticlockwise
 ### `.straighten()`
-```
+```JavaScript
 myref.straighten()
 ```
 Undo the rotation making the element horizontal.
 ### `.fittoparent()`
-```
+```JavaScript
 myref.fittoparent();
 ```
 The element will be scaled, centred and straightened so it fits entirely within its parent element.  
 ### `filltoparent()`
-```
+```JavaScript
 myref.filltoparent();
 ```
 The element will be scaled, centred and straightened so no background of the parent element can be seen.
 ### `.setTransition(bool)`
-```
+```JavaScript
 // turn off transitions. Transformation will not be smooth
 myref.setTransition(false);
 
@@ -158,13 +158,13 @@ myref.setTransition(false);
 myref.setTransition(true);
 ```
 ### `.snapRotation()`
-```
+```JavaScript
 // turn off transitions. Transformation will not be smooth
 myref.snapRotation();
 ```
 If the element rotation is within 3 degrees of a multiple of 15, the rotation will snap to that multiple. I.e. 45, 60, 75, 90 degrees. 
 ### `.centreinparent([transition, parents])`
-```
+```JavaScript
 // Centre element within its parent element. Use smooth transition.
 myref.centreinparent();
 
@@ -173,30 +173,30 @@ myref.centreinparent(false);
 ```
 The second argument `parents` is included for internal optimisations, it is rarely useful.
 ### `.pointInRectangle(p, a, b, c, d)`
-```
+```JavaScript
 // see if Point p is within the polygon defined with corner points a, b, c, d
 myref.pointInRectangle(p, a, b, c, d);
 ```
 returns `{ ok: true}` or `{ ok: false }` all arguments should be instances of Point
 ### `.trigger(eventType[, eventObject])`
-```
+```JavaScript
 myref.trigger('stop');
 ```
 Trigger a named event and optionaly pass in an event object.
 ### `.getRotationQuadrant(angle)`
-```
+```JavaScript
 myref.getRotationQuadrant(35);
 ```
 Returns `{ Angle: angle, Horiz: bool, Vert: bool, Quad: number }` Quadrants are numbered from 0 to 3 in clockwise direction.
 
 ## Undo & Redo
 ### `.reset([transition])`
-```
+```JavaScript
 myref.reset();
 ```
 The transform will be reset to the initial CSS transform (if there was one) or undo all transformations.
 ### `.undo([snapshotKey])`
-```
+```JavaScript
 // undo last transformation/interaction by user
 myref.undo();
 
@@ -205,17 +205,17 @@ myref.undo('namehere');
 ```
 If you provide a string as first argument, and there is a matching snapshot in the undo stack, you can revert to that previous state.
 ### `.redo()`
-```
+```JavaScript
 // redo last undone transformation/interaction
 myref.redo();
 ```
 ### `.hasHistoryKey(snapshotKey)`
-```
+```JavaScript
 myref.hasHistoryKey('myKey')
 ```
 If the undo stack contains a matching snapshot, returns `true` otherwise `false`.
 ### `.matrix.save(snapshotKey)`
-```
+```JavaScript
 // create a snapshot
 myref.matrix.save('mySnapshot')
 ```
