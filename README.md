@@ -8,7 +8,7 @@ Rotate handles allow you to rotate around the centre of the element (default) or
 
 Transformable elements can be nested within each other and the depth/position in the node hierarchy won't matter.
 
-Examples coming soon!
+View the [Demo](https://philip-martin.github.io/transformable/solution/demo/index.html)
 
 ## Loading
 
