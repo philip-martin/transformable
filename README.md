@@ -62,10 +62,11 @@ opts = {
   // on tap/click
   tap: function() { /* do something */ }
   
-  // say if start/stop/tap should be attached to the element, default is true
+  // say if mouse and touch events are attached to the element, default is true. 
+  // false means the element will not respond to any user interaction
   attachevents: true,
   
-  // say if the transformable element can be interacted with, default is true.
+  // say if the transformable element can be interacted with and can fire events, default is true.
   editable: true,
   
   // disable the transformable element, default is false
@@ -84,7 +85,7 @@ opts = {
   
   // internal option to make handles etc. work correctly. Do not use.
   // can be: 'rotator-box' only (for now)
-  type: 'dont-set-this-option',
+  type: 'rotator-box',
   
   // internal option to specify another Transformable instance to receive the transform. Do not use
   // it is used to make rotate handles work
