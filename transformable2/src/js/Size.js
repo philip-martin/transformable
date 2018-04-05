@@ -64,9 +64,9 @@ Size.prototype = {
     SwapSign: function () {
         return new Size(-this.Width, -this.Height);
     },
-    ToPos: function () {
-        return new Pos(this.Width, this.Height);
-    },
+    //ToPos: function () {
+    //    return new Pos(this.Width, this.Height);
+    //},
     Scale: function (x) {
         return new Size(this.Width * x, this.Height * x);
     },

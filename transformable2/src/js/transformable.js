@@ -1360,8 +1360,8 @@ Transformable.prototype._addEvents = function () {
         that.start = that._getPoint2(e, touches);
 
         var ww = that.sizes.window;
-        if (that.start.pageX < 40 || that.start.pageX > ww.width - 40) // don't translate if history navigation can happen from swipe
-        { console.log('edge cancel'); return false; }
+        if (that.start.pageX < 40 || that.start.pageX > ww.width - 40) // don't translate if history navigation can happen from swiping at the edges of webpage.  e.g. on a touch device
+        { console.log('edge cancel.'); return false; }
 
         that.delta = { x: 0, y: 0 };
 
@@ -1505,7 +1505,7 @@ Transformable.prototype._addEvents = function () {
     });
 
     if (!this.options.disable || (this.options.disable && !this.options.disable.wheel))
-        if(navigator.userAgent.indexOf('Mac OS') == -1) // some issues with wild zoom on magic mouse, so turn it off
+        if (navigator.userAgent.indexOf('Mac OS') == -1) // some issues with wild zoom on magic mouse, so turn it off
             addWheelListener(el, _dowheelzoom);
 }
 Transformable.Handlers = { Namespaces: {} };
