@@ -1,12 +1,14 @@
 # transformable
 
-Transformable is a vanilla javascript library for adding translation (panning), scaling (resizing) and rotation to HTML elements via a 2D CSS transformation matrix.
+Transformable is a vanilla javascript library for adding translation (panning), scaling (zoom) and rotation to HTML elements via a 2D CSS transformation matrix.
 
-It works with mouse and touch events to scale, rotate or move elements. You can use pinch gestures too. 
+It works with mouse and touch events to scale, rotate or move elements. You can use pinch gestures and mouse wheel too. 
 
-Rotate handles allow you to rotate around the centre of the element (default) or you can move the rotation handle somewhere else to rotate about another point. 
+Rotate handles allow you to rotate around the centre of the element (default) or you can move the rotation handle somewhere else to rotate about another point. Resize handles can be dragged to change the elements width/height.
 
-Transformable elements can be nested within each other and it shouldn't matter if there are other non-transformable elements/parentnodes in between. 
+Transformable elements can be nested within each other and the depth/position in the node heirarchy won't matter.
+
+Examples coming soon!
 
 ## Loading
 
