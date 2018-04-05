@@ -116,7 +116,7 @@ This will zoom the element centrally within its parent element. Meaning the cent
 myref.scale(new Point(50, 100), 1.5);
 ```
 First argument should be an instance of `Point` and is used as the origin for the scaling. The coordinates of the point are relative to top left of the element **before** any transformations are applied. It is not the window/viewport pixels.
-### `.translate = function (x, y[, transition])`
+### `.translate(x, y[, transition])`
 ```
 // translate left 50px and down 100px with smooth transition
 myref.translate(50, 100);
