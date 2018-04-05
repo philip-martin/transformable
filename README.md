@@ -18,7 +18,7 @@ You just need to include the stylesheet and one javascript file:
 There is a minified version created with uglifyjs (48Kb). 
 
 ## Usage
-Create a new instance and pass in an HTML element
+Create a new instance and pass in a single HTML element (not a jQuery object)
 ```
 var myref = new Transformable(document.getElementById('one'));
 
@@ -92,8 +92,128 @@ opts = {
   
 }
 ```
-    
+## Methods
+Methods are chainable so you can call one then another.
 
+### `.zoom(dir)`
+```
+// make bigger by 5%
+myref.zoom(1);
 
+// make smaller by 5% 
+myref.zoom(-1);
 
+// make bigger by 15%. Each whole number is 5%
+myref.zoom(3);
+```
+This will zoom the element centrally within its parent element. Meaning the centre of the parent element will be the origin of the zoom. The parent element must have a height and width. 
+### `.scale(origin, amount)`
+```
+// Make 50% bigger from point 50, 100. Origin point is relative to top left 
+// of the element before any transformations are applied. Nothing to do with 
+// window/viewport coordinates
+myref.scale(new Point(50, 100), 1.5);
+```
+### `.translate = function (x, y[, transition])`
+```
+// translate left 50px and down 100px with smooth transition
+myref.translate(50, 100);
 
+// translate left 50px and down 100px but don't use a smooth transition
+myref.translate(50, 100, false);
+```
+### `.rotate(origin, degrees, transition[, relativeToWindow])`
+```
+// rotate 45 degrees clockwise with smooth transition
+myref.rotate(new Point(0, 0), 45, true);
+
+// Same but, rotated around the centre of the element
+myref.rotate(null, 45, true);
+```
+Positive values for `degrees` will be clockwise rotations, negative will be anticlockwise
+### `.straighten()`
+```
+myref.straighten()
+```
+Undo the rotation making the element horizontal.
+### `.fittoparent()`
+```
+myref.fittoparent();
+```
+The element will scaled, centred and straightened so it fits entirely within its parent element.  
+### `filltoparent()`
+```
+myref.filltoparent();
+```
+The element will be scaled, centred and straightened so no background of the parent element can be seen.
+### `.setTransition(bool)`
+```
+// turn off transitions. Transformation will not be smooth
+myref.setTransition(false);
+
+// turn on transitions. Transformation will be smooth
+myref.setTransition(true);
+```
+### `.snapRotation()`
+```
+// turn off transitions. Transformation will not be smooth
+myref.snapRotation();
+```
+If the element rotation is within 3 degrees of a multiple of 15, the rotation will snap to that multiple. I.e. 45, 60, 75, 90 degrees. 
+### `.centreinparent([transition, parents])`
+```
+// Centre element within its parent element. Use smooth transition.
+myref.centreinparent();
+
+// Centre element within its parent element. No transition.
+myref.centreinparent(false);
+```
+The second argument `parents` is included for internal optimisations, it is rarely useful.
+### `.pointInRectangle(p, a, b, c, d)`
+```
+// see if Point p is within the polygon defined with corner points a, b, c, d
+myref.pointInRectangle(p, a, b, c, d);
+```
+returns `{ ok: true}` or `{ ok: false }` all arguments should be instances of Point
+### `.trigger(eventType[, eventObject])`
+```
+myref.trigger('stop');
+```
+Trigger a named event and optionaly pass in an event object.
+### `.getRotationQuadrant(angle)`
+```
+myref.getRotationQuadrant(35);
+```
+Returns `{ Angle: angle, Horiz: bool, Vert: bool, Quad: number }` Quadrants are numbered from 0 to 3 in clockwise direction.
+
+## Undo / Redo History
+### `.reset([transition])`
+```
+myref.reset();
+```
+The transform will be reset to the initial CSS transform (if there was one) or undo all transformations.
+### `.undo([snapshotKey])`
+```
+// undo last transformation/interaction by user
+myref.undo();
+
+// Go back to a named snapshot.
+myref.undo('namehere');
+```
+If you provide a string as first argument, and there is a matching snapshot in the undo stack, you can revert to that previous state.
+### `.redo()`
+```
+// redo last undone transformation/interaction
+myref.redo();
+```
+### `.hashistorykey(snapshotKey)`
+```
+myref.hasHistoryKey('myKey')
+```
+If the undo stack contains a matching snapshot, returns `true` otherwise `false`.
+### `.matrix.save(snapshotKey)`
+```
+// create a snapshot
+myref.matrix.save('mySnapshot')
+```
+Saving a snapshot is done using the `save` method on the Transformable's matrix property.
