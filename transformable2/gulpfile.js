@@ -5,7 +5,8 @@ var gulp = require("gulp"),
     rimraf = require("rimraf"),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
-    uglify = require("gulp-uglify");
+    uglify = require("gulp-uglify"),
+    rename = require("gulp-rename");
 
 var paths = {
     src: "./src/",
@@ -46,7 +47,8 @@ gulp.task("min:css", function () {
 
 gulp.task("examples", function () {
     gulp.src(paths.src + "examples.html")
-        .pipe(gulp.dest('./dist/'))
+        .pipe(rename("index.html"))
+        .pipe(gulp.dest('./demo/'))
 });
 
 gulp.task("min", ["min:js", "min:css", "examples"]);
