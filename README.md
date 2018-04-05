@@ -189,7 +189,7 @@ myref.getRotationQuadrant(35);
 ```
 Returns `{ Angle: angle, Horiz: bool, Vert: bool, Quad: number }` Quadrants are numbered from 0 to 3 in clockwise direction.
 
-## Undo / Redo History
+## Undo & Redo
 ### `.reset([transition])`
 ```
 myref.reset();
