@@ -1,14 +1,16 @@
 # transformable
 
-Transformable is a vanilla javascript library for adding translation (panning), scaling (zoom) and rotation to HTML elements via a 2D CSS transformation matrix.
+Transformable is a vanilla javascript library for adding translation (panning), scaling (zoom) and rotation to HTML elements by manipulating a 2D CSS transformation matrix.
 
 It works with mouse and touch events to scale, rotate or move elements. You can use pinch gestures and mouse wheel too. 
 
-Rotate handles allow you to rotate around the centre of the element (default) or you can move the rotation handle somewhere else to rotate about another point. Resize handles can be dragged to change the elements width/height.
+Rotatation handles allow you to rotate around the centre of the element (initially) or you can move the rotation handle somewhere else to rotate about another point. Resize handles can also be dragged to change the elements width/height.
 
-Transformable elements can be nested within each other and the depth/position in the node hierarchy won't matter.
+Transformable elements can be nested within each other and the depth/position/offset in the node hierarchy won't matter. 
 
-Examples coming soon!
+You also get undo/redo history and can save snapshots to go to specific named transform states.
+
+View the [Demo](https://philip-martin.github.io/transformable/solution/demo/index.html) to see how flexible it can be.
 
 ## Loading
 
@@ -220,3 +222,7 @@ If the undo stack contains a matching snapshot, returns `true` otherwise `false`
 myref.matrix.save('mySnapshot')
 ```
 Saving a snapshot is done using the `save` method on the Transformable's matrix property.
+## Ancestry `.Ancestry`;
+Each instance of Transformable has an `.Ancestry` property. The Ancestry class records the CSS transform of the transformable element and all parent elements higher up in the node hierarchy. It deals with scroll position and converts any CSS, that would change an element's position or offset, to a 2D matrix and stores it in an array. From that array of parent matrices, it can calculate the exact position of any click or touch on the element, however the element or its parents have been transformed or positioned. 
+
+The transform origin is always `0, 0`.
