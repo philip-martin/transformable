@@ -81,12 +81,13 @@ Ancestry.prototype.GetComputedDims = function (el) {
         transform: cs.transform
     }
 }
+/* Walk upwards through node hierarchy replacing any position/offset changing CSS with an equivalent matrix.
+ * This approach means you can simply multiply each matrix together in calculations without 
+ * adding/subtracting offsets or imposing CSS restrictions on elements you want to make transformable.
+*/
 Ancestry.prototype.Init = function () {
     var t, cs, nt, has, pt, tid, nm, el = this.Self.element;
-    while (el.parentNode && !el.parentNode.body
-            //&& !el.parentNode.classList.contains('transformable-container')
-            //&& !el.classList.contains('transformable-container')
-        ) {
+    while (el.parentNode && !el.parentNode.body) {
         var
         cs = this.GetComputedDims(el.parentNode),
         t = cs.transform,
@@ -118,14 +119,13 @@ Ancestry.prototype.Init = function () {
                     var
                         prect = this.GetElementSize(el.parentNode);
 
-                    //if (el.classList.contains('transformable') && has) {
-                        el.parentNode.style.top = 0;
-                        el.parentNode.style.left = 0; 
-                        el.parentNode.style.marginLeft = 0;
-                        el.parentNode.style.marginTop = 0;
-                        el.parentNode.style.transformOrigin = '0 0';
-                        el.parentNode.style.transform = this.Self._arrayToCssString(nm.elements);
-                    //}
+                    el.parentNode.style.top = 0;
+                    el.parentNode.style.left = 0; 
+                    el.parentNode.style.marginLeft = 0;
+                    el.parentNode.style.marginTop = 0;
+                    el.parentNode.style.transformOrigin = '0 0';
+                    el.parentNode.style.transform = this.Self._arrayToCssString(nm.elements);
+
                     this.Add(nm, el.parentNode, prect);
                 }
             }
@@ -191,13 +191,21 @@ Ancestry.prototype.FirstParent = function () {
 
     return par;
 }
-Ancestry.prototype.GetMatrix = function (p) {
+/**
+ Gets the combined effective matrix based on all matrices that have an effect on the element
+ */
+Ancestry.prototype.GetMatrix = function () {
     var mat = Matrix.Identity();
     this.Items.forEach(function (v, i) {
         mat.multiply(v.matrix.elements);
     });
     return mat;
 }
+/**
+ * 
+ * @param {Point} p
+ * @param {Array of Matrix} pars
+ */
 Ancestry.prototype.OffsetFromPoint = function (p, pars) {
     var pars = pars || this.GetParents();
     this._setoffset();
