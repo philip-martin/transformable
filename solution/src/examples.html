@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>transformable examples</title>
     <style>
         body, html {
@@ -27,7 +28,7 @@
 
         .example-parent {
             background: #ffefb3;
-            width: 50%;
+            width: 75%;
             height: 200px;
         }
 
@@ -57,6 +58,7 @@
             background: #fff;
             border-radius: 0.5rem;
             padding: 0.25rem 0.5rem;
+            font-size: small;
         }
 
         #three {
@@ -98,7 +100,9 @@
             </div>
         </section>
         <section>
-            <h1>Nested transformable elements <code>var parent = new Transformable(elementp), child = new Transformable(elementc, {contain: 'enclose'});</code></h1>
+            <h1>Nested transformable elements 
+<code>var parent = new Transformable(elementp), 
+           child = new Transformable(elementc, {contain: 'enclose'});</code></h1>
             <div class="example-row">
                 <div id="four" class="example-parent">
                     <div id="five" class="example-nested example-ml"></div>
@@ -106,7 +110,7 @@
             </div>
         </section>
         <section>
-            <h1>Resizable. <code>var t1 = new Transformable(element, {resize: 'tl-br'});</code></h1>
+            <h1>Resizable. <code>var t1 = new Transformable(element, {resize: 'tl-br', contain: 'enclose'});</code></h1>
             <div class="example-row">
                 <div class="example-parent">
                     <div id="six" class="example"></div>
