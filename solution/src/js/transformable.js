@@ -355,9 +355,16 @@ Transformable.prototype.translate = function (x,y, transition) {
     this.matrix.translate(x, y);
     this.setTransition(transition);
     this._updateElement();
-    //this.trigger('stop');
     return this;
 }
+/**
+ * Rotates the element about point p. Or about the centre of the element if p is not supplied. 
+ * If inwindow==true, you can supply a Point in the window coordinate space and have the element rotate about that.
+ * @param {Point} p The origin of the rotation in pixels on the element. When inwindow == false or undefined
+ * @param {Number} a Angle in degrees
+ * @param {Boolean} trans Optional: Specify if a transition should be used
+ * @param {Boolean} inwindow Optional: If true, p should be treated like a window coordinate. 
+ */
 Transformable.prototype.rotate = function (p, a, trans, inwindow) {
     if (!(p instanceof Point) || !p || typeof p == 'undefined') 
         p = this.Ancestry.OffsetFromPoint(this._findCentreInWindow());
@@ -373,11 +380,17 @@ Transformable.prototype.rotate = function (p, a, trans, inwindow) {
     this._updateElement();
     return this;
 }
+/**
+ * Makes a rotated element horizontal.
+ */
 Transformable.prototype.straighten = function () {
     var r = this.matrix.rotation();
     this.rotate(new Point(this.sizes.element.initial.width / 2, this.sizes.element.initial.height / 2), -r, true);
     return this;
 }
+/**
+ * Scales the element to make the element's height or width match that of the parent element. Centres it and straightens out any rotation. 
+ */
 Transformable.prototype.fittoparent = function () {
     var sz = new Point(this.sizes.element.initial.width, this.sizes.element.initial.height),
         anc = this.Ancestry,
@@ -398,7 +411,11 @@ Transformable.prototype.fittoparent = function () {
 
     return this;
 }
-Transformable.prototype.filltoparent = function (el) {
+/**
+ * Scales the element so its width and height is equal or greater than the parent element. 
+ * Basically so you can't see any background in the parent element. Also centres and straightens it.
+ */
+Transformable.prototype.filltoparent = function () {
     var sz = new Point(this.sizes.element.initial.width, this.sizes.element.initial.height),
     anc = this.Ancestry,
     pars = anc.GetParents(),
@@ -420,15 +437,24 @@ Transformable.prototype.filltoparent = function (el) {
 
     return this;
 }
+/**
+ * Gets the boundingClientRect for supplied element.
+ * @param {HtmlElement} el
+ */
 Transformable.prototype._getRect = function (el) {
     return el.getBoundingClientRect();
 }
+/**
+ * Resets the transformation to its starting value. Undoing all changes since instantiation.
+ * @param {Boolean} trans Specify if a transition should be used
+ */
 Transformable.prototype.reset = function (trans) {
     if (!this.InitialMatrix)
         this.matrix.reset();
     else
         this.matrix.elements = this.InitialMatrix.slice(0);
 
+    // unsupported!
     //this.off(this.element, 'transitionstart.reset');
 
     this.setTransition(typeof trans == 'undefined' ? true : trans);
@@ -451,21 +477,37 @@ Transformable.prototype.reset = function (trans) {
     this._updateElement();
     return this;
 }
+/**
+ * Returns true if the undo stack contains a saved state named k
+ * @param {String} k
+ */
 Transformable.prototype.hasHistoryKey = function (k) {
     return this.matrix.history.undo[k] instanceof Array;
 }
+/**
+ * Undo the last transformation or go back to a named state.
+ * @param {String} k Optional: the name of a saved state to go back to
+ */
 Transformable.prototype.undo = function (k) {
     this.matrix.undo(k);
     this.setTransition(true);
     this._updateElement();
     return this;
 }
+
+/**
+ * Redo the last thing that was undone.
+ */
 Transformable.prototype.redo = function () {
     this.matrix.redo();
     this.setTransition(true);
     this._updateElement();
     return this;
 }
+
+/**
+ * Sets initial sizes and positions of the element and window
+ */
 Transformable.prototype.setInitialSizes = function () {
     if (this.sizes) return;
     var
@@ -490,7 +532,12 @@ Transformable.prototype.setInitialSizes = function () {
         window: { width: parseFloat(getComputedStyle(document.body.parentNode).width) }
     }
 }
-Transformable.prototype._getOffset = function (el, setParentDims) {
+
+/**
+ * Gets the offset of an element taking in to account scroll position of the window
+ * @param {HtmlElement} el Element to check
+ */
+Transformable.prototype._getOffset = function (el) {
     var cr = this._getRect(el), scroll = this.Ancestry._getScroll(); 
     
     var cs = getComputedStyle(el),
@@ -502,6 +549,10 @@ Transformable.prototype._getOffset = function (el, setParentDims) {
 
     return { offset: os, topleft: os, bottomright: br, topright: tr, bottomleft: bl, pos: pos  };
 }
+
+/**
+ * Sets the initial offset.  
+ */
 Transformable.prototype._setOffset = function () {
     // first init 
     if (!this.offset) {
@@ -512,15 +563,11 @@ Transformable.prototype._setOffset = function () {
         return;
     }
 }
-Transformable.prototype._getParentMatrix = function () {
-    var par = this.element.parentElement.closest('.transformable'); // Element.closest returns itself if matched by the selector
-    if(par==null)
-        this.parentmatrix = Matrix.Identity();
-    else
-        this.parentmatrix = this._getMatrix(par);
 
-    return this.parentmatrix
-}
+/**
+ * Convert a string representation of a CSS transformation matrix in to an Array
+ * @param {String} t The CSS transformation
+ */
 Transformable.prototype._cssStringToArray = function (t) {
     var m = t.match(/[0-9e., -]+/)[0].split(", ");
     m.forEach(function (v,i) {
@@ -528,10 +575,20 @@ Transformable.prototype._cssStringToArray = function (t) {
     });
     return m;
 }
+
+/**
+ * Converts a 6 element Array in to a CSS transformation string.
+ * @param {Array} a 
+ */
 Transformable.prototype._arrayToCssString = function (a) {
     return 'matrix(' + a.join(',') + ')'
 }
 
+/**
+ * Creates a Matrix for the transformable element. 
+ * Cancels out any CSS that affects the offset or position of the element and converts to an equivalent CSS transformation matrix.
+ * @param {HtmlElement} el
+ */
 Transformable.prototype._getMatrix = function (el) {
     var elem = el || this.element,
         cs = getComputedStyle(elem),
@@ -570,6 +627,12 @@ Transformable.prototype._getMatrix = function (el) {
     }
     return m;
 }
+
+/**
+ * Sets the transition to use for transforms. 
+ * Retains any existing transition originally set by CSS
+ * @param {Boolean} bool If true will use a transition
+ */
 Transformable.prototype.setTransition = function (bool) {
     if(typeof bool == 'boolean') {
         var was = this.transition,
@@ -591,19 +654,39 @@ Transformable.prototype.setTransition = function (bool) {
         this.transition = bool;
     }
 }
+
+/**
+ * Sets the CSS transform on the element.
+ */
 Transformable.prototype._updateElement = function () {
     var m = this.matrix, mtx = 'matrix(' + m.elements.join(',') + ')';
 
     this.element.style.transform = mtx;
 }
+
+/**
+ * Adds the current matrix to the undo stack.
+ */
 Transformable.prototype._pushhistory = function () {
     this.matrix.save();
 }
+
+/**
+ * Sets the matrix property on this instance and applies the CSS.
+ * @param {Matrix} m
+ */
 Transformable.prototype._setMatrix = function (m) {
     this.matrix = m;
     this._updateElement(m);
 }
 
+/**
+ * Gets the window coordinates of a mouse or touch event.
+ * Also gets the angle and centre point between two touches
+ * 
+ * @param {Event} e
+ * @param {Array} touches
+ */
 Transformable.prototype._getPageXY = function (e, touches) {
     var xy, ang, p1, p2;
     if (touches)
@@ -629,6 +712,12 @@ Transformable.prototype._getPageXY = function (e, touches) {
     };
 }
 
+/**
+ * Gets offset (point in element coordinate space), 
+ * window coordinates of the event and angle, distance and centre between two touches.
+ * @param {Event} e
+ * @param {Array} touches
+ */
 Transformable.prototype._getPoint2 = function (e, touches) {
     var
         dat = this._getPageXY(e, touches), deltaXY = null,
@@ -654,10 +743,21 @@ Transformable.prototype._getPoint2 = function (e, touches) {
         deltaXY: deltaXY
     };  
 }
+
+/**
+ * Calculates the distance between two points
+ * @param {Point} a First point
+ * @param {Point} b Second point
+ */
 Transformable.prototype._distanceBetweenPoints = function (a, b) {
     var prop = a.pageX ? {x:'pageX', y:'pageX'} : {x:'x', y:'y'}
     return Math.sqrt(Math.pow(Math.abs(b[prop.x] - a[prop.x]), 2) + Math.pow(Math.abs(b[prop.y] - a[prop.y]), 2));
 }
+
+/**
+ * Gets the centre point between two touches
+ * @param {Array} touches
+ */
 Transformable.prototype._getMiddle = function (touches) {
     var touch1 = touches[0];
     var touch2 = touches[1];
@@ -666,6 +766,12 @@ Transformable.prototype._getMiddle = function (touches) {
 
     return new Point(mx, my);
 };
+
+/**
+ * Gets distance between two touch points (in the window) relative to the element.
+ * @param {Array} touches
+ * @param {Array} pars
+ */
 Transformable.prototype._getDistance2 = function (touches, pars) {
     var anc = this.Ancestry;
     pars = pars || anc.GetParents();
@@ -674,6 +780,12 @@ Transformable.prototype._getDistance2 = function (touches, pars) {
 
     return this._distanceBetweenPoints(t1, t2);
 }
+
+/**
+ * Gets the angle in degrees between two touch points
+ * @param {Array} touches
+ * @param {Boolean} norm Optional: Normalise to be 0-365 degrees
+ */
 Transformable.prototype._getRotation = function (touches, norm) {
     var r;
 
@@ -681,6 +793,10 @@ Transformable.prototype._getRotation = function (touches, norm) {
 
     return norm ? this.matrix.normaldegree(r) : r;
 };
+
+/**
+ * Snaps the rotation to a multiple of 15 degrees if within 3 degrees of a multiple of 15 degrees.
+ */
 Transformable.prototype.snapRotation = function () {
     if (this.options.disable && this.options.disable.rotate)
         return;
@@ -709,13 +825,30 @@ Transformable.prototype.snapRotation = function () {
     }
     this.showMessage(msg, 'sticky', 2000);
 }
+
+/**
+ * Writes info to the console
+ * @param {String} m
+ * @param {any} c Not implemented
+ * @param {any} t Not implemented
+ */
 Transformable.prototype.showMessage = function (m, c, t) {
     console.log(m);
 }
+
+/**
+ * Gets the centre point of the element in window coordinates
+ */
 Transformable.prototype._findCentreInWindow = function () {
     var prect = this._getRect(this.parent);
     return new Point(prect.left + prect.width / 2, prect.top + prect.height / 2);
 }
+
+/**
+ * Centres the element in the middle of its parent element
+ * @param {Bool} transition Optional
+ * @param {Array} pars Optional but should always be supplied
+ */
 Transformable.prototype.centreinparent = function (transition, pars) {
 
     var was = this.transition, anc = this.Ancestry;
@@ -729,6 +862,15 @@ Transformable.prototype.centreinparent = function (transition, pars) {
     this.translate( centreOnThis.sub(new Point(this.sizes.element.initial.width / 2, this.sizes.element.initial.height / 2)));
     this.setTransition(was);
 }
+
+/**
+ * Find out if point p is within the rectangle defined by points a,b,c,d
+ * @param {Point} p
+ * @param {Point} a
+ * @param {Point} b
+ * @param {Point} c
+ * @param {Point} d
+ */
 Transformable.prototype.pointInRectangle = function(p, a, b, c, d) {
     var ab = b.sub(a),
         ap = p.sub(a),
@@ -750,10 +892,23 @@ Transformable.prototype.pointInRectangle = function(p, a, b, c, d) {
     return r;
 }
 
+/**
+ * Triggers an event named n. 
+ * In the handler, this will refer to the Transformable instance.
+ * The handler will receive the transformable element as first argument and a real event object as the second argument.
+ * @param {String} n
+ * @param {Event} event Pass in a real event object if you have one
+ */
 Transformable.prototype.trigger = function (n, event) {
     if (typeof this.events[n] == "function")
         this.events[n].apply(this, [this.element, event]);
 }
+
+/**
+ * Gets the points data needed to make rotation handles work
+ * @param {Event} e
+ * @param {Array} pars
+ */
 Transformable.prototype._getRotatorPoints = function (e, pars) {
     var rpoint,
         apoint = this.anchor.TL,
@@ -769,10 +924,7 @@ Transformable.prototype._getRotatorPoints = function (e, pars) {
     else
         rpoint = (new Point(e.pageX, e.pageY));
 
-    //console.log(apoint.add(anc.scroll));
-    //console.log(rpoint);
     var angle = Math.round(this._getRotation([apoint.add(anc.scroll), rpoint], false) * 100)/100; //,
-    //console.log(angle);
 
     return {
         deltaXY: null,
@@ -784,6 +936,11 @@ Transformable.prototype._getRotatorPoints = function (e, pars) {
         distance: 0
    }; 
 }
+
+/**
+ * Attaches events for rotation interactions with rotation handles
+ * @param {HtmlElement} hdl The element to use as a rotation handle
+ */
 Transformable.prototype._addRotateEvents = function (hdl) {
     var that = this, handle = hdl;
     var
@@ -898,6 +1055,12 @@ Transformable.prototype._addRotateEvents = function (hdl) {
     this.on(hdl, 'touchmove.transformable', _domove);
     this.on(hdl, 'touchend.transformable', _dostop);
 }
+
+/**
+ * Attaches events for resize interactions with resize handles
+ * @param {HtmlElement} tlb Top left button/handle used for moving the element
+ * @param {HtmlElement} brb Bottom right button/handle for resizing the element's width/height
+ */
 Transformable.prototype._addResizeEvents = function (tlb, brb) {
     var that = this, el = this.element, opts = that.options;
     var
@@ -1019,12 +1182,22 @@ Transformable.prototype._addResizeEvents = function (tlb, brb) {
     that.on(brb, 'touchmove.transformable', _domove);
     that.on(brb, 'touchend.transformable', _dostop);
 }
+
+/**
+ * Gets the quadrant based on angle r and wether the angle is horizontal or vertical
+ * @param {Number} r
+ */
 Transformable.prototype.getRotationQuadrant = function (r) {
     var rot = (typeof r != 'undefined' ? r : this.matrix.rotation()) % 360;
     if(rot < 0) rot+=360;
 
     return { Angle: rot, Quad: Math.floor(rot / 90), Horiz: rot == 0 || rot == 180, Vert: rot == 90 || rot == 270 }
 }
+
+/**
+ * Attaches events for scaling, rotating and moving elements. 
+ * Calculates and applies containment too.
+ */
 Transformable.prototype._addEvents = function () {
     var that = this,
         el = this.element,
@@ -1547,8 +1720,19 @@ Transformable.prototype._addEvents = function () {
         if (navigator.userAgent.indexOf('Mac OS') == -1) // some issues with wild zoom on magic mouse, so turn it off
             addWheelListener(el, _dowheelzoom);
 }
+
+/**
+ * Datastore for any namespaced events attached to elements by .on(....)
+ */
 Transformable.Handlers = { Namespaces: {} };
 
+/**
+ * attaches events to an element
+ * @param {HtmlElement} el The element to attach the event to
+ * @param {String} event Type of event with optional namespace. E.g. touchstart.mynamespace
+ * @param {Function} func Handler function
+ * @param {Object} opts Options to use when attaching the event
+ */
 Transformable.prototype.on = function (el, event, func, opts) {
     var events = event.split(' '), i, sp, ev, ns, pl;
     for (i = 0; i < events.length; i++) {
@@ -1567,6 +1751,13 @@ Transformable.prototype.on = function (el, event, func, opts) {
             Transformable.Handlers.Namespaces[ns].push(Transformable.Handlers.Namespaces[event][pl - 1]);
     }
 };
+
+/**
+ * REmoves an event previously added with .on(...)
+ * @param {HtmlElement} el The element to remove the event from
+ * @param {any} event Handler function to remove
+ * @param {any} opts Options to use when removing the event
+ */
 Transformable.prototype.off = function (el, event, opts) {
     var x = Transformable.Handlers.Namespaces[event], tv;
     if (x)
@@ -1576,6 +1767,10 @@ Transformable.prototype.off = function (el, event, opts) {
         }
 
 };
+
+/**
+ * Resets/updates the instance.
+ */
 Transformable.prototype.Refresh = function () {
     this.sizes = undefined;
     this.setInitialSizes();
