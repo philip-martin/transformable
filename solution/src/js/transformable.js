@@ -68,6 +68,11 @@
 
 })(window, document);
 
+/**
+ * Constructor
+ * @param {HtmlElement} el
+ * @param {Object} opts
+ */
 var Transformable = function (el, opts) {
     opts = opts || {}
     if (el.length)
@@ -142,10 +147,17 @@ var Transformable = function (el, opts) {
         if (opts.handle && opts.type == 'rotator-box') 
             this._addRotateEvents(opts.handle);
     }
-
-    //window.lastTransformable = this;
 }
+/**
+ * A store/lookup of all transformable instances.
+ * Each transformable element is given a data attribute for its id in this lookup.
+ * E.g. data-transformable-id="0"
+ */
 Transformable.Instance = [];
+/**
+ * Gets any existing CSS transition that exists on the element.
+ * It will be merged with transition changes to preserve existing effects
+ */
 Transformable.prototype._getOriginalTransition = function () {
     var t = getComputedStyle(this.element)['transition'], sa = t.split(','), r = [];
     for (var i in sa) {
@@ -154,11 +166,19 @@ Transformable.prototype._getOriginalTransition = function () {
     }
     return r.join(',');
 }
+/**
+ * Creates an HTML Element from str 
+ * @param {String} str E.g. span, div etc
+ */
 Transformable.prototype.tag = function (str) {
     var r = document.createElement('div');
     r.innerHTML = str;
     return r.firstChild;
 }
+/**
+ * Adds rotation handles on to the transformable element and wires up their events
+ * @param {String} typ 
+ */
 Transformable.prototype.createRotateHandles = function (typ) {
     if ((!typ || typ == 'rotate')) {
         var box = this.tag('<div class="transformable-rotation-box"></div>'),
@@ -234,9 +254,9 @@ Transformable.prototype.createRotateHandles = function (typ) {
                     pt = anc.FirstParent(), 
                     ds = 1;
                 /*
-                 * something to try and scale the handles displayed inside the transformable element
+                 * trying to scale the handles displayed inside the transformable element
                  * so they dont look huge when a parent element is scaled 
-                 * not really working as I wanted
+                 * abandoned - not really working as I wanted
                  * 
                 if (pt)
                     ds = 1 / pt.matrix.scaling();
@@ -276,6 +296,10 @@ Transformable.prototype.createRotateHandles = function (typ) {
         this.on(rotparent, 'click.rotatormouse', function () { _domouseenter.apply(this, [0]); });
     }
 }
+/**
+ * Creates resize handles on the transformable element and wires up their events
+ * @param {String} typ
+ */
 Transformable.prototype.createResizeHandles = function (typ) {
     // hard coded svg elements. Sorry
     if (typ == 'tl-br') {
@@ -299,12 +323,21 @@ Transformable.prototype.createResizeHandles = function (typ) {
         this._addResizeEvents(tlb, brb);
     }
 }
+/**
+ * Zooms the element centred on the middle of the parent element in increments of 5%.
+ * @param {Number} dir positive numbers make it bigger, negative make it smaller
+ */
 Transformable.prototype.zoom = function (dir) {
     var offset = this.Ancestry.OffsetFromPoint(this._findCentreInWindow());
     this.scale(offset, 1 + dir * 0.05);
 
     return this;
 }
+/**
+ * Scales the transformable element at point p by s amount
+ * @param {Point} p Origin for the transform on the element
+ * @param {any} s scale amount
+ */
 Transformable.prototype.scale = function (p, s) {
     this.matrix.scale(p, s);
     this.setTransition(true);
@@ -312,6 +345,12 @@ Transformable.prototype.scale = function (p, s) {
     //this.trigger('stop');
     return this;
 }
+/**
+ * Translates the element by x and y. Uses element pixels before any transform. Not window/screen pixels.
+ * @param {Number} x Pixels horizontal
+ * @param {Number} y Pixels vertical
+ * @param {Boolean} transition Use a transition
+ */
 Transformable.prototype.translate = function (x,y, transition) {
     this.matrix.translate(x, y);
     this.setTransition(transition);

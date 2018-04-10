@@ -1,12 +1,17 @@
 var Ancestry = function (self) {
     this.Items = [];
-    this.Add(self, self.element);
+    this._add(self, self.element);
     this.Self = self;
-    this.Init();
+    this._init();
 }
 Ancestry.prototype._getScroll = function () {
     return new Point(window.pageXOffset || document.documentElement.scrollLeft, window.pageYOffset || document.documentElement.scrollTop);
 }
+/**
+ * Gets size/positions from computed style
+ * @param {HtmlElement} el
+ * @param {CSSStyleDeclaration} cs If you just got the computed styles, pass them in.
+ */
 Ancestry.prototype.GetElementSize = function (el, cs) {
     cs = cs || getComputedStyle(el);
 
@@ -25,6 +30,9 @@ Ancestry.prototype.GetElementSize = function (el, cs) {
         bottomleft: new Point(0, h)
     }
 }
+/**
+ * Prints out the Ancestry to console
+ */
 Ancestry.prototype._debug = function () {
     this.Items.forEach(function (v, i) {
         console.log(v.matrix.elements);
@@ -33,14 +41,36 @@ Ancestry.prototype._debug = function () {
         console.log([v.element]);
     });
 }
+/**
+ * Automatically called after resizing the window.
+ * Or can be called manually if the resizable element has its position on 
+ * the page changed by elements outside its Ancestry. E.g. content above, changes height
+ */
 Ancestry.prototype.Refresh = function () {
     this.Items = [];
-    this.Add(this.Self, this.Self.element);
+    this._add(this.Self, this.Self.element);
     //this.scroll = Point.Point0;
     this.Init();
 }
+
+/**
+ * Checks a computed style value to see if it is in percent instead of px 
+ * @param {String|Number} v
+ */
 Ancestry.prototype._ispercent = function (v) { return v.indexOf('%') > -1; }
+
+/**
+ * Checks a computed style value to see if it is auto
+ * @param {String|Number} v
+ */
 Ancestry.prototype._isauto = function (v) { return v == 'auto'; }
+
+/**
+ * Converts percentage values obtained from buggy browsers to pixels
+ * @param {String} k CSS style to calculate
+ * @param {String|Number} val The percentage value to convert to pixels
+ * @param {CSSStyleDeclaration} cs The computed styles of the parent element. E.g. getComputedStyle(parentElement);
+ */
 Ancestry.prototype._pixelFromParent = function (k, val, cs) {
     if (val === '0%') return 0;
     var v = parseFloat(val);
@@ -54,6 +84,10 @@ Ancestry.prototype._pixelFromParent = function (k, val, cs) {
     }
     return v;
 }
+/**
+ * Gets dimensions from computed styles and makes them all pixel based
+ * @param {HtmlElement} el
+ */
 Ancestry.prototype.GetComputedDims = function (el) {
     var cs = getComputedStyle(el),
         cl = cs.left,
@@ -81,11 +115,12 @@ Ancestry.prototype.GetComputedDims = function (el) {
         transform: cs.transform
     }
 }
-/* Walk upwards through node hierarchy replacing any position/offset changing CSS with an equivalent matrix.
- * This approach means you can simply multiply each matrix together in calculations without 
- * adding/subtracting offsets or imposing CSS restrictions on elements you want to make transformable.
-*/
-Ancestry.prototype.Init = function () {
+
+/**
+ * Walks upwards through node hierarchy replacing any position/offset changing CSS with an equivalent matrix.
+ * This simplifies matrix calculations and means no CSS restrictions are required on elements you want to make transformable.
+ */
+Ancestry.prototype._init = function () {
     var t, cs, nt, has, pt, tid, nm, el = this.Self.element;
     while (el.parentNode && !el.parentNode.body) {
         var
@@ -105,7 +140,7 @@ Ancestry.prototype.Init = function () {
             if (tid = el.parentNode.getAttribute('data-transformable-id')) {
                 pt = Transformable.Instance[tid];
                 if (pt)
-                    this.Add(pt);
+                    this._add(pt);
             } else {
                 var om = has ? new Matrix(this.Self._cssStringToArray(t)) : false;                
 
@@ -126,13 +161,16 @@ Ancestry.prototype.Init = function () {
                     el.parentNode.style.transformOrigin = '0 0';
                     el.parentNode.style.transform = this.Self._arrayToCssString(nm.elements);
 
-                    this.Add(nm, el.parentNode, prect);
+                    this._add(nm, el.parentNode, prect);
                 }
             }
         }
         el = el.parentNode;
     }
 }
+/**
+ * Sets offset initially then updates scroll position data
+ */
 Ancestry.prototype._setoffset = function () {
     this.scroll = this._getScroll();
     if(this.offset) return;
@@ -148,7 +186,12 @@ Ancestry.prototype._setoffset = function () {
         }
     }
 }
-Ancestry.prototype.Add = function (t, el) {
+/**
+ * Adds an element/transformable element to the Ancestry of parent elements
+ * @param {Transformable|Matrix} t
+ * @param {HtmlElement} el
+ */
+Ancestry.prototype._add = function (t, el) {
     if (t instanceof Transformable) {
         this.Items.unshift({ matrix: t.matrix, element: el || t.element, rect: t.sizes.element.initial, transformable: t });
     }
@@ -156,6 +199,10 @@ Ancestry.prototype.Add = function (t, el) {
         this.Items.unshift({ matrix: t, element: el, rect: this.GetElementSize(el) });
     }
 }
+/**
+ * Returns Array of objects for each parent element.
+ * Gets the matrix, inverse matrix and the element for each parent.
+ */
 Ancestry.prototype.GetParents = function () {
     var r = [], that = this;
     //this._setoffset();
@@ -176,6 +223,10 @@ Ancestry.prototype.GetParents = function () {
     });
     return r;
 }
+/**
+ * Uses this instance's matrix to transform corner points
+ * @param {Object} c Named points of a rectangle
+ */
 Ancestry.prototype.TransformCorners = function (c) {
     var mat = this.GetMatrix();
     return {
@@ -185,6 +236,9 @@ Ancestry.prototype.TransformCorners = function (c) {
         topleft: mat.transformpoint(c.topleft)
     }
 }
+/**
+ * Gets data from Items for the outermost containing element.
+ */
 Ancestry.prototype.FirstParent = function () {
     var t = this, i = t.Items, l = i.length,
         par = l > 1 ? i[l - 2] : false;
@@ -202,9 +256,9 @@ Ancestry.prototype.GetMatrix = function () {
     return mat;
 }
 /**
- * 
- * @param {Point} p
- * @param {Array of Matrix} pars
+ * Gets the x,y coordinate on the transformable element for a given point
+ * @param {Point} p Coordinates in the window or from a mouse/touch event
+ * @param {Array of Object} pars Objects with matrix, inverse matrix and element
  */
 Ancestry.prototype.OffsetFromPoint = function (p, pars) {
     var pars = pars || this.GetParents();
@@ -220,8 +274,6 @@ Ancestry.prototype.OffsetFromPoint = function (p, pars) {
 
     var matinv = mat.inverse();
     op = matinv.transformpoint(op); 
-
-    //console.log(op)
 
     return op;
 }
@@ -676,6 +728,11 @@ Size.Size100 = new Size(100, 100);
 
 })(window, document);
 
+/**
+ * Constructor
+ * @param {HtmlElement} el
+ * @param {Object} opts
+ */
 var Transformable = function (el, opts) {
     opts = opts || {}
     if (el.length)
@@ -750,10 +807,17 @@ var Transformable = function (el, opts) {
         if (opts.handle && opts.type == 'rotator-box') 
             this._addRotateEvents(opts.handle);
     }
-
-    //window.lastTransformable = this;
 }
+/**
+ * A store/lookup of all transformable instances.
+ * Each transformable element is given a data attribute for its id in this lookup.
+ * E.g. data-transformable-id="0"
+ */
 Transformable.Instance = [];
+/**
+ * Gets any existing CSS transition that exists on the element.
+ * It will be merged with transition changes to preserve existing effects
+ */
 Transformable.prototype._getOriginalTransition = function () {
     var t = getComputedStyle(this.element)['transition'], sa = t.split(','), r = [];
     for (var i in sa) {
@@ -762,11 +826,19 @@ Transformable.prototype._getOriginalTransition = function () {
     }
     return r.join(',');
 }
+/**
+ * Creates an HTML Element from str 
+ * @param {String} str E.g. span, div etc
+ */
 Transformable.prototype.tag = function (str) {
     var r = document.createElement('div');
     r.innerHTML = str;
     return r.firstChild;
 }
+/**
+ * Adds rotation handles on to the transformable element and wires up their events
+ * @param {String} typ 
+ */
 Transformable.prototype.createRotateHandles = function (typ) {
     if ((!typ || typ == 'rotate')) {
         var box = this.tag('<div class="transformable-rotation-box"></div>'),
@@ -842,9 +914,9 @@ Transformable.prototype.createRotateHandles = function (typ) {
                     pt = anc.FirstParent(), 
                     ds = 1;
                 /*
-                 * something to try and scale the handles displayed inside the transformable element
+                 * trying to scale the handles displayed inside the transformable element
                  * so they dont look huge when a parent element is scaled 
-                 * not really working as I wanted
+                 * abandoned - not really working as I wanted
                  * 
                 if (pt)
                     ds = 1 / pt.matrix.scaling();
@@ -884,6 +956,10 @@ Transformable.prototype.createRotateHandles = function (typ) {
         this.on(rotparent, 'click.rotatormouse', function () { _domouseenter.apply(this, [0]); });
     }
 }
+/**
+ * Creates resize handles on the transformable element and wires up their events
+ * @param {String} typ
+ */
 Transformable.prototype.createResizeHandles = function (typ) {
     // hard coded svg elements. Sorry
     if (typ == 'tl-br') {
@@ -907,12 +983,21 @@ Transformable.prototype.createResizeHandles = function (typ) {
         this._addResizeEvents(tlb, brb);
     }
 }
+/**
+ * Zooms the element centred on the middle of the parent element in increments of 5%.
+ * @param {Number} dir positive numbers make it bigger, negative make it smaller
+ */
 Transformable.prototype.zoom = function (dir) {
     var offset = this.Ancestry.OffsetFromPoint(this._findCentreInWindow());
     this.scale(offset, 1 + dir * 0.05);
 
     return this;
 }
+/**
+ * Scales the transformable element at point p by s amount
+ * @param {Point} p Origin for the transform on the element
+ * @param {any} s scale amount
+ */
 Transformable.prototype.scale = function (p, s) {
     this.matrix.scale(p, s);
     this.setTransition(true);
@@ -920,6 +1005,12 @@ Transformable.prototype.scale = function (p, s) {
     //this.trigger('stop');
     return this;
 }
+/**
+ * Translates the element by x and y. Uses element pixels before any transform. Not window/screen pixels.
+ * @param {Number} x Pixels horizontal
+ * @param {Number} y Pixels vertical
+ * @param {Boolean} transition Use a transition
+ */
 Transformable.prototype.translate = function (x,y, transition) {
     this.matrix.translate(x, y);
     this.setTransition(transition);
