@@ -91,7 +91,7 @@ opts = {
   // can be: 'rotator-box' only (for now)
   type: 'rotator-box',
   
-  // internal option to specify another Transformable instance to receive the transform. Do not use
+  // internal option to specify another Transformable instance to receive the transform.
   // it is used to make rotate handles work
   rotatetarget: instanceofTransformable
   
