@@ -54,17 +54,17 @@ opts = {
   computedsize: { width: 345, height: 789 },
   
   // on start event.
-  start: function() { /* do something */ },
+  start: function(element, event) { /* this will be the Transformable instance */ },
   
   // on move event. Try not to use this for anything other than basic stuff. The event will fire
   // many, many times per second
-  move: function() { /* do almost nothing */ },
+  move: function(element, event) { /* this will be the Transformable instance */ },
   
   // on stop event.
-  stop: function() { /* do something */ },
+  stop: function(element, event) { /* this will be the Transformable instance */ },
   
   // on tap/click
-  tap: function() { /* do something */ }
+  tap: function(element, event) { /* this will be the Transformable instance */ },
   
   // say if mouse and touch events are attached to the element, default is true. 
   // false means the element will not respond to any user interaction
