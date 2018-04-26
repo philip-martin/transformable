@@ -4,7 +4,7 @@ Transformable is a vanilla javascript library for adding translation (panning), 
 
 It works with mouse and touch events to scale, rotate or move elements. You can use pinch gestures and mouse wheel too. 
 
-Rotatation handles allow you to rotate around the centre of the element (initially) or you can move the rotation handle somewhere else to rotate about another point. Resize handles can also be dragged to change the elements width/height.
+Rotation handles allow you to rotate around the centre of the element (initially) or you can move the rotation handle somewhere else to rotate about another point. Resize handles can also be dragged to change the elements width/height.
 
 Transformable elements can be nested within each other and the depth/position/offset in the node hierarchy won't matter. 
 
