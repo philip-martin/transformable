@@ -1,4 +1,6 @@
-﻿var Matrix = function (a) {
+﻿import Point from './Point.js';
+
+var Matrix = function (a) {
     if (a == null || typeof a == 'undefined')
         return Matrix.Identity();
 
@@ -195,3 +197,5 @@ Matrix.prototype = {
         return new Point(this.elements[4], this.elements[5]);
     }
 }
+
+export default Matrix;

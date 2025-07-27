@@ -1,4 +1,7 @@
-﻿var Ancestry = function (self) {
+﻿import Matrix from './Matrix.js';
+import Point from './Point.js';
+
+var Ancestry = function (self) {
     this.Items = [];
     this._add(self, self.element);
     this.Self = self;
@@ -277,3 +280,5 @@ Ancestry.prototype.OffsetFromPoint = function (p, pars) {
 
     return op;
 }
+
+export default Ancestry;

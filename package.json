@@ -1,0 +1,37 @@
+{
+  "version": "1.0.0",
+  "name": "transformable",
+  "description": "A JavaScript library for transformable UI elements.",
+  "main": "dist/js/transformable.umd.js",
+  "module": "dist/js/transformable.esm.js",
+  "exports": {
+    "import": "./dist/js/transformable.esm.js",
+    "require": "./dist/js/transformable.umd.js"
+  },
+  "scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack --watch"
+  },
+  "author": "Phil Martin",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/philip-martin/transformable.git"
+  },
+  "bugs": { "url": "https://github.com/philip-martin/transformable/issues" },
+  "homepage": "https://github.com/philip-martin/transformable#readme",
+  "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "babel-loader": "^10.0.0",
+    "css-loader": "^6.8.1",
+    "mini-css-extract-plugin": "^2.7.6",
+    "style-loader": "^3.3.4",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "files": [
+    "dist/"
+  ],
+  "keywords": ["transform", "scale", "rotate", "pan", "html", "element", "css", "2d matrix"]
+}

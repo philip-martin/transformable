@@ -55,3 +55,5 @@ Point.prototype = {
     //    return new Pos(this.x, this.y);
     //}
 }
+
+export default Point;

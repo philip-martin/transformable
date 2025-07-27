@@ -1,4 +1,7 @@
-﻿var PolygonMath = {
+﻿import Size from './Size.js';
+import Point from './Point.js';
+
+var PolygonMath = {
     fitWithin: function (w, h, dw, dh) {
         var a = w / h,
             da = dw / dh,
@@ -23,3 +26,5 @@
     },
     normaliseAngle: function (deg) { var a = deg % 360; if (a < 0) a += 360; return a; }
 }
+
+export default PolygonMath;

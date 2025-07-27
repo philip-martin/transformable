@@ -1,0 +1,8 @@
+node_modules/
+dist/
+demo/
+*.log
+*.tmp
+*.bak
+*.cache
+src/examples.html

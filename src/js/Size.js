@@ -1,4 +1,6 @@
-﻿Size = function (w, h) {
+﻿import Point from './Point.js';
+
+var Size = function (w, h) {
     switch (typeof w) {
         case 'object':
             this.Width = w.Width;
@@ -95,3 +97,5 @@ Size.Size4 = new Size(4, 4);
 Size.Size5 = new Size(5, 5);
 Size.Size6 = new Size(6, 6);
 Size.Size100 = new Size(100, 100);
+
+export default Size;

@@ -1,4 +1,9 @@
-﻿// Wheel event polyfill
+﻿import '../css/transformable.css';
+import Matrix from './Matrix.js';
+import Ancestry from './Ancestry.js';
+import Point from './Point.js';
+
+// Wheel event polyfill
 (function (window, document) {
  
     var prefix = "", _addEventListener, support;
@@ -305,7 +310,7 @@ Transformable.prototype.createResizeHandles = function (typ) {
     if (typ == 'tl-br') {
         var
             tl = this.tag('<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-271 394.9 52 52" style="enable-background:new -271 394.9 52 52;" xml:space="preserve"><g><path style="fill:#00A8DF;" d="M-244.9,421L-244.9,421L-244.9,421L-244.9,421L-244.9,421l26,0.1c0-10.8-6.1-20-16-24.1 c-10-4.1-20.8-2-28.4,5.7c-7.6,7.6-9.7,18.5-5.6,28.4c4.2,10,13.4,16,24.2,15.9L-244.9,421z"/><path style="fill:none;stroke:#FFFFFF;stroke-width:3;" d="M-251.6,414.3"/><path style="fill:none;stroke:#FFFFFF;stroke-width:3;" d="M-236.6,414.3"/></g><g><path style="fill:#FFFFFF;" d="M-227,419.5l-7.6-4.4c-1.1-0.6-2.4,0.2-2.4,1.4v1.9h-5.6v-5.5h2c1.2,0,2-1.3,1.4-2.4l-4.4-7.6 c-0.6-1.1-2.1-1.1-2.7,0l-4.4,7.6c-0.6,1.1,0.2,2.4,1.4,2.4h2v5.5h-5.6v-1.9c0-1.2-1.3-2-2.4-1.4l-7.6,4.4c-1.1,0.6-1.1,2.1,0,2.7 l7.6,4.4c1.1,0.6,2.4-0.2,2.4-1.4v-2h5.6v5.6h-2c-1.2,0-2,1.3-1.4,2.4l4.4,7.6c0.6,1.1,2.1,1.1,2.7,0l4.4-7.6 c0.6-1.1-0.2-2.4-1.4-2.4h-2v-5.6h5.6v2c0,1.2,1.3,2,2.4,1.4l7.6-4.4C-225.9,421.7-225.9,420.1-227,419.5z"/><path style="opacity:0.5;fill:#231F20;" d="M-245,402.1c0.5,0,1.1,0.3,1.4,0.8l4.4,7.6c0.6,1.1-0.2,2.4-1.4,2.4h-2v5.5h5.6v-1.9 c0-0.9,0.8-1.6,1.6-1.6c0.3,0,0.5,0.1,0.8,0.2l7.6,4.4c1.1,0.6,1.1,2.1,0,2.7l-7.6,4.4c-0.3,0.1-0.5,0.2-0.8,0.2 c-0.8,0-1.6-0.7-1.6-1.6v-2h-5.6v5.6h2c1.2,0,2,1.3,1.4,2.4l-4.4,7.6c-0.3,0.5-0.8,0.8-1.4,0.8c-0.5,0-1.1-0.3-1.4-0.8l-4.4-7.6 c-0.6-1.1,0.2-2.4,1.4-2.4h2v-5.6h-5.6v2c0,0.9-0.8,1.6-1.6,1.6c-0.3,0-0.5-0.1-0.8-0.2l-7.6-4.4c-1.1-0.6-1.1-2.1,0-2.7l7.6-4.4 c0.3-0.1,0.5-0.2,0.8-0.2c0.8,0,1.6,0.7,1.6,1.6v1.9h5.6v-5.5h-2c-1.2,0-2-1.3-1.4-2.4l4.4-7.6C-246.1,402.3-245.5,402.1-245,402.1 M-245,400.6c-1.1,0-2.1,0.6-2.6,1.5l-4.4,7.6c-0.5,0.9-0.5,2.1,0,3c0.5,0.9,1.5,1.5,2.6,1.5h0.5v2.7h-2.7v-0.5c0-1.7-1.4-3-3-3 c-0.5,0-1,0.1-1.5,0.4l-7.6,4.4c-0.9,0.5-1.5,1.5-1.5,2.6c0,1.1,0.6,2.1,1.5,2.6l7.6,4.4c0.5,0.3,1,0.4,1.5,0.4c1.7,0,3-1.4,3-3	v-0.6h2.7v2.8h-0.5c-1.1,0-2.1,0.6-2.6,1.5c-0.5,0.9-0.5,2.1,0,3l4.4,7.6c0.5,0.9,1.5,1.5,2.6,1.5c1.1,0,2.1-0.6,2.6-1.5l4.4-7.6 c0.5-0.9,0.5-2.1,0-3c-0.5-0.9-1.5-1.5-2.6-1.5h-0.5v-2.8h2.7v0.6c0,1.7,1.4,3,3,3c0.5,0,1-0.1,1.5-0.4l7.6-4.4	c0.9-0.5,1.5-1.5,1.5-2.6c0-1.1-0.6-2.1-1.5-2.6l-7.6-4.4c-0.5-0.3-1-0.4-1.5-0.4c-1.7,0-3,1.4-3,3v0.5h-2.7v-2.7h0.5	c1.1,0,2.1-0.6,2.6-1.5c0.5-0.9,0.5-2.1,0-3l-4.4-7.6C-242.9,401.2-243.9,400.6-245,400.6L-245,400.6z"/></g></svg>'),
-            br = this.tag('<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-271 394.9 52 52" style="enable-background:new -271 394.9 52 52;" xml:space="preserve"><g><path style="fill:#00A8DF;" d="M-245,420.9L-245,420.9L-245,420.9L-245,420.9L-245,420.9l-26-0.1c0,10.8,6.1,20,16,24.1 c10,4.1,20.8,2,28.4-5.7c7.6-7.6,9.7-18.5,5.6-28.4c-4.2-10-13.4-16-24.2-15.9L-245,420.9z"/></g><g><path style="fill:#FFFFFF;" d="M-245.8,423l-2.5-2.5l-2.1,2.1c-0.9,0.9-2.3,0.5-2.6-0.7l-1.6-9.2c-0.3-1.2,0.8-2.3,1.9-1.9l9.2,1.6 c1.2,0.3,1.6,1.8,0.7,2.6l-2.1,2.1l2.5,2.5l2.7,2.7l-1-1l2.1-2.1c0.9-0.9,2.3-0.5,2.6,0.7l1.6,9.2c0.3,1.2-0.8,2.3-1.9,1.9 l-9.2-1.6c-1.2-0.3-1.6-1.8-0.7-2.6l2.1-2.1l-3.2-3.2L-245.8,423z"/><path style="opacity:0.5;fill:#231F20;" d="M-239.6,422.3l-1-1l2.1-2.1c0.7-0.7,1.7-0.6,2.2,0c0.2,0.2,0.3,0.4,0.4,0.7l1.6,9.2 c0.3,1.2-0.8,2.3-1.9,1.9l-9.2-1.6c-0.3-0.1-0.5-0.2-0.7-0.4c-0.6-0.6-0.7-1.6,0-2.2l2.1-2.1l-3.2-3.2l1.5,1.5l-2.5-2.5l-2.1,2.1 c-0.7,0.7-1.7,0.6-2.2,0c-0.2-0.2-0.3-0.4-0.4-0.7l-1.6-9.2c-0.3-1.2,0.8-2.3,1.9-1.9l9.2,1.6c0.3,0.1,0.5,0.2,0.7,0.4 c0.6,0.6,0.7,1.6,0,2.2l-2.1,2.1l2.5,2.5L-239.6,422.3z M-242.3,417.5l-0.5-0.5l1-1c1.2-1.2,1.2-3.1,0-4.3 c-0.4-0.4-0.8-0.6-1.4-0.8l-9.2-1.6c-1.1-0.3-2.1,0-2.9,0.8c-0.8,0.8-1.1,1.9-0.8,2.9l1.6,9.2c0.1,0.5,0.4,1,0.8,1.4 c1.2,1.2,3.1,1.2,4.3,0l1.1-1.1l0.5,0.5l0.5,0.5l1.2,1.2l-1.1,1.1c-1.2,1.2-1.2,3.1,0,4.3c0.4,0.4,0.8,0.6,1.4,0.8l9.2,1.6 c1.1,0.3,2.1,0,2.9-0.8c0.8-0.8,1.1-1.9,0.8-2.9l-1.6-9.2c-0.1-0.5-0.4-1-0.8-1.4c-1.2-1.2-3.1-1.2-4.3,0l-1,1l-1.2-1.2"/></g></svg>');
+            br = this.tag('<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-271 394.9 52 52" style="enable-background:new -271 394.9 52 52;" xml:space="preserve"><g><path style="fill:#00A8DF;" d="M-245,420.9L-245,420.9L-245,420.9L-245,420.9L-245,420.9l-26-0.1c0,10.8,6.1,20,16,24.1 c10,4.1,20.8,2,28.4-5.7c7.6-7.6,9.7-18.5,5.6-28.4c-4.2-10-13.4-16-24.2-15.9L-245,420.9z"/></g><g><path style="fill:#FFFFFF;" d="M-245.8,423l-2.5-2.5l-2.1,2.1c-0.9,0.9-2.3,0.5-2.6-0.7l-1.6-9.2c-0.3-1.2,0.8-2.3,1.9-1.9l9.2,1.6 c1.2,0.3,1.6,1.8,0.7,2.6l-2.1,2.1l2.5,2.5l2.7,2.7l-1-1l2.1-2.1c0.9-0.9,2.3-0.5,2.6,0.7l1.6,9.2c0.3,1.2-0.8,2.3-1.9,1.9 l-9.2-1.6c-1.2-0.3-1.6-1.8-0.7-2.6l2.1-2.1l-3.2-3.2L-245.8,423z"/><path style="opacity:0.5;fill:#231F20;" d="M-239.6,422.3l-1-1l2.1-2.1c0.7-0.7,1.7-0.6,2.2,0c0.2,0.2,0.3,0.4,0.4,0.7l1.6,9.2 c0.3,1.2-0.8,2.3-1.9,1.9l-9.2-1.6c-0.3-0.1-0.5-0.2-0.7-0.4c-0.6-0.6-0.7-1.6,0-2.2l2.1-2.1l-3.2-3.2l1.5,1.5l-2.5-2.5l-2.1,2.1 c-0.7,0.7-1.7,0.6-2.2,0c-0.2-0.2-0.3-0.4-0.4-0.7l-1.6-9.2c-0.3-1.2,0.8-2.3,1.9-1.9l9.2,1.6c0.3,0.1,0.5,0.2,0.7,0.4 c0.6,0.6,0.7,1.6,0,2.2l-2.1,2.1l2.5,2.5L-239.6,422.3z M-242.3,417.5l-0.5-0.5l1-1c1.2-1.2,1.2-3.1,0-4.3 c-0.4-0.4-0.8-0.6-1.4-0.8l-9.2-1.6c-1.1-0.3-2.1,0-2.9,0.8c-0.8,0.8-1.1,1.9-0.8,2.9l1.6,9.2c0.1,0.5,0.4,1,0.8,1.4 c1.2,1.2,3.1,1.2,4.3,0l1.1-1.1l0.5,0.5l0.5,0.5l1.2,1.2l-1.1,1.1c-1.2,1.2-1.2,3.1,0,4.3c0.4,0.4,0.8,0.6,1.4,0.8l9.2,1.6 c1.1,0.3,2.1,0,2.9-0.8c0.8-0.8,1.1-1.9,0.8-2.9l-1.6-9.2c-0.1-0.5-0.4-1-0.8-1.4c-1.2-1.2-3.1-1.2-4.3,0l-1,1l-1.2-1.2"/></g></svg>');
         var
             tlb = this.tag('<div class="transformable-resize-button"></div>'),
             brb = tlb.cloneNode();
@@ -944,112 +949,112 @@ Transformable.prototype._getRotatorPoints = function (e, pars) {
 Transformable.prototype._addRotateEvents = function (hdl) {
     var that = this, handle = hdl;
     var
-    _domove = function (e) {
-        if (!that.startedrotate) return false;
-        that.draggingrotate = true;
-        e.preventDefault();
-        e.stopPropagation();
-        var touches = e.touches, doupdate = false;
+        _domove = function (e) {
+            if (!that.startedrotate) return false;
+            that.draggingrotate = true;
+            e.preventDefault();
+            e.stopPropagation();
+            var touches = e.touches, doupdate = false;
 
-        if(touches)
-            if (touches.length == 2)
-                return false
+            if (touches)
+                if (touches.length == 2)
+                    return false
 
-        var point = that._getRotatorPoints(e),
-            orig = that.origrotate,
-            start = that.startrotate,
-            m = that.matrix;
+            var point = that._getRotatorPoints(e),
+                orig = that.origrotate,
+                start = that.startrotate,
+                m = that.matrix;
 
-        var delta = {
-            angle: Math.round((point.angle - start.angle) * 100)/100,
-        }
-
-        if (delta.angle != 0) {
-            if (that.parent != that.options.rotatetarget.element) {
-                m.rotateAboutPoint(new Point(0), delta.angle);
-                doupdate = true;
+            var delta = {
+                angle: Math.round((point.angle - start.angle) * 100) / 100,
             }
-            if (that.options.rotatetarget instanceof Transformable)
-                that.options.rotatetarget.rotate(that.anchor.TL.add(that.Ancestry.scroll), delta.angle, false, true);
-            
-        }
 
-        if(doupdate)
-            that._updateElement(m);
-                
-        that.startrotate.angle = point.angle;
-    },
-    _dostop = function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        that.element.classList.remove('transformable-active');
-
-        that.startedrotate = false;
-        that.draggingrotate = false;
-
-        that.off(document.querySelector('body'), 'mouseup.transformable dragend.transformable', _dostop);
-
-        if (that.options.rotatetarget instanceof Transformable) {
-            if (that.options.rotatetarget.events.stop)
-                that.options.rotatetarget.trigger('stop', e);
-
-            that.options.rotatetarget.snapRotation();
-        }
-        if (that.events.stop)
-            that.trigger('stop', e);
-
-        that.snapRotation();
-    };
-    _dostart = function (e) {
-        if (that.options.disabled === true)
-            return false;
-        if (that.startedresize)
-            return false;
-        if (document.querySelectorAll('.transformable-active').length == 0)
-            that.element.classList.add('transformable-active');
-
-        //if (that.options.rotatetarget instanceof Transformable) 
-        //    that.options.rotatetarget.updatedims();
-
-        //that.updatedims();
-
-        var m = that.matrix;
-
-        that.origrotate = {
-            trans: new Point(m.elements[4], m.elements[5]),
-            angle: m.rotation(true),
-            scale: m.scaling(),
-        };
-
-        var touches = e.touches;
-        if (touches && touches.length == 2)
-            if (touches[0].target && touches[1].target)
-                if (touches[0].target !== touches[1].target) {
-                    console.log('Two active elements not supported');
-                    return false;
+            if (delta.angle != 0) {
+                if (that.parent != that.options.rotatetarget.element) {
+                    m.rotateAboutPoint(new Point(0), delta.angle);
+                    doupdate = true;
                 }
+                if (that.options.rotatetarget instanceof Transformable)
+                    that.options.rotatetarget.rotate(that.anchor.TL.add(that.Ancestry.scroll), delta.angle, false, true);
 
-        that.anchor = that.anchor || {};
-        that.anchor.clientRect = that._getRect(that.element.querySelector('.transformable-anchor-point'));
-        that.anchor.TL = new Point(that.anchor.clientRect.left, that.anchor.clientRect.top);
+            }
 
-        that.startrotate = that._getRotatorPoints(e);
+            if (doupdate)
+                that._updateElement(m);
 
-        that.startrotate.scale = that.origrotate.scale;
-        that.startedrotate = true;
-        that.draggingrotate = false;
+            that.startrotate.angle = point.angle;
+        },
+        _dostop = function (e) {
+            e.preventDefault();
+            e.stopPropagation();
 
-        that.setTransition(false);
+            that.element.classList.remove('transformable-active');
 
-        e.stopPropagation();
+            that.startedrotate = false;
+            that.draggingrotate = false;
 
-        var body = document.querySelector('body');
-        if (e.type == 'mousedown') {
-            that.on(body, 'mousemove.transformable', _domove);
-            that.on(body, 'mouseup.transformable dragend.transformable', _dostop);
-        }
-    },
+            that.off(document.querySelector('body'), 'mouseup.transformable dragend.transformable', _dostop);
+
+            if (that.options.rotatetarget instanceof Transformable) {
+                if (that.options.rotatetarget.events.stop)
+                    that.options.rotatetarget.trigger('stop', e);
+
+                that.options.rotatetarget.snapRotation();
+            }
+            if (that.events.stop)
+                that.trigger('stop', e);
+
+            that.snapRotation();
+        },
+        _dostart = function (e) {
+            if (that.options.disabled === true)
+                return false;
+            if (that.startedresize)
+                return false;
+            if (document.querySelectorAll('.transformable-active').length == 0)
+                that.element.classList.add('transformable-active');
+
+            //if (that.options.rotatetarget instanceof Transformable) 
+            //    that.options.rotatetarget.updatedims();
+
+            //that.updatedims();
+
+            var m = that.matrix;
+
+            that.origrotate = {
+                trans: new Point(m.elements[4], m.elements[5]),
+                angle: m.rotation(true),
+                scale: m.scaling(),
+            };
+
+            var touches = e.touches;
+            if (touches && touches.length == 2)
+                if (touches[0].target && touches[1].target)
+                    if (touches[0].target !== touches[1].target) {
+                        console.log('Two active elements not supported');
+                        return false;
+                    }
+
+            that.anchor = that.anchor || {};
+            that.anchor.clientRect = that._getRect(that.element.querySelector('.transformable-anchor-point'));
+            that.anchor.TL = new Point(that.anchor.clientRect.left, that.anchor.clientRect.top);
+
+            that.startrotate = that._getRotatorPoints(e);
+
+            that.startrotate.scale = that.origrotate.scale;
+            that.startedrotate = true;
+            that.draggingrotate = false;
+
+            that.setTransition(false);
+
+            e.stopPropagation();
+
+            var body = document.querySelector('body');
+            if (e.type == 'mousedown') {
+                that.on(body, 'mousemove.transformable', _domove);
+                that.on(body, 'mouseup.transformable dragend.transformable', _dostop);
+            }
+        };
 
     this.on(hdl, 'mousedown.transformable touchstart.transformable', _dostart)
     this.on(hdl, 'touchmove.transformable', _domove);
@@ -1798,3 +1803,9 @@ Transformable.prototype.Refresh = function () {
         });
     };
 })(); // end
+
+// Ensure Transformable is available as a global for UMD/browser builds
+if (typeof window !== 'undefined') {
+  window.Transformable = Transformable;
+}
+export default Transformable;
