@@ -688,18 +688,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Matrix_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Matrix.js */ "./src/js/Matrix.js");
 /* harmony import */ var _Ancestry_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Ancestry.js */ "./src/js/Ancestry.js");
 /* harmony import */ var _Point_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Point.js */ "./src/js/Point.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 
 
 
-// Wheel event polyfill
+// Wheel event polyfill (modernized slightly for scope, but logic preserved for compatibility)
 (function (window, document) {
-  var prefix = "",
-    _addEventListener,
-    support;
+  var prefix = "";
+  var _addEventListener;
 
-  // detect event model
+  // Detect event model
   if (window.addEventListener) {
     _addEventListener = "addEventListener";
   } else {
@@ -707,1561 +724,1614 @@ __webpack_require__.r(__webpack_exports__);
     prefix = "on";
   }
 
-  // detect available wheel event
-  support = "onwheel" in document.createElement("div") ? "wheel" :
-  // Modern browsers support "wheel"
+  // Detect available wheel event
+  var support = "onwheel" in document.createElement("div") ? "wheel" :
+  // Modern browsers
   document.onmousewheel !== undefined ? "mousewheel" :
-  // Webkit and IE support at least "mousewheel"
-  "DOMMouseScroll"; // let's assume that remaining browsers are older Firefox
+  // Webkit and IE
+  "DOMMouseScroll"; // Older Firefox
 
   window.addWheelListener = function (elem, callback, useCapture) {
+    var _addWheelListener = function _addWheelListener(targetElem, eventName, cb, capture) {
+      targetElem[_addEventListener](prefix + eventName, support === "wheel" ? cb : function (originalEvent) {
+        var event = originalEvent || window.event;
+
+        // Create a normalized event object
+        var normalizedEvent = {
+          originalEvent: event,
+          target: event.target || event.srcElement,
+          type: "wheel",
+          deltaMode: event.type === "MozMousePixelScroll" ? 0 : 1,
+          deltaX: 0,
+          deltaY: 0,
+          deltaZ: 0,
+          preventDefault: function preventDefault() {
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
+          },
+          stopPropagation: function stopPropagation() {
+            event.stopPropagation ? event.stopPropagation() : event.returnValue = false;
+          }
+        };
+
+        // Calculate deltaY (and deltaX)
+        if (support === "mousewheel") {
+          normalizedEvent.deltaY = -1 / 40 * event.wheelDelta;
+          if (event.wheelDeltaX) {
+            normalizedEvent.deltaX = -1 / 40 * event.wheelDeltaX;
+          }
+        } else {
+          normalizedEvent.deltaY = event.detail;
+        }
+        return cb(normalizedEvent);
+      }, capture || false);
+    };
     _addWheelListener(elem, support, callback, useCapture);
 
-    // handle MozMousePixelScroll in older Firefox
-    if (support == "DOMMouseScroll") {
+    // Handle MozMousePixelScroll in older Firefox
+    if (support === "DOMMouseScroll") {
       _addWheelListener(elem, "MozMousePixelScroll", callback, useCapture);
     }
   };
-  function _addWheelListener(elem, eventName, callback, useCapture) {
-    elem[_addEventListener](prefix + eventName, support == "wheel" ? callback : function (originalEvent) {
-      !originalEvent && (originalEvent = window.event);
-
-      // create a normalized event object
-      var event = {
-        // keep a ref to the original event object
-        originalEvent: originalEvent,
-        target: originalEvent.target || originalEvent.srcElement,
-        type: "wheel",
-        deltaMode: originalEvent.type == "MozMousePixelScroll" ? 0 : 1,
-        deltaX: 0,
-        deltaY: 0,
-        deltaZ: 0,
-        preventDefault: function preventDefault() {
-          originalEvent.preventDefault ? originalEvent.preventDefault() : originalEvent.returnValue = false;
-        },
-        stopPropagation: function stopPropagation() {
-          originalEvent.stopPropagation ? originalEvent.stopPropagation() : originalEvent.returnValue = false;
-        }
-      };
-
-      // calculate deltaY (and deltaX) according to the event
-      if (support == "mousewheel") {
-        event.deltaY = -1 / 40 * originalEvent.wheelDelta;
-        // Webkit also support wheelDeltaX
-        originalEvent.wheelDeltaX && (event.deltaX = -1 / 40 * originalEvent.wheelDeltaX);
-      } else {
-        event.deltaY = originalEvent.detail;
-      }
-
-      // it's time to fire the callback
-      return callback(event);
-    }, useCapture || false);
-  }
 })(window, document);
-
-/**
- * Constructor
- * @param {HtmlElement} el
- * @param {Object} opts
- */
-var _Transformable = function Transformable(el, opts) {
-  opts = opts || {};
-  if (el.length) el = el[0];
-  this.options = opts;
-  this.element = el;
-  this.element.classList.add('transformable');
-  this.parent = el.parentNode;
-  this.setInitialSizes();
-  if (opts && opts.matrix) {
-    var cscale = {
-      x: 1,
-      y: 1
-    };
-    if (opts.computedsize && (opts.computedsize.width || opts.computedsize.Width)) {
-      // TO DO: Explain and document this...
-      // we have a size to compare current computed size with
-      // translation is in local pixels, and depends on current size of element in local pixels
-      // if the current computed size is different, the translation will need 
-      // to be scaled so relative size of elements look the same when drawn at some other size
-      var precs = {
-        width: opts.computedsize.width || opts.computedsize.Width,
-        height: opts.computedsize.height || opts.computedsize.Height
+var Transformable = /*#__PURE__*/function () {
+  /**
+   * Constructor
+   * @param {HTMLElement} el
+   * @param {Object} opts
+   */
+  function Transformable(el) {
+    var _opts$attachevents;
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    _classCallCheck(this, Transformable);
+    this.element = el.length ? el[0] : el;
+    this.options = opts;
+    this.element.classList.add('transformable');
+    this.parent = this.element.parentNode;
+    this.setInitialSizes();
+    if (opts.matrix) {
+      var _opts$computedsize, _opts$computedsize2;
+      var cscale = {
+        x: 1,
+        y: 1
       };
-      var curcs = this.sizes.element.initial;
-      cscale.x = curcs.width / precs.width;
-      cscale.y = curcs.height / precs.height;
-    }
-    if (opts.matrix instanceof Array && opts.matrix.length == 6) {
-      opts.matrix[4] *= cscale.x;
-      opts.matrix[5] *= cscale.y;
-      this._setMatrix(new _Matrix_js__WEBPACK_IMPORTED_MODULE_1__["default"](opts.matrix));
-    } else if (opts.matrix instanceof _Matrix_js__WEBPACK_IMPORTED_MODULE_1__["default"]) {
-      opts.matrix.elements[4] *= cscale.x;
-      opts.matrix.elements[5] *= cscale.y;
-      this._setMatrix(opts.matrix);
-    }
-  }
-  this.matrix = this._getMatrix();
-  this.originalTransition = this._getOriginalTransition();
-  this.Ancestry = new _Ancestry_js__WEBPACK_IMPORTED_MODULE_2__["default"](this);
-  this._setOffset();
-  this.Ancestry._setoffset();
-  this.dragging = false; //
-  this.start = null;
-  this.orig = null;
-  this.zooma = 0.001;
-  this.events = {
-    start: opts.start,
-    move: opts.move,
-    stop: opts.stop,
-    tap: opts.tap,
-    transition: opts.transition
-  };
-  this.element.setAttribute('data-transformable-id', _Transformable.Instance.push(this) - 1);
-  if (navigator.userAgent.indexOf('Edge') == -1) this.element.setAttribute('draggable', false);
-  if ((typeof opts.attachevents == 'undefined' || opts.attachevents === true) && opts.editable !== false) {
-    this._addEvents();
-    if (opts.resize) this.createResizeHandles(opts.resize);
-    if (!opts.disable || opts.disable && !opts.disable.rotate) this.createRotateHandles();
-    if (opts.handle && opts.type == 'rotator-box') this._addRotateEvents(opts.handle);
-  }
-};
-/**
- * A store/lookup of all transformable instances.
- * Each transformable element is given a data attribute for its id in this lookup.
- * E.g. data-transformable-id="0"
- */
-_Transformable.Instance = [];
-/**
- * Gets any existing CSS transition that exists on the element.
- * It will be merged with transition changes to preserve existing effects
- */
-_Transformable.prototype._getOriginalTransition = function () {
-  var t = getComputedStyle(this.element)['transition'],
-    sa = t.split(','),
-    r = [];
-  for (var i in sa) {
-    if (sa[i].indexOf('transform ') == -1) r.push(sa[i]);
-  }
-  return r.join(',');
-};
-/**
- * Creates an HTML Element from str 
- * @param {String} str E.g. span, div etc
- */
-_Transformable.prototype.tag = function (str) {
-  var r = document.createElement('div');
-  r.innerHTML = str;
-  return r.firstChild;
-};
-/**
- * Adds rotation handles on to the transformable element and wires up their events
- * @param {String} typ 
- */
-_Transformable.prototype.createRotateHandles = function (typ) {
-  if (!typ || typ == 'rotate') {
-    var box = this.tag('<div class="transformable-rotation-box"></div>'),
-      rot = this.tag('<svg class="transformable-svg-rotator" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 96 96" style="enable-background:new 0 0 96 96;" xml:space="preserve"><g><circle style="fill:#00A8DF;" cx="48.3" cy="48" r="35.3"/><g><path style="fill:#FFFFFF;" d="M35.2,3.8l4.1,28.5c0.2,1.5,2,2.1,3,1l8.2-8.2c0.7-0.7,1.8-0.7,2.5,0l8.8,8.8c7.8,7.8,9.1,20.2,1.2,28.2l-10,10c-0.7,0.7-1.8,0.7-2.5,0L41,62.6c-1-1-2.8-0.4-3,1l-4.1,28.5c-0.2,1.2,0.8,2.2,2,2l28.5-4.1c1.5-0.2,2.1-2,1-3l-8.9-8.9c-0.7-0.7-0.7-1.8,0-2.5l10-10c9.8-9.8,8.5-25.6-1.2-35.2l-8.8-8.8c-0.7-0.7-0.7-1.8,0-2.5L66.7,8.9c1-1,0.4-2.8-1-3L37.2,1.8C36,1.6,35,2.6,35.2,3.8z"/><g style="opacity:0.5;"><path d="M36.9,1.8c0.1,0,0.2,0,0.3,0l28.5,4.1c1.5,0.2,2.1,2,1,3L56.6,19.1c-0.7,0.7-0.7,1.8,0,2.5l8.8,8.8c9.7,9.7,11,25.5,1.2,35.2l-10,10c-0.7,0.7-0.7,1.8,0,2.5l8.9,8.9c1,1,0.4,2.8-1,3l-28.5,4.1c-0.1,0-0.2,0-0.3,0c-1.1,0-1.9-1-1.8-2.1l4.1-28.5c0.1-1,0.9-1.5,1.8-1.5c0.4,0,0.9,0.2,1.3,0.5l9.5,9.5c0.4,0.4,0.8,0.5,1.3,0.5s0.9-0.2,1.3-0.5l10-10c8-8,6.7-20.3-1.2-28.2L53,25.2c-0.4-0.4-0.8-0.5-1.3-0.5s-0.9,0.2-1.3,0.5l-8.2,8.2c-0.4,0.4-0.8,0.5-1.3,0.5c-0.8,0-1.7-0.6-1.8-1.5L35.2,3.8C35,2.7,35.9,1.8,36.9,1.8 M36.9-0.2c-1.1,0-2.1,0.5-2.9,1.3c-0.7,0.8-1,1.9-0.9,3l4.1,28.5c0.3,1.9,1.9,3.3,3.8,3.3c1,0,2-0.4,2.7-1.1l8.1-8.1l8.7,8.7c7.4,7.4,8,18.6,1.2,25.3l-9.8,9.8l-9.3-9.3c-0.7-0.7-1.7-1.1-2.7-1.1c-1.9,0-3.5,1.4-3.8,3.3l-4.1,28.5c-0.2,1.1,0.2,2.2,0.9,3c0.7,0.8,1.8,1.3,2.9,1.3c0.2,0,0.4,0,0.5,0l28.5-4.1c1.4-0.2,2.6-1.2,3.1-2.6c0.5-1.4,0.1-2.9-0.9-3.9l-8.7-8.7l9.8-9.8c10.2-10.2,9.6-27.2-1.2-38.1l-8.7-8.7l10-10c1-1,1.4-2.5,0.9-3.9c-0.5-1.4-1.6-2.4-3.1-2.6L37.5-0.2C37.3-0.2,37.1-0.2,36.9-0.2L36.9-0.2z"/></g></g></g></svg>'),
-      anc = this.tag('<svg class="transformable-svg-anchor" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 96 96" style="enable-background:new 0 0 96 96;" xml:space="preserve"><g><circle style="fill:#00A8DF;" cx="47.6" cy="48.4" r="17.6"/><g><path style="fill:#FFFFFF;" d="M69,46H50V27.2c0-1.4-1.1-2.4-2.5-2.4S45,25.9,45,27.2V46H26.6c-1.4,0-2.4,1.1-2.4,2.5s1.1,2.5,2.4,2.5H45v18.6c0,1.4,1.1,2.4,2.5,2.4s2.5-1.1,2.5-2.4V51h19c1.4,0,2.4-1.1,2.4-2.5S70.3,46,69,46z"/><g style="opacity:0.5;"><path d="M47.5,24.8c1.4,0,2.5,1.1,2.5,2.4V46h19c1.4,0,2.4,1.1,2.4,2.5c0,1.4-1.1,2.5-2.4,2.5H50v18.6c0,1.4-1.1,2.4-2.5,2.4S45,70.9,45,69.6V51H26.6c-1.4,0-2.4-1.1-2.4-2.5c0-1.4,1.1-2.5,2.4-2.5H45V27.2C45,25.9,46.1,24.8,47.5,24.8 M47.5,22.8c-2.5,0-4.5,2-4.5,4.4V44H26.6c-2.5,0-4.4,2-4.4,4.5c0,2.5,2,4.5,4.4,4.5H43v16.6c0,2.5,2,4.4,4.5,4.4s4.5-2,4.5-4.4V53h17c2.5,0,4.4-2,4.4-4.5c0-2.5-2-4.5-4.4-4.5H52V27.2C52,24.8,50,22.8,47.5,22.8L47.5,22.8z"/></g></g></g></svg>'),
-      lin = this.tag('<div class="transformable-rotation-line"></div>'),
-      that = this;
-    box.appendChild(lin);
-    box.appendChild(anc);
-    box.appendChild(rot);
-    box.appendChild(this.tag('<div class="transformable-anchor-point"></div>'));
-    if (this.element.nodeName == 'IMG') this.parent.appendChild(box);else this.element.appendChild(box);
-
-    // stops clicks from parent elements, can't cancel clicks in a mouseup
-    box.addEventListener('click', function (e) {
-      e.stopPropagation();
-      return false;
-    });
-    this.rotatorBox = new _Transformable(box, {
-      type: 'rotator-box',
-      rotatetarget: this,
-      handle: rot,
-      disable: {
-        zoom: true,
-        rotate: true,
-        resize: true
+      if ((_opts$computedsize = opts.computedsize) !== null && _opts$computedsize !== void 0 && _opts$computedsize.width || (_opts$computedsize2 = opts.computedsize) !== null && _opts$computedsize2 !== void 0 && _opts$computedsize2.Width) {
+        var precs = {
+          width: opts.computedsize.width || opts.computedsize.Width,
+          height: opts.computedsize.height || opts.computedsize.Height
+        };
+        var curcs = this.sizes.element.initial;
+        cscale.x = curcs.width / precs.width;
+        cscale.y = curcs.height / precs.height;
       }
-    });
-    var _domouseup = function _domouseup() {
-        if (that.rotatorBox) if (that.rotatorBox.parent) that.rotatorBox.parent.classList.remove('transformable-mousedown');
-        var body = document.querySelector('body');
-        that.off(body, 'mouseup.rotatormouse');
-      },
-      _domousedown = function _domousedown() {
-        this.classList.add('transformable-mousedown');
-        var body = document.querySelector('body');
-        that.on(body, 'mouseup.rotatormouse', _domouseup);
-      },
-      _domouseleave = function _domouseleave() {
-        if (that._overTimer) clearTimeout(that._overTimer);
+      if (Array.isArray(opts.matrix) && opts.matrix.length === 6) {
+        opts.matrix[4] *= cscale.x;
+        opts.matrix[5] *= cscale.y;
+        this._setMatrix(new _Matrix_js__WEBPACK_IMPORTED_MODULE_1__["default"](opts.matrix));
+      } else if (opts.matrix instanceof _Matrix_js__WEBPACK_IMPORTED_MODULE_1__["default"]) {
+        opts.matrix.elements[4] *= cscale.x;
+        opts.matrix.elements[5] *= cscale.y;
+        this._setMatrix(opts.matrix);
+      }
+    }
+    this.matrix = this._getMatrix();
+    this.originalTransition = this._getOriginalTransition();
+    this.Ancestry = new _Ancestry_js__WEBPACK_IMPORTED_MODULE_2__["default"](this);
+    this._setOffset();
+    this.Ancestry._setoffset();
+    this.dragging = false;
+    this.start = null;
+    this.orig = null;
+    this.zooma = 0.001;
+    this.events = {
+      start: opts.start,
+      move: opts.move,
+      stop: opts.stop,
+      tap: opts.tap,
+      transition: opts.transition
+    };
+    this.element.setAttribute('data-transformable-id', Transformable.Instance.push(this) - 1);
+    if (!navigator.userAgent.includes('Edge')) {
+      this.element.setAttribute('draggable', 'false');
+    }
+    if (((_opts$attachevents = opts.attachevents) !== null && _opts$attachevents !== void 0 ? _opts$attachevents : true) && opts.editable !== false) {
+      var _opts$disable;
+      this._addEvents();
+      if (opts.resize) this.createResizeHandles(opts.resize);
+      if (!((_opts$disable = opts.disable) !== null && _opts$disable !== void 0 && _opts$disable.rotate)) this.createRotateHandles();
+      if (opts.handle && opts.type === 'rotator-box') this._addRotateEvents(opts.handle);
+    }
+  }
 
-        //var rb;
-        //if (rb = that.rotatorBox) {
-        //    rb.translate(8000, 0, false);
-        //}
-        that._resizeTimer = setTimeout(function () {
-          that.element.classList.remove('transformable-resize-over');
+  /**
+   * Gets any existing CSS transition that exists on the element.
+   * It will be merged with transition changes to preserve existing effects
+   */
+  return _createClass(Transformable, [{
+    key: "_getOriginalTransition",
+    value: function _getOriginalTransition() {
+      var t = getComputedStyle(this.element).transition;
+      if (!t) return '';
+      return t.split(',').filter(function (part) {
+        return !part.trim().startsWith('transform');
+      }).join(',');
+    }
+
+    /**
+     * Creates an HTML Element from a string.
+     * @param {String} str E.g. span, div etc
+     */
+  }, {
+    key: "tag",
+    value: function tag(str) {
+      var r = document.createElement('div');
+      r.innerHTML = str;
+      return r.firstChild;
+    }
+
+    /**
+     * Adds rotation handles on to the transformable element and wires up their events
+     * @param {String} typ 
+     */
+  }, {
+    key: "createRotateHandles",
+    value: function createRotateHandles(typ) {
+      var _this = this;
+      if (typ && typ !== 'rotate') return;
+      var box = this.tag('<div class="transformable-rotation-box"></div>');
+      var rot = this.tag('<svg class="transformable-svg-rotator" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 96 96" style="enable-background:new 0 0 96 96;" xml:space="preserve"><g><circle style="fill:#00A8DF;" cx="48.3" cy="48" r="35.3"/><g><path style="fill:#FFFFFF;" d="M35.2,3.8l4.1,28.5c0.2,1.5,2,2.1,3,1l8.2-8.2c0.7-0.7,1.8-0.7,2.5,0l8.8,8.8c7.8,7.8,9.1,20.2,1.2,28.2l-10,10c-0.7,0.7-1.8,0.7-2.5,0L41,62.6c-1-1-2.8-0.4-3,1l-4.1,28.5c-0.2,1.2,0.8,2.2,2,2l28.5-4.1c1.5-0.2,2.1-2,1-3l-8.9-8.9c-0.7-0.7-0.7-1.8,0-2.5l10-10c9.8-9.8,8.5-25.6-1.2-35.2l-8.8-8.8c-0.7-0.7-0.7-1.8,0-2.5L66.7,8.9c1-1,0.4-2.8-1-3L37.2,1.8C36,1.6,35,2.6,35.2,3.8z"/><g style="opacity:0.5;"><path d="M36.9,1.8c0.1,0,0.2,0,0.3,0l28.5,4.1c1.5,0.2,2.1,2,1,3L56.6,19.1c-0.7,0.7-0.7,1.8,0,2.5l8.8,8.8c9.7,9.7,11,25.5,1.2,35.2l-10,10c-0.7,0.7-0.7,1.8,0,2.5l8.9,8.9c1,1,0.4,2.8-1,3l-28.5,4.1c-0.1,0-0.2,0-0.3,0c-1.1,0-1.9-1-1.8-2.1l4.1-28.5c0.1-1,0.9-1.5,1.8-1.5c0.4,0,0.9,0.2,1.3,0.5l9.5,9.5c0.4,0.4,0.8,0.5,1.3,0.5s0.9-0.2,1.3-0.5l10-10c8-8,6.7-20.3-1.2-28.2L53,25.2c-0.4-0.4-0.8-0.5-1.3-0.5s-0.9,0.2-1.3,0.5l-8.2,8.2c-0.4,0.4-0.8,0.5-1.3,0.5c-0.8,0-1.7-0.6-1.8-1.5L35.2,3.8C35,2.7,35.9,1.8,36.9,1.8 M36.9-0.2c-1.1,0-2.1,0.5-2.9,1.3c-0.7,0.8-1,1.9-0.9,3l4.1,28.5c0.3,1.9,1.9,3.3,3.8,3.3c1,0,2-0.4,2.7-1.1l8.1-8.1l8.7,8.7c7.4,7.4,8,18.6,1.2,25.3l-9.8,9.8l-9.3-9.3c-0.7-0.7-1.7-1.1-2.7-1.1c-1.9,0-3.5,1.4-3.8,3.3l-4.1,28.5c-0.2,1.1,0.2,2.2,0.9,3c0.7,0.8,1.8,1.3,2.9,1.3c0.2,0,0.4,0,0.5,0l28.5-4.1c1.4-0.2,2.6-1.2,3.1-2.6c0.5-1.4,0.1-2.9-0.9-3.9l-8.7-8.7l9.8-9.8c10.2-10.2,9.6-27.2-1.2-38.1l-8.7-8.7l10-10c1-1,1.4-2.5,0.9-3.9c-0.5-1.4-1.6-2.4-3.1-2.6L37.5-0.2C37.3-0.2,37.1-0.2,36.9-0.2L36.9-0.2z"/></g></g></g></svg>');
+      var anc = this.tag('<svg class="transformable-svg-anchor" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 96 96" style="enable-background:new 0 0 96 96;" xml:space="preserve"><g><circle style="fill:#00A8DF;" cx="47.6" cy="48.4" r="17.6"/><g><path style="fill:#FFFFFF;" d="M69,46H50V27.2c0-1.4-1.1-2.4-2.5-2.4S45,25.9,45,27.2V46H26.6c-1.4,0-2.4,1.1-2.4,2.5s1.1,2.5,2.4,2.5H45v18.6c0,1.4,1.1,2.4,2.5,2.4s2.5-1.1,2.5-2.4V51h19c1.4,0,2.4-1.1,2.4-2.5S70.3,46,69,46z"/><g style="opacity:0.5;"><path d="M47.5,24.8c1.4,0,2.5,1.1,2.5,2.4V46h19c1.4,0,2.4,1.1,2.4,2.5c0,1.4-1.1,2.5-2.4,2.5H50v18.6c0,1.4-1.1,2.4-2.5,2.4S45,70.9,45,69.6V51H26.6c-1.4,0-2.4-1.1-2.4-2.5c0-1.4,1.1-2.5,2.4-2.5H45V27.2C45,25.9,46.1,24.8,47.5,24.8 M47.5,22.8c-2.5,0-4.5,2-4.5,4.4V44H26.6c-2.5,0-4.4,2-4.4,4.5c0,2.5,2,4.5,4.4,4.5H43v16.6c0,2.5,2,4.4,4.5,4.4s4.5-2,4.5-4.4V53h17c2.5,0,4.4-2,4.4-4.5c0-2.5-2-4.5-4.4-4.5H52V27.2C52,24.8,50,22.8,47.5,22.8L47.5,22.8z"/></g></g></g></svg>');
+      var lin = this.tag('<div class="transformable-rotation-line"></div>');
+      box.append(lin, anc, rot, this.tag('<div class="transformable-anchor-point"></div>'));
+      if (this.element.nodeName === 'IMG') {
+        this.parent.appendChild(box);
+      } else {
+        this.element.appendChild(box);
+      }
+      box.addEventListener('click', function (e) {
+        e.stopPropagation();
+        return false;
+      });
+      this.rotatorBox = new Transformable(box, {
+        type: 'rotator-box',
+        rotatetarget: this,
+        handle: rot,
+        disable: {
+          zoom: true,
+          rotate: true,
+          resize: true
+        }
+      });
+      var _domouseup = function _domouseup() {
+        var _this$rotatorBox;
+        if ((_this$rotatorBox = _this.rotatorBox) !== null && _this$rotatorBox !== void 0 && _this$rotatorBox.parent) {
+          _this.rotatorBox.parent.classList.remove('transformable-mousedown');
+        }
+        _this.off(document.body, 'mouseup.rotatormouse');
+      };
+      var _domousedown = function _domousedown() {
+        _this.rotatorBox.parent.classList.add('transformable-mousedown');
+        _this.on(document.body, 'mouseup.rotatormouse', _domouseup);
+      };
+      var _domouseleave = function _domouseleave(e) {
+        if (_this._overTimer) clearTimeout(_this._overTimer);
+        _this._resizeTimer = setTimeout(function () {
+          _this.element.classList.remove('transformable-resize-over');
         }, 500);
-        this.classList.remove('transformable-over-active');
-        this.classList.remove('transformable-over');
-      },
-      _domouseenter = function _domouseenter(tim) {
+        e.currentTarget.classList.remove('transformable-over-active', 'transformable-over');
+      };
+      var _domouseenter = function _domouseenter(tim) {
         if (tim.stopPropagation) tim.stopPropagation();
-        if (that._resizeTimer) clearTimeout(that._resizeTimer);
-        this.classList.add('transformable-over');
-        this.classList.add('transformable-resize-over');
-        that.Ancestry.Items.forEach(function (v, i) {
+        if (_this._resizeTimer) clearTimeout(_this._resizeTimer);
+        var target = _this.rotatorBox.parent;
+        target.classList.add('transformable-over', 'transformable-resize-over');
+        _this.Ancestry.Items.forEach(function (v) {
           if (v._overTimer) clearTimeout(v._overTimer);
         });
-        that._overTimer = setTimeout(function () {
-          var rb = that.rotatorBox,
-            anc = rb.Ancestry,
-            pt = anc.FirstParent(),
-            ds = 1;
-          /*
-           * trying to scale the handles displayed inside the transformable element
-           * so they dont look huge when a parent element is scaled 
-           * abandoned - not really working as I wanted
-           * 
-          if (pt)
-              ds = 1 / pt.matrix.scaling();
-            if (rb) {
-              var tsc = rb.matrix.scaling(); 
-              if (rb.dragging || rb.draggingrotate)
-                  return;
-                rb.scale(new Point(0), ds * (1/tsc), false);
+        _this._overTimer = setTimeout(function () {
+          var rb = _this.rotatorBox;
+          if (parseFloat(getComputedStyle(rb.element).width) >= 32) {
+            rb.parent.classList.add('transformable-over-active');
           }
-          if (tlb && brb)
-          {
-              tlb.style.transform = 'scale(' + ds + ')';
-              brb.style.transform = 'scale(' + ds + ')';
-          }
-          */
-          if (parseFloat(getComputedStyle(rb.element).width) >= 32) rb.parent.classList.add('transformable-over-active');
-          var l = anc.Items.length;
-          anc.Items.forEach(function (v, i) {
+          var l = _this.Ancestry.Items.length;
+          _this.Ancestry.Items.forEach(function (v, i) {
             if (i < l - 2) {
               v.element.classList.remove('transformable-over-active');
             }
           });
-        }, typeof tim == 'number' ? tim : 1500);
+        }, typeof tim === 'number' ? tim : 1500);
       };
-    var rotparent = this.rotatorBox.parent;
-    this.on(rotparent, 'mouseenter.rotatormouse', _domouseenter);
-    this.on(rotparent, 'mouseleave.rotatormouse', _domouseleave);
-    this.on(rotparent, 'mousedown.rotatormouse', _domousedown);
-    this.on(rotparent, 'click.rotatormouse', function () {
-      _domouseenter.apply(this, [0]);
-    });
-  }
-};
-/**
- * Creates resize handles on the transformable element and wires up their events
- * @param {String} typ
- */
-_Transformable.prototype.createResizeHandles = function (typ) {
-  // hard coded svg elements. Sorry
-  if (typ == 'tl-br') {
-    var tl = this.tag('<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-271 394.9 52 52" style="enable-background:new -271 394.9 52 52;" xml:space="preserve"><g><path style="fill:#00A8DF;" d="M-244.9,421L-244.9,421L-244.9,421L-244.9,421L-244.9,421l26,0.1c0-10.8-6.1-20-16-24.1 c-10-4.1-20.8-2-28.4,5.7c-7.6,7.6-9.7,18.5-5.6,28.4c4.2,10,13.4,16,24.2,15.9L-244.9,421z"/><path style="fill:none;stroke:#FFFFFF;stroke-width:3;" d="M-251.6,414.3"/><path style="fill:none;stroke:#FFFFFF;stroke-width:3;" d="M-236.6,414.3"/></g><g><path style="fill:#FFFFFF;" d="M-227,419.5l-7.6-4.4c-1.1-0.6-2.4,0.2-2.4,1.4v1.9h-5.6v-5.5h2c1.2,0,2-1.3,1.4-2.4l-4.4-7.6 c-0.6-1.1-2.1-1.1-2.7,0l-4.4,7.6c-0.6,1.1,0.2,2.4,1.4,2.4h2v5.5h-5.6v-1.9c0-1.2-1.3-2-2.4-1.4l-7.6,4.4c-1.1,0.6-1.1,2.1,0,2.7 l7.6,4.4c1.1,0.6,2.4-0.2,2.4-1.4v-2h5.6v5.6h-2c-1.2,0-2,1.3-1.4,2.4l4.4,7.6c0.6,1.1,2.1,1.1,2.7,0l4.4-7.6 c0.6-1.1-0.2-2.4-1.4-2.4h-2v-5.6h5.6v2c0,1.2,1.3,2,2.4,1.4l7.6-4.4C-225.9,421.7-225.9,420.1-227,419.5z"/><path style="opacity:0.5;fill:#231F20;" d="M-245,402.1c0.5,0,1.1,0.3,1.4,0.8l4.4,7.6c0.6,1.1-0.2,2.4-1.4,2.4h-2v5.5h5.6v-1.9 c0-0.9,0.8-1.6,1.6-1.6c0.3,0,0.5,0.1,0.8,0.2l7.6,4.4c1.1,0.6,1.1,2.1,0,2.7l-7.6,4.4c-0.3,0.1-0.5,0.2-0.8,0.2 c-0.8,0-1.6-0.7-1.6-1.6v-2h-5.6v5.6h2c1.2,0,2,1.3,1.4,2.4l-4.4,7.6c-0.3,0.5-0.8,0.8-1.4,0.8c-0.5,0-1.1-0.3-1.4-0.8l-4.4-7.6 c-0.6-1.1,0.2-2.4,1.4-2.4h2v-5.6h-5.6v2c0,0.9-0.8,1.6-1.6,1.6c-0.3,0-0.5-0.1-0.8-0.2l-7.6-4.4c-1.1-0.6-1.1-2.1,0-2.7l7.6-4.4 c0.3-0.1,0.5-0.2,0.8-0.2c0.8,0,1.6,0.7,1.6,1.6v1.9h5.6v-5.5h-2c-1.2,0-2-1.3-1.4-2.4l4.4-7.6C-246.1,402.3-245.5,402.1-245,402.1 M-245,400.6c-1.1,0-2.1,0.6-2.6,1.5l-4.4,7.6c-0.5,0.9-0.5,2.1,0,3c0.5,0.9,1.5,1.5,2.6,1.5h0.5v2.7h-2.7v-0.5c0-1.7-1.4-3-3-3 c-0.5,0-1,0.1-1.5,0.4l-7.6,4.4c-0.9,0.5-1.5,1.5-1.5,2.6c0,1.1,0.6,2.1,1.5,2.6l7.6,4.4c0.5,0.3,1,0.4,1.5,0.4c1.7,0,3-1.4,3-3	v-0.6h2.7v2.8h-0.5c-1.1,0-2.1,0.6-2.6,1.5c-0.5,0.9-0.5,2.1,0,3l4.4,7.6c0.5,0.9,1.5,1.5,2.6,1.5c1.1,0,2.1-0.6,2.6-1.5l4.4-7.6 c0.5-0.9,0.5-2.1,0-3c-0.5-0.9-1.5-1.5-2.6-1.5h-0.5v-2.8h2.7v0.6c0,1.7,1.4,3,3,3c0.5,0,1-0.1,1.5-0.4l7.6-4.4	c0.9-0.5,1.5-1.5,1.5-2.6c0-1.1-0.6-2.1-1.5-2.6l-7.6-4.4c-0.5-0.3-1-0.4-1.5-0.4c-1.7,0-3,1.4-3,3v0.5h-2.7v-2.7h0.5	c1.1,0,2.1-0.6,2.6-1.5c0.5-0.9,0.5-2.1,0-3l-4.4-7.6C-242.9,401.2-243.9,400.6-245,400.6L-245,400.6z"/></g></svg>'),
-      br = this.tag('<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-271 394.9 52 52" style="enable-background:new -271 394.9 52 52;" xml:space="preserve"><g><path style="fill:#00A8DF;" d="M-245,420.9L-245,420.9L-245,420.9L-245,420.9L-245,420.9l-26-0.1c0,10.8,6.1,20,16,24.1 c10,4.1,20.8,2,28.4-5.7c7.6-7.6,9.7-18.5,5.6-28.4c-4.2-10-13.4-16-24.2-15.9L-245,420.9z"/></g><g><path style="fill:#FFFFFF;" d="M-245.8,423l-2.5-2.5l-2.1,2.1c-0.9,0.9-2.3,0.5-2.6-0.7l-1.6-9.2c-0.3-1.2,0.8-2.3,1.9-1.9l9.2,1.6 c1.2,0.3,1.6,1.8,0.7,2.6l-2.1,2.1l2.5,2.5l2.7,2.7l-1-1l2.1-2.1c0.9-0.9,2.3-0.5,2.6,0.7l1.6,9.2c0.3,1.2-0.8,2.3-1.9,1.9 l-9.2-1.6c-1.2-0.3-1.6-1.8-0.7-2.6l2.1-2.1l-3.2-3.2L-245.8,423z"/><path style="opacity:0.5;fill:#231F20;" d="M-239.6,422.3l-1-1l2.1-2.1c0.7-0.7,1.7-0.6,2.2,0c0.2,0.2,0.3,0.4,0.4,0.7l1.6,9.2 c0.3,1.2-0.8,2.3-1.9,1.9l-9.2-1.6c-0.3-0.1-0.5-0.2-0.7-0.4c-0.6-0.6-0.7-1.6,0-2.2l2.1-2.1l-3.2-3.2l1.5,1.5l-2.5-2.5l-2.1,2.1 c-0.7,0.7-1.7,0.6-2.2,0c-0.2-0.2-0.3-0.4-0.4-0.7l-1.6-9.2c-0.3-1.2,0.8-2.3,1.9-1.9l9.2,1.6c0.3,0.1,0.5,0.2,0.7,0.4 c0.6,0.6,0.7,1.6,0,2.2l-2.1,2.1l2.5,2.5L-239.6,422.3z M-242.3,417.5l-0.5-0.5l1-1c1.2-1.2,1.2-3.1,0-4.3 c-0.4-0.4-0.8-0.6-1.4-0.8l-9.2-1.6c-1.1-0.3-2.1,0-2.9,0.8c-0.8,0.8-1.1,1.9-0.8,2.9l1.6,9.2c0.1,0.5,0.4,1,0.8,1.4 c1.2,1.2,3.1,1.2,4.3,0l1.1-1.1l0.5,0.5l0.5,0.5l1.2,1.2l-1.1,1.1c-1.2,1.2-1.2,3.1,0,4.3c0.4,0.4,0.8,0.6,1.4,0.8l9.2,1.6 c1.1,0.3,2.1,0,2.9-0.8c0.8-0.8,1.1-1.9,0.8-2.9l-1.6-9.2c-0.1-0.5-0.4-1-0.8-1.4c-1.2-1.2-3.1-1.2-4.3,0l-1,1l-1.2-1.2"/></g></svg>');
-    var tlb = this.tag('<div class="transformable-resize-button"></div>'),
-      brb = tlb.cloneNode();
-    tlb.classList.add('tl');
-    tlb.appendChild(tl);
-    brb.classList.add('br');
-    brb.appendChild(br);
-    this.resizertl = tlb;
-    this.resizerbr = brb;
-    this.element.appendChild(tlb);
-    this.element.appendChild(brb);
-    this._addResizeEvents(tlb, brb);
-  }
-};
-/**
- * Zooms the element centred on the middle of the parent element in increments of 5%.
- * @param {Number} dir positive numbers make it bigger, negative make it smaller
- */
-_Transformable.prototype.zoom = function (dir) {
-  var offset = this.Ancestry.OffsetFromPoint(this._findCentreInWindow());
-  this.scale(offset, 1 + dir * 0.05);
-  return this;
-};
-/**
- * Scales the transformable element at point p by s amount
- * @param {Point} p Origin for the transform on the element
- * @param {any} s scale amount
- */
-_Transformable.prototype.scale = function (p, s) {
-  this.matrix.scale(p, s);
-  this.setTransition(true);
-  this._updateElement();
-  //this.trigger('stop');
-  return this;
-};
-/**
- * Translates the element by x and y. Uses element pixels before any transform. Not window/screen pixels.
- * @param {Number} x Pixels horizontal
- * @param {Number} y Pixels vertical
- * @param {Boolean} transition Use a transition
- */
-_Transformable.prototype.translate = function (x, y, transition) {
-  this.matrix.translate(x, y);
-  this.setTransition(transition);
-  this._updateElement();
-  return this;
-};
-/**
- * Rotates the element about point p. Or about the centre of the element if p is not supplied. 
- * If inwindow==true, you can supply a Point in the window coordinate space and have the element rotate about that.
- * @param {Point} p The origin of the rotation in pixels on the element. When inwindow == false or undefined
- * @param {Number} a Angle in degrees
- * @param {Boolean} trans Optional: Specify if a transition should be used
- * @param {Boolean} inwindow Optional: If true, p should be treated like a window coordinate. 
- */
-_Transformable.prototype.rotate = function (p, a, trans, inwindow) {
-  if (!(p instanceof _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"]) || !p || typeof p == 'undefined') p = this.Ancestry.OffsetFromPoint(this._findCentreInWindow());
-  if (p instanceof _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"] && inwindow) p = this.Ancestry.OffsetFromPoint(p);
-  this.matrix.rotate(p, a);
-  this.lastrotationpoint = p;
-  if (typeof trans == 'undefined' || trans === false) this.setTransition(false);
-  this._updateElement();
-  return this;
-};
-/**
- * Makes a rotated element horizontal.
- */
-_Transformable.prototype.straighten = function () {
-  var r = this.matrix.rotation();
-  this.rotate(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this.sizes.element.initial.width / 2, this.sizes.element.initial.height / 2), -r, true);
-  return this;
-};
-/**
- * Scales the element to make the element's height or width match that of the parent element. Centres it and straightens out any rotation. 
- */
-_Transformable.prototype.fittoparent = function () {
-  var sz = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this.sizes.element.initial.width, this.sizes.element.initial.height),
-    anc = this.Ancestry,
-    pars = anc.GetParents(),
-    parentT = anc.FirstParent(),
-    pr = parentT.rect,
-    m = this.matrix.inverse(),
-    tl = m.transformpoint(pr.topleft),
-    tr = m.transformpoint(pr.topright),
-    bl = m.transformpoint(pr.bottomleft),
-    br = m.transformpoint(pr.bottomright),
-    psiz = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this._distanceBetweenPoints(tl, tr), this._distanceBetweenPoints(tl, bl));
-  var sc = psiz.divide(sz),
-    scale = Math.min(sc.x, sc.y);
-  this.scale(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0, 0), scale);
-  this.centreinparent(true, pars);
-  this.straighten();
-  return this;
-};
-/**
- * Scales the element so its width and height is equal or greater than the parent element. 
- * Basically so you can't see any background in the parent element. Also centres and straightens it.
- */
-_Transformable.prototype.filltoparent = function () {
-  var sz = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this.sizes.element.initial.width, this.sizes.element.initial.height),
-    anc = this.Ancestry,
-    pars = anc.GetParents(),
-    parentT = anc.FirstParent(),
-    pr = parentT.rect,
-    m = this.matrix.inverse(),
-    tl = m.transformpoint(pr.topleft),
-    tr = m.transformpoint(pr.topright),
-    bl = m.transformpoint(pr.bottomleft),
-    br = m.transformpoint(pr.bottomright),
-    psiz = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this._distanceBetweenPoints(tl, tr), this._distanceBetweenPoints(tl, bl));
-  var sc = psiz.divide(sz),
-    scale = Math.max(sc.x, sc.y);
-  this.scale(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0, 0), scale);
-  this.centreinparent(true, pars);
-  this.straighten();
-  return this;
-};
-/**
- * Gets the boundingClientRect for supplied element.
- * @param {HtmlElement} el
- */
-_Transformable.prototype._getRect = function (el) {
-  return el.getBoundingClientRect();
-};
-/**
- * Resets the transformation to its starting value. Undoing all changes since instantiation.
- * @param {Boolean} trans Specify if a transition should be used
- */
-_Transformable.prototype.reset = function (trans) {
-  if (!this.InitialMatrix) this.matrix.reset();else this.matrix.elements = this.InitialMatrix.slice(0);
-
-  // unsupported!
-  //this.off(this.element, 'transitionstart.reset');
-
-  this.setTransition(typeof trans == 'undefined' ? true : trans);
-  if (this.transition) {
-    var that = this;
-    if (this.delta && (this.delta.x || this.delta.y)) {
-      // has moved so will transition
-      this.element.classList.add('transformable-reset');
-      this.on(this.element, 'transitionend.reset', function () {
-        this.classList.remove('transformable-reset');
-        that.off(this, 'transitionend.reset');
+      var rotparent = this.rotatorBox.parent;
+      this.on(rotparent, 'mouseenter.rotatormouse', _domouseenter);
+      this.on(rotparent, 'mouseleave.rotatormouse', _domouseleave);
+      this.on(rotparent, 'mousedown.rotatormouse', _domousedown);
+      this.on(rotparent, 'click.rotatormouse', function () {
+        return _domouseenter.call(rotparent, 0);
       });
     }
-    // unsupported !
-    //this.on(this.element, 'transitionstart.reset', function () {
-    //    this.classList.add('transformable-reset');
-    //    that.off(this, 'transitionstart.reset');
-    //});
-  }
-  this._updateElement();
-  return this;
-};
-/**
- * Returns true if the undo stack contains a saved state named k
- * @param {String} k
- */
-_Transformable.prototype.hasHistoryKey = function (k) {
-  return this.matrix.history.undo[k] instanceof Array;
-};
-/**
- * Undo the last transformation or go back to a named state.
- * @param {String} k Optional: the name of a saved state to go back to
- */
-_Transformable.prototype.undo = function (k) {
-  this.matrix.undo(k);
-  this.setTransition(true);
-  this._updateElement();
-  return this;
-};
 
-/**
- * Redo the last thing that was undone.
- */
-_Transformable.prototype.redo = function () {
-  this.matrix.redo();
-  this.setTransition(true);
-  this._updateElement();
-  return this;
-};
+    /**
+     * Creates resize handles on the transformable element and wires up their events
+     * @param {String} typ
+     */
+  }, {
+    key: "createResizeHandles",
+    value: function createResizeHandles(typ) {
+      if (typ !== 'tl-br') return;
+      var tl_svg = this.tag('<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-271 394.9 52 52" style="enable-background:new -271 394.9 52 52;" xml:space="preserve"><g><path style="fill:#00A8DF;" d="M-244.9,421L-244.9,421L-244.9,421L-244.9,421L-244.9,421l26,0.1c0-10.8-6.1-20-16-24.1 c-10-4.1-20.8-2-28.4,5.7c-7.6,7.6-9.7,18.5-5.6,28.4c4.2,10,13.4,16,24.2,15.9L-244.9,421z"/><path style="fill:none;stroke:#FFFFFF;stroke-width:3;" d="M-251.6,414.3"/><path style="fill:none;stroke:#FFFFFF;stroke-width:3;" d="M-236.6,414.3"/></g><g><path style="fill:#FFFFFF;" d="M-227,419.5l-7.6-4.4c-1.1-0.6-2.4,0.2-2.4,1.4v1.9h-5.6v-5.5h2c1.2,0,2-1.3,1.4-2.4l-4.4-7.6 c-0.6-1.1-2.1-1.1-2.7,0l-4.4,7.6c-0.6,1.1,0.2,2.4,1.4,2.4h2v5.5h-5.6v-1.9c0-1.2-1.3-2-2.4-1.4l-7.6,4.4c-1.1,0.6-1.1,2.1,0,2.7 l7.6,4.4c1.1,0.6,2.4-0.2,2.4-1.4v-2h5.6v5.6h-2c-1.2,0-2,1.3-1.4,2.4l4.4,7.6c0.6,1.1,2.1,1.1,2.7,0l4.4-7.6 c0.6-1.1-0.2-2.4-1.4-2.4h-2v-5.6h5.6v2c0,1.2,1.3,2,2.4,1.4l7.6-4.4C-225.9,421.7-225.9,420.1-227,419.5z"/><path style="opacity:0.5;fill:#231F20;" d="M-245,402.1c0.5,0,1.1,0.3,1.4,0.8l4.4,7.6c0.6,1.1-0.2,2.4-1.4,2.4h-2v5.5h5.6v-1.9 c0-0.9,0.8-1.6,1.6-1.6c0.3,0,0.5,0.1,0.8,0.2l7.6,4.4c1.1,0.6,1.1,2.1,0,2.7l-7.6,4.4c-0.3,0.1-0.5,0.2-0.8,0.2 c-0.8,0-1.6-0.7-1.6-1.6v-2h-5.6v5.6h2c1.2,0,2,1.3,1.4,2.4l-4.4,7.6c-0.3,0.5-0.8,0.8-1.4,0.8c-0.5,0-1.1-0.3-1.4-0.8l-4.4-7.6 c-0.6-1.1,0.2-2.4,1.4-2.4h2v-5.6h-5.6v2c0,0.9-0.8,1.6-1.6,1.6c-0.3,0-0.5-0.1-0.8-0.2l-7.6-4.4c-1.1-0.6-1.1-2.1,0-2.7l7.6-4.4 c0.3-0.1,0.5-0.2,0.8-0.2c0.8,0,1.6,0.7,1.6,1.6v1.9h5.6v-5.5h-2c-1.2,0-2-1.3-1.4-2.4l4.4-7.6C-246.1,402.3-245.5,402.1-245,402.1 M-245,400.6c-1.1,0-2.1,0.6-2.6,1.5l-4.4,7.6c-0.5,0.9-0.5,2.1,0,3c0.5,0.9,1.5,1.5,2.6,1.5h0.5v2.7h-2.7v-0.5c0-1.7-1.4-3-3-3 c-0.5,0-1,0.1-1.5,0.4l-7.6,4.4c-0.9,0.5-1.5,1.5-1.5,2.6c0,1.1,0.6,2.1,1.5,2.6l7.6,4.4c0.5,0.3,1,0.4,1.5,0.4c1.7,0,3-1.4,3-3	v-0.6h2.7v2.8h-0.5c-1.1,0-2.1,0.6-2.6,1.5c-0.5,0.9-0.5,2.1,0,3l4.4,7.6c0.5,0.9,1.5,1.5,2.6,1.5c1.1,0,2.1-0.6,2.6-1.5l4.4-7.6 c0.5-0.9,0.5-2.1,0-3c-0.5-0.9-1.5-1.5-2.6-1.5h-0.5v-2.8h2.7v0.6c0,1.7,1.4,3,3,3c0.5,0,1-0.1,1.5-0.4l7.6-4.4	c0.9-0.5,1.5-1.5,1.5-2.6c0-1.1-0.6-2.1-1.5-2.6l-7.6-4.4c-0.5-0.3-1-0.4-1.5-0.4c-1.7,0-3,1.4-3,3v0.5h-2.7v-2.7h0.5	c1.1,0,2.1-0.6,2.6-1.5c0.5-0.9,0.5-2.1,0-3l-4.4-7.6C-242.9,401.2-243.9,400.6-245,400.6L-245,400.6z"/></g></svg>');
+      var br_svg = this.tag('<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-271 394.9 52 52" style="enable-background:new -271 394.9 52 52;" xml:space="preserve"><g><path style="fill:#00A8DF;" d="M-245,420.9L-245,420.9L-245,420.9L-245,420.9L-245,420.9l-26-0.1c0,10.8,6.1,20,16,24.1 c10,4.1,20.8,2,28.4-5.7c7.6-7.6,9.7-18.5,5.6-28.4c-4.2-10-13.4-16-24.2-15.9L-245,420.9z"/></g><g><path style="fill:#FFFFFF;" d="M-245.8,423l-2.5-2.5l-2.1,2.1c-0.9,0.9-2.3,0.5-2.6-0.7l-1.6-9.2c-0.3-1.2,0.8-2.3,1.9-1.9l9.2,1.6 c1.2,0.3,1.6,1.8,0.7,2.6l-2.1,2.1l2.5,2.5l2.7,2.7l-1-1l2.1-2.1c0.9-0.9,2.3-0.5,2.6,0.7l1.6,9.2c0.3,1.2-0.8,2.3-1.9,1.9 l-9.2-1.6c-1.2-0.3-1.6-1.8-0.7-2.6l2.1-2.1l-3.2-3.2L-245.8,423z"/><path style="opacity:0.5;fill:#231F20;" d="M-239.6,422.3l-1-1l2.1-2.1c0.7-0.7,1.7-0.6,2.2,0c0.2,0.2,0.3,0.4,0.4,0.7l1.6,9.2 c0.3,1.2-0.8,2.3-1.9,1.9l-9.2-1.6c-0.3-0.1-0.5-0.2-0.7-0.4c-0.6-0.6-0.7-1.6,0-2.2l2.1-2.1l-3.2-3.2l1.5,1.5l-2.5-2.5l-2.1,2.1 c-0.7,0.7-1.7,0.6-2.2,0c-0.2-0.2-0.3-0.4-0.4-0.7l-1.6-9.2c-0.3-1.2,0.8-2.3,1.9-1.9l9.2,1.6c0.3,0.1,0.5,0.2,0.7,0.4 c0.6,0.6,0.7,1.6,0,2.2l-2.1,2.1l2.5,2.5L-239.6,422.3z M-242.3,417.5l-0.5-0.5l1-1c1.2-1.2,1.2-3.1,0-4.3 c-0.4-0.4-0.8-0.6-1.4-0.8l-9.2-1.6c-1.1-0.3-2.1,0-2.9,0.8c-0.8,0.8-1.1,1.9-0.8,2.9l1.6,9.2c0.1,0.5,0.4,1,0.8,1.4 c1.2,1.2,3.1,1.2,4.3,0l1.1-1.1l0.5,0.5l0.5,0.5l1.2,1.2l-1.1,1.1c-1.2,1.2-1.2,3.1,0,4.3c0.4,0.4,0.8,0.6,1.4,0.8l9.2,1.6 c1.1,0.3,2.1,0,2.9-0.8c0.8-0.8,1.1-1.9,0.8-2.9l-1.6-9.2c-0.1-0.5-0.4-1-0.8-1.4c-1.2-1.2-3.1-1.2-4.3,0l-1,1l-1.2-1.2"/></g></svg>');
+      var tlb = this.tag('<div class="transformable-resize-button"></div>');
+      var brb = tlb.cloneNode();
+      tlb.classList.add('tl');
+      tlb.appendChild(tl_svg);
+      brb.classList.add('br');
+      brb.appendChild(br_svg);
+      this.resizertl = tlb;
+      this.resizerbr = brb;
+      this.element.appendChild(tlb);
+      this.element.appendChild(brb);
+      this._addResizeEvents(tlb, brb);
+    }
 
-/**
- * Sets initial sizes and positions of the element and window
- */
-_Transformable.prototype.setInitialSizes = function () {
-  if (this.sizes) return;
-  var cs = window.getComputedStyle(this.element),
-    w = parseFloat(cs.width),
-    h = parseFloat(cs.height),
-    l = parseFloat(cs.left),
-    t = parseFloat(cs.top); //,
+    /**
+     * Zooms the element centred on the middle of the parent element in increments of 5%.
+     * @param {Number} dir positive numbers make it bigger, negative make it smaller
+     */
+  }, {
+    key: "zoom",
+    value: function zoom(dir) {
+      var offset = this.Ancestry.OffsetFromPoint(this._findCentreInWindow());
+      this.scale(offset, 1 + dir * 0.05);
+      return this;
+    }
 
-  this.sizes = {
-    element: {
-      initial: {
-        offset: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](l, t),
-        width: w,
-        height: h,
-        topleft: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0, 0),
-        topright: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](w, 0),
-        bottomright: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](w, h),
-        bottomleft: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0, h)
+    /**
+     * Scales the transformable element at point p by s amount
+     * @param {Point} p Origin for the transform on the element
+     * @param {any} s scale amount
+     */
+  }, {
+    key: "scale",
+    value: function scale(p, s) {
+      this.matrix.scale(p, s);
+      this.setTransition(true);
+      this._updateElement();
+      return this;
+    }
+
+    /**
+     * Translates the element by x and y. Uses element pixels before any transform. Not window/screen pixels.
+     * @param {Number} x Pixels horizontal
+     * @param {Number} y Pixels vertical
+     * @param {Boolean} transition Use a transition
+     */
+  }, {
+    key: "translate",
+    value: function translate(x, y, transition) {
+      this.matrix.translate(x, y);
+      this.setTransition(transition);
+      this._updateElement();
+      return this;
+    }
+
+    /**
+     * Rotates the element about point p. Or about the centre of the element if p is not supplied. 
+     * If inwindow==true, you can supply a Point in the window coordinate space and have the element rotate about that.
+     * @param {Point} p The origin of the rotation in pixels on the element. When inwindow == false or undefined
+     * @param {Number} a Angle in degrees
+     * @param {Boolean} trans Optional: Specify if a transition should be used
+     * @param {Boolean} inwindow Optional: If true, p should be treated like a window coordinate. 
+     */
+  }, {
+    key: "rotate",
+    value: function rotate(p, a, trans, inwindow) {
+      var rotationPoint = p;
+      if (!(rotationPoint instanceof _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"]) || !rotationPoint) {
+        rotationPoint = this.Ancestry.OffsetFromPoint(this._findCentreInWindow());
       }
-    },
-    window: {
-      width: parseFloat(getComputedStyle(document.body.parentNode).width)
-    }
-  };
-};
-
-/**
- * Gets the offset of an element taking in to account scroll position of the window
- * @param {HtmlElement} el Element to check
- */
-_Transformable.prototype._getOffset = function (el) {
-  var cr = this._getRect(el),
-    scroll = this.Ancestry._getScroll();
-  var cs = getComputedStyle(el),
-    pos = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](parseFloat(cs.left), parseFloat(cs.top)),
-    os = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](cr.left + scroll.x, cr.top + scroll.y),
-    br = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](cr.right, cr.bottom),
-    tr = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](cr.right, cr.top),
-    bl = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](cr.left, cr.bottom);
-  return {
-    offset: os,
-    topleft: os,
-    bottomright: br,
-    topright: tr,
-    bottomleft: bl,
-    pos: pos
-  };
-};
-
-/**
- * Sets the initial offset.  
- */
-_Transformable.prototype._setOffset = function () {
-  // first init 
-  if (!this.offset) {
-    var too = this._getOffset(this.element, true);
-    this.offset = too.offset;
-    this.initialoffset = too.offset;
-    return;
-  }
-};
-
-/**
- * Convert a string representation of a CSS transformation matrix in to an Array
- * @param {String} t The CSS transformation
- */
-_Transformable.prototype._cssStringToArray = function (t) {
-  var m = t.match(/[0-9e., -]+/)[0].split(", ");
-  m.forEach(function (v, i) {
-    m[i] = parseFloat(v);
-  });
-  return m;
-};
-
-/**
- * Converts a 6 element Array in to a CSS transformation string.
- * @param {Array} a 
- */
-_Transformable.prototype._arrayToCssString = function (a) {
-  return 'matrix(' + a.join(',') + ')';
-};
-
-/**
- * Creates a Matrix for the transformable element. 
- * Cancels out any CSS that affects the offset or position of the element and converts to an equivalent CSS transformation matrix.
- * @param {HtmlElement} el
- */
-_Transformable.prototype._getMatrix = function (el) {
-  var elem = el || this.element,
-    cs = getComputedStyle(elem),
-    pcs = getComputedStyle(this.parent),
-    t = cs.transform,
-    top = cs.top.indexOf('%') > -1 ? parseFloat(pcs.height) * parseFloat(cs.top) / 100 : parseFloat(cs.top),
-    // ios safari bug
-    left = cs.left.indexOf('%') > -1 ? parseFloat(pcs.width) * parseFloat(cs.left) / 100 : parseFloat(cs.left),
-    // ios safari bug
-    margintop = parseFloat(cs.marginTop),
-    marginleft = parseFloat(cs.marginLeft),
-    bordertop = parseFloat(cs.borderTopWidth),
-    borderleft = parseFloat(cs.borderLeftWidth),
-    m,
-    hasone = /matrix\(\-?[0-9]+[^\)]+\)/.test(t);
-  if (hasone) {
-    var m = this._cssStringToArray(t);
-    if (!this.InitialMatrix) this.InitialMatrix = m.slice(0);
-  }
-  m = new _Matrix_js__WEBPACK_IMPORTED_MODULE_1__["default"](m || [1, 0, 0, 1, 0, 0]);
-  var isrb = this.options.type == 'rotator-box';
-  if (left || top || margintop || marginleft || bordertop || borderleft) {
-    m.translate(left || 0, top || 0);
-    m.translate(marginleft || 0, margintop || 0);
-    m.translate(borderleft || 0, bordertop || 0);
-    elem.style.marginTop = 0;
-    elem.style.marginLeft = 0;
-    elem.style.top = 0;
-    elem.style.left = 0;
-    elem.style.marginTop = -(bordertop || 0) + 'px';
-    elem.style.marginLeft = -(bordertop || 0) + 'px';
-    this.matrix = m;
-    this._updateElement();
-    this.InitialMatrix = m.elements.slice(0);
-  }
-  return m;
-};
-
-/**
- * Sets the transition to use for transforms. 
- * Retains any existing transition originally set by CSS
- * @param {Boolean} bool If true will use a transition
- */
-_Transformable.prototype.setTransition = function (bool) {
-  if (typeof bool == 'boolean') {
-    var was = this.transition,
-      cur = this.originalTransition,
-      spl = cur ? cur.split(',') : [];
-    if (bool == true) {
-      if (was != bool) {
-        spl.push('transform 0.5s');
-        this.element.style.transition = spl.join(',');
+      if (rotationPoint instanceof _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"] && inwindow) {
+        rotationPoint = this.Ancestry.OffsetFromPoint(rotationPoint);
       }
-    }
-    if (bool == false) {
-      if (was != bool) {
-        spl.push('transform 0s');
-        this.element.style.transition = spl.join(',');
+      this.matrix.rotate(rotationPoint, a);
+      this.lastrotationpoint = rotationPoint;
+      if (typeof trans === 'undefined' || trans === false) {
+        this.setTransition(false);
       }
+      this._updateElement();
+      return this;
     }
-    this.transition = bool;
-  }
-};
 
-/**
- * Sets the CSS transform on the element.
- */
-_Transformable.prototype._updateElement = function () {
-  var m = this.matrix,
-    mtx = 'matrix(' + m.elements.join(',') + ')';
-  this.element.style.transform = mtx;
-};
-
-/**
- * Adds the current matrix to the undo stack.
- */
-_Transformable.prototype._pushhistory = function () {
-  this.matrix.save();
-};
-
-/**
- * Sets the matrix property on this instance and applies the CSS.
- * @param {Matrix} m
- */
-_Transformable.prototype._setMatrix = function (m) {
-  this.matrix = m;
-  this._updateElement(m);
-};
-
-/**
- * Gets the window coordinates of a mouse or touch event.
- * Also gets the angle and centre point between two touches
- * 
- * @param {Event} e
- * @param {Array} touches
- */
-_Transformable.prototype._getPageXY = function (e, touches) {
-  var xy, ang, p1, p2;
-  if (touches) {
-    if (touches.length == 2) {
-      xy = this._getMiddle(touches);
-      ang = this._getRotation(touches);
-      p1 = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[0].pageX, touches[0].pageY);
-      p2 = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[1].pageX, touches[1].pageY);
-    } else {
-      xy = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[0].pageX, touches[0].pageY);
-      ang = this.matrix.rotation();
+    /**
+     * Makes a rotated element horizontal.
+     */
+  }, {
+    key: "straighten",
+    value: function straighten() {
+      var r = this.matrix.rotation();
+      this.rotate(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this.sizes.element.initial.width / 2, this.sizes.element.initial.height / 2), -r, true);
+      return this;
     }
-  } else {
-    xy = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](e.pageX, e.pageY);
-    ang = this.matrix.rotation();
-  }
-  return {
-    point: xy,
-    angle: ang,
-    p1: p1,
-    p2: p2
-  };
-};
 
-/**
- * Gets offset (point in element coordinate space), 
- * window coordinates of the event and angle, distance and centre between two touches.
- * @param {Event} e
- * @param {Array} touches
- */
-_Transformable.prototype._getPoint2 = function (e, touches) {
-  var dat = this._getPageXY(e, touches),
-    deltaXY = null,
-    anc = this.Ancestry,
-    pars = anc.GetParents(),
-    op = anc.OffsetFromPoint(dat.point, pars),
-    dist = dat.p1 && dat.p2 ? this._distanceBetweenPoints(anc.OffsetFromPoint(dat.p1, pars), anc.OffsetFromPoint(dat.p2, pars)) : 0;
-  if (typeof e.deltaX != 'undefined') deltaXY = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](e.deltaX, e.deltaY);
-  return {
-    offset: op,
-    pageXY: dat.point,
-    pageX: dat.point.x,
-    pageY: dat.point.y,
-    angle: dat.angle,
-    distance: dist,
-    deltaXY: deltaXY
-  };
-};
+    /**
+     * Scales the element to make the element's height or width match that of the parent element. Centres it and straightens out any rotation. 
+     */
+  }, {
+    key: "fittoparent",
+    value: function fittoparent() {
+      var sz = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this.sizes.element.initial.width, this.sizes.element.initial.height);
+      var anc = this.Ancestry;
+      var pars = anc.GetParents();
+      var parentT = anc.FirstParent();
+      var pr = parentT.rect;
+      var m = this.matrix.inverse();
+      var tl = m.transformpoint(pr.topleft);
+      var tr = m.transformpoint(pr.topright);
+      var bl = m.transformpoint(pr.bottomleft);
+      var psiz = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this._distanceBetweenPoints(tl, tr), this._distanceBetweenPoints(tl, bl));
+      var sc = psiz.divide(sz);
+      var scale = Math.min(sc.x, sc.y);
+      this.scale(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0, 0), scale);
+      this.centreinparent(true, pars);
+      this.straighten();
+      return this;
+    }
 
-/**
- * Calculates the distance between two points
- * @param {Point} a First point
- * @param {Point} b Second point
- */
-_Transformable.prototype._distanceBetweenPoints = function (a, b) {
-  var prop = a.pageX ? {
-    x: 'pageX',
-    y: 'pageX'
-  } : {
-    x: 'x',
-    y: 'y'
-  };
-  return Math.sqrt(Math.pow(Math.abs(b[prop.x] - a[prop.x]), 2) + Math.pow(Math.abs(b[prop.y] - a[prop.y]), 2));
-};
+    /**
+     * Scales the element so its width and height is equal or greater than the parent element. 
+     * Basically so you can't see any background in the parent element. Also centres and straightens it.
+     */
+  }, {
+    key: "filltoparent",
+    value: function filltoparent() {
+      var sz = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this.sizes.element.initial.width, this.sizes.element.initial.height);
+      var anc = this.Ancestry;
+      var pars = anc.GetParents();
+      var parentT = anc.FirstParent();
+      var pr = parentT.rect;
+      var m = this.matrix.inverse();
+      var tl = m.transformpoint(pr.topleft);
+      var tr = m.transformpoint(pr.topright);
+      var bl = m.transformpoint(pr.bottomleft);
+      var psiz = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this._distanceBetweenPoints(tl, tr), this._distanceBetweenPoints(tl, bl));
+      var sc = psiz.divide(sz);
+      var scale = Math.max(sc.x, sc.y);
+      this.scale(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0, 0), scale);
+      this.centreinparent(true, pars);
+      this.straighten();
+      return this;
+    }
 
-/**
- * Gets the centre point between two touches
- * @param {Array} touches
- */
-_Transformable.prototype._getMiddle = function (touches) {
-  var touch1 = touches[0];
-  var touch2 = touches[1];
-  var mx = (touch2.pageX - touch1.pageX) / 2 + touch1.pageX;
-  var my = (touch2.pageY - touch1.pageY) / 2 + touch1.pageY;
-  return new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](mx, my);
-};
+    /**
+     * Gets the boundingClientRect for supplied element.
+     * @param {HTMLElement} el
+     */
+  }, {
+    key: "_getRect",
+    value: function _getRect(el) {
+      return el.getBoundingClientRect();
+    }
 
-/**
- * Gets distance between two touch points (in the window) relative to the element.
- * @param {Array} touches
- * @param {Array} pars
- */
-_Transformable.prototype._getDistance2 = function (touches, pars) {
-  var anc = this.Ancestry;
-  pars = pars || anc.GetParents();
-  var t1 = anc.OffsetFromPoint(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[0].pageX, touches[0].pageY), pars);
-  var t2 = anc.OffsetFromPoint(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[1].pageX, touches[1].pageY), pars);
-  return this._distanceBetweenPoints(t1, t2);
-};
-
-/**
- * Gets the angle in degrees between two touch points
- * @param {Array} touches
- * @param {Boolean} norm Optional: Normalise to be 0-365 degrees
- */
-_Transformable.prototype._getRotation = function (touches, norm) {
-  var r;
-  r = Math.atan2((touches[0].pageY || touches[0].y) - (touches[1].pageY || touches[1].y), (touches[0].pageX || touches[0].x) - (touches[1].pageX || touches[1].x)) * 180 / Math.PI;
-  return norm ? this.matrix.normaldegree(r) : r;
-};
-
-/**
- * Snaps the rotation to a multiple of 15 degrees if within 3 degrees of a multiple of 15 degrees.
- */
-_Transformable.prototype.snapRotation = function () {
-  if (this.options.disable && this.options.disable.rotate) return;
-  var r = this.matrix.rotation(),
-    m = r - 15 * Math.round(r / 15),
-    am = Math.abs(m),
-    siz = this.sizes.element.initial;
-  this.setTransition(true);
-  if (am <= 3 && am > 0) {
-    var pt = this.lastrotationpoint || new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](siz.width / 2, siz.height / 2);
-    this.rotate(pt, -m);
-    this.lastlastrotationpoint = undefined;
-    this._pushhistory();
-  }
-  var msg;
-  r = this.matrix.rotation();
-  switch (Math.abs(Math.round(r * 10) / 10)) {
-    case 0:
-    case 180:
-      msg = 'Horizontal';
-      break;
-    case 90:
-      msg = 'Vertical';
-      break;
-    default:
-      msg = 'Rotation: ' + Math.round(r * 10) / 10 + '&deg;';
-  }
-  this.showMessage(msg, 'sticky', 2000);
-};
-
-/**
- * Writes info to the console
- * @param {String} m
- * @param {any} c Not implemented
- * @param {any} t Not implemented
- */
-_Transformable.prototype.showMessage = function (m, c, t) {
-  console.log(m);
-};
-
-/**
- * Gets the centre point of the element in window coordinates
- */
-_Transformable.prototype._findCentreInWindow = function () {
-  var prect = this._getRect(this.parent);
-  return new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](prect.left + prect.width / 2, prect.top + prect.height / 2);
-};
-
-/**
- * Centres the element in the middle of its parent element
- * @param {Bool} transition Optional
- * @param {Array} pars Optional but should always be supplied
- */
-_Transformable.prototype.centreinparent = function (transition, pars) {
-  var was = this.transition,
-    anc = this.Ancestry;
-  this.setTransition(transition);
-  pars = pars || anc.GetParents();
-  var pcs = getComputedStyle(this.parent),
-    parentCentre = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](parseFloat(pcs.width) / 2, parseFloat(pcs.height) / 2);
-  var centreOnThis = this.matrix.inverse().transformpoint(parentCentre);
-  this.translate(centreOnThis.sub(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this.sizes.element.initial.width / 2, this.sizes.element.initial.height / 2)));
-  this.setTransition(was);
-};
-
-/**
- * Find out if point p is within the rectangle defined by points a,b,c,d
- * @param {Point} p
- * @param {Point} a
- * @param {Point} b
- * @param {Point} c
- * @param {Point} d
- */
-_Transformable.prototype.pointInRectangle = function (p, a, b, c, d) {
-  var ab = b.sub(a),
-    ap = p.sub(a),
-    bc = c.sub(b),
-    bp = p.sub(b),
-    dot_abap = ab.dot(ap),
-    dot_abab = ab.dot(ab),
-    dot_bcbp = bc.dot(bp),
-    dot_bcbc = bc.dot(bc);
-  var r = {
-    dot_abap: dot_abap,
-    dot_abab: dot_abab,
-    dot_bcbp: dot_bcbp,
-    dot_bcbc: dot_bcbc,
-    ok: 0 <= dot_abap && Math.round(dot_abap * 10) / 10 <= Math.round(dot_abab * 10) / 10 && 0 <= dot_bcbp && Math.round(dot_bcbp * 10) / 10 <= Math.round(dot_bcbc * 10) / 10
-  };
-  return r;
-};
-
-/**
- * Triggers an event named n. 
- * In the handler, this will refer to the Transformable instance.
- * The handler will receive the transformable element as first argument and a real event object as the second argument.
- * @param {String} n
- * @param {Event} event Pass in a real event object if you have one
- */
-_Transformable.prototype.trigger = function (n, event) {
-  if (typeof this.events[n] == "function") this.events[n].apply(this, [this.element, event]);
-};
-
-/**
- * Gets the points data needed to make rotation handles work
- * @param {Event} e
- * @param {Array} pars
- */
-_Transformable.prototype._getRotatorPoints = function (e, pars) {
-  var rpoint,
-    apoint = this.anchor.TL,
-    touches = e.touches,
-    anc = this.Ancestry;
-  pars = pars || anc.GetParents();
-  anc._setoffset();
-  if (touches) rpoint = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[0].pageX, touches[0].pageY);else rpoint = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](e.pageX, e.pageY);
-  var angle = Math.round(this._getRotation([apoint.add(anc.scroll), rpoint], false) * 100) / 100; //,
-
-  return {
-    deltaXY: null,
-    offset: anc.OffsetFromPoint(rpoint, pars),
-    pageXY: rpoint,
-    pageX: rpoint.x,
-    pageY: rpoint.y,
-    angle: angle,
-    distance: 0
-  };
-};
-
-/**
- * Attaches events for rotation interactions with rotation handles
- * @param {HtmlElement} hdl The element to use as a rotation handle
- */
-_Transformable.prototype._addRotateEvents = function (hdl) {
-  var that = this,
-    handle = hdl;
-  var _domove = function _domove(e) {
-      if (!that.startedrotate) return false;
-      that.draggingrotate = true;
-      e.preventDefault();
-      e.stopPropagation();
-      var touches = e.touches,
-        doupdate = false;
-      if (touches) if (touches.length == 2) return false;
-      var point = that._getRotatorPoints(e),
-        orig = that.origrotate,
-        start = that.startrotate,
-        m = that.matrix;
-      var delta = {
-        angle: Math.round((point.angle - start.angle) * 100) / 100
-      };
-      if (delta.angle != 0) {
-        if (that.parent != that.options.rotatetarget.element) {
-          m.rotateAboutPoint(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0), delta.angle);
-          doupdate = true;
+    /**
+     * Resets the transformation to its starting value. Undoing all changes since instantiation.
+     * @param {Boolean} trans Specify if a transition should be used
+     */
+  }, {
+    key: "reset",
+    value: function reset(trans) {
+      var _this2 = this;
+      if (!this.InitialMatrix) {
+        this.matrix.reset();
+      } else {
+        this.matrix.elements = _toConsumableArray(this.InitialMatrix);
+      }
+      this.setTransition(trans !== null && trans !== void 0 ? trans : true);
+      if (this.transition) {
+        var _this$delta, _this$delta2;
+        if ((_this$delta = this.delta) !== null && _this$delta !== void 0 && _this$delta.x || (_this$delta2 = this.delta) !== null && _this$delta2 !== void 0 && _this$delta2.y) {
+          // has moved so will transition
+          this.element.classList.add('transformable-reset');
+          this.on(this.element, 'transitionend.reset', function () {
+            _this2.element.classList.remove('transformable-reset');
+            _this2.off(_this2.element, 'transitionend.reset');
+          });
         }
-        if (that.options.rotatetarget instanceof _Transformable) that.options.rotatetarget.rotate(that.anchor.TL.add(that.Ancestry.scroll), delta.angle, false, true);
       }
-      if (doupdate) that._updateElement(m);
-      that.startrotate.angle = point.angle;
-    },
-    _dostop2 = function _dostop(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      that.element.classList.remove('transformable-active');
-      that.startedrotate = false;
-      that.draggingrotate = false;
-      that.off(document.querySelector('body'), 'mouseup.transformable dragend.transformable', _dostop2);
-      if (that.options.rotatetarget instanceof _Transformable) {
-        if (that.options.rotatetarget.events.stop) that.options.rotatetarget.trigger('stop', e);
-        that.options.rotatetarget.snapRotation();
-      }
-      if (that.events.stop) that.trigger('stop', e);
-      that.snapRotation();
-    },
-    _dostart = function _dostart(e) {
-      if (that.options.disabled === true) return false;
-      if (that.startedresize) return false;
-      if (document.querySelectorAll('.transformable-active').length == 0) that.element.classList.add('transformable-active');
+      this._updateElement();
+      return this;
+    }
 
-      //if (that.options.rotatetarget instanceof Transformable) 
-      //    that.options.rotatetarget.updatedims();
+    /**
+     * Returns true if the undo stack contains a saved state named k
+     * @param {String} k
+     */
+  }, {
+    key: "hasHistoryKey",
+    value: function hasHistoryKey(k) {
+      return Array.isArray(this.matrix.history.undo[k]);
+    }
 
-      //that.updatedims();
+    /**
+     * Undo the last transformation or go back to a named state.
+     * @param {String} k Optional: the name of a saved state to go back to
+     */
+  }, {
+    key: "undo",
+    value: function undo(k) {
+      this.matrix.undo(k);
+      this.setTransition(true);
+      this._updateElement();
+      return this;
+    }
 
-      var m = that.matrix;
-      that.origrotate = {
-        trans: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](m.elements[4], m.elements[5]),
-        angle: m.rotation(true),
-        scale: m.scaling()
+    /**
+     * Redo the last thing that was undone.
+     */
+  }, {
+    key: "redo",
+    value: function redo() {
+      this.matrix.redo();
+      this.setTransition(true);
+      this._updateElement();
+      return this;
+    }
+
+    /**
+     * Sets initial sizes and positions of the element and window
+     */
+  }, {
+    key: "setInitialSizes",
+    value: function setInitialSizes() {
+      if (this.sizes) return;
+      var cs = window.getComputedStyle(this.element);
+      var w = parseFloat(cs.width);
+      var h = parseFloat(cs.height);
+      var l = parseFloat(cs.left);
+      var t = parseFloat(cs.top);
+      this.sizes = {
+        element: {
+          initial: {
+            offset: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](l, t),
+            width: w,
+            height: h,
+            topleft: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0, 0),
+            topright: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](w, 0),
+            bottomright: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](w, h),
+            bottomleft: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0, h)
+          }
+        },
+        window: {
+          width: parseFloat(getComputedStyle(document.body.parentNode).width)
+        }
       };
-      var touches = e.touches;
-      if (touches && touches.length == 2) if (touches[0].target && touches[1].target) if (touches[0].target !== touches[1].target) {
-        console.log('Two active elements not supported');
-        return false;
-      }
-      that.anchor = that.anchor || {};
-      that.anchor.clientRect = that._getRect(that.element.querySelector('.transformable-anchor-point'));
-      that.anchor.TL = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](that.anchor.clientRect.left, that.anchor.clientRect.top);
-      that.startrotate = that._getRotatorPoints(e);
-      that.startrotate.scale = that.origrotate.scale;
-      that.startedrotate = true;
-      that.draggingrotate = false;
-      that.setTransition(false);
-      e.stopPropagation();
-      var body = document.querySelector('body');
-      if (e.type == 'mousedown') {
-        that.on(body, 'mousemove.transformable', _domove);
-        that.on(body, 'mouseup.transformable dragend.transformable', _dostop2);
-      }
-    };
-  this.on(hdl, 'mousedown.transformable touchstart.transformable', _dostart);
-  this.on(hdl, 'touchmove.transformable', _domove);
-  this.on(hdl, 'touchend.transformable', _dostop2);
-};
+    }
 
-/**
- * Attaches events for resize interactions with resize handles
- * @param {HtmlElement} tlb Top left button/handle used for moving the element
- * @param {HtmlElement} brb Bottom right button/handle for resizing the element's width/height
- */
-_Transformable.prototype._addResizeEvents = function (tlb, brb) {
-  var that = this,
-    el = this.element,
-    opts = that.options;
-  var _domove = function _domove(e) {
-      // not really implemented yet
-      //if (that.options.disabled === true)
-      //    return;
-
-      if (!that.element.classList.contains('transformable-active')) return false;
-      if (!that.startedresize) return false;
-      that.draggingresize = true;
-      e.preventDefault();
-      e.stopPropagation();
-      var touches = e.touches,
-        doupdate = false;
-      if (touches) if (touches.length == 2) return false;
-      var point = that._getPoint2(e, touches),
-        orig = that.origresize,
-        start = that.startresize,
-        cs = getComputedStyle(el);
-      var delta = {
-        trans: point.offset.sub(start.offset),
-        angle: Math.round((point.angle - start.angle) * 100) / 100,
-        distance: start.distance != 0 ? Math.round(point.distance / ((start.distance + point.distance) / 2) * 1000) / 1000 : 0
-      };
-      if (delta.trans.nonzero()) {
-        var h = parseFloat(cs.height),
-          w = parseFloat(cs.width);
-        var dw = that.w - w,
-          dh = that.h - h,
-          neww = w + delta.trans.x + dw,
-          newh = h + delta.trans.y + dh;
-        el.style.width = neww + 'px';
-        el.style.height = newh + 'px';
-        that.sizes.element.initial.bottomright = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](neww, newh);
-        that.sizes.element.initial.topright.x = neww;
-        that.sizes.element.initial.bottomleft.y = newh;
-        that.sizes.element.initial.width = neww;
-        that.sizes.element.initial.height = newh;
-      }
-      that.startresize.angle = point.angle;
-      return false; // kill off bubble
-    },
-    _dostart = function _dostart(e) {
-      if (document.querySelectorAll('.transformable-active').length == 0) that.element.classList.add('transformable-active');
-      console.log('_resize.start');
-      e.preventDefault();
-      e.stopPropagation();
-      var m = that.matrix;
-      that.origresize = {
-        trans: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](m.elements[4], m.elements[5]),
-        angle: m.rotation(),
-        scale: m.scaling() //,
-      };
-      var touches = e.touches;
-      that.startresize = that._getPoint2(e, touches);
-      that.startresize.scale = that.origresize.scale;
-      that.startedresize = true;
-      that.draggingresize = false;
+    /**
+     * Gets the offset of an element taking in to account scroll position of the window
+     * @param {HTMLElement} el Element to check
+     */
+  }, {
+    key: "_getOffset",
+    value: function _getOffset(el) {
+      var cr = this._getRect(el);
+      var scroll = this.Ancestry._getScroll();
       var cs = getComputedStyle(el);
-      that.h = parseFloat(cs.height), that.w = parseFloat(cs.width);
-      if (typeof that.contained == 'undefined') that.contained = true;
-      if (that.events.startresize) that.trigger('startresize', e);
-      that.setTransition(false);
-      if (e.type == 'mousedown') {
-        var bodee = document.querySelector('body');
-        that.on(bodee, 'mousemove.transformable', _domove);
-        that.on(bodee, 'mouseup.transformable dragend.transformable', _dostop3);
-      }
-      return false; // kill off bubble
-    },
-    _dostop3 = function _dostop() {
-      var bodee = document.querySelector('body');
-      that.off(bodee, 'mousemove.transformable', _domove);
-      that.off(bodee, 'mouseup.transformable dragend.transformable', _dostop3);
-      if (that.options.disabled === true) return false;
-      that.element.classList.remove('transformable-active');
-      that.startedresize = false;
-      that.draggingresize = false;
-    };
-  that.on(brb, 'mousedown.transformable', _dostart);
-  that.on(brb, 'touchstart.transformable', _dostart);
-  that.on(brb, 'touchmove.transformable', _domove);
-  that.on(brb, 'touchend.transformable', _dostop3);
-};
-
-/**
- * Gets the quadrant based on angle r and wether the angle is horizontal or vertical
- * @param {Number} r
- */
-_Transformable.prototype.getRotationQuadrant = function (r) {
-  var rot = (typeof r != 'undefined' ? r : this.matrix.rotation()) % 360;
-  if (rot < 0) rot += 360;
-  return {
-    Angle: rot,
-    Quad: Math.floor(rot / 90),
-    Horiz: rot == 0 || rot == 180,
-    Vert: rot == 90 || rot == 270
-  };
-};
-
-/**
- * Attaches events for scaling, rotating and moving elements. 
- * Calculates and applies containment too.
- */
-_Transformable.prototype._addEvents = function () {
-  var that = this,
-    el = this.element,
-    docontain = this.options && this.options.contain;
-  if (typeof this.events.transition == 'function') {
-    el.addEventListener('transitionend', this.events.transition);
-  }
-  var _domove = function _domove(e) {
-      if (that.options.disabled === true) return false;
-      if (!that.element.classList.contains('transformable-active')) {
-        return false;
-      }
-      if (!that.started || that.startedresize || that.startedrotate) {
-        return false;
-      }
-      that.dragging = true;
-      e.preventDefault();
-      e.stopPropagation();
-      var touches = e.touches,
-        doupdate = false;
-      if (touches && touches.length == 2) if (touches[0].target && touches[1].target) if (touches[0].target !== touches[1].target) {
-        console.log('Two active elements not supported');
-        return false;
-      }
-      var m = that.matrix;
-      var cr = m.rotation();
-      var disable = that.options.disable,
-        disableZoom = false,
-        disableTranslate = false,
-        disableRotate = false;
-      if (disable) {
-        disableZoom = disable.zoom || disable.scale;
-        disableRotate = disable.rotate;
-        disableTranslate = disable.translate;
-      }
-      var point = that._getPoint2(e, touches),
-        orig = that.orig,
-        start = that.start;
-      var delta = {
-        trans: point.offset.sub(start.offset),
-        angle: Math.round((point.angle - start.angle) * 100) / 100,
-        distance: start.distance != 0 ? Math.round(point.distance / ((start.distance + point.distance) / 2) * 1000) / 1000 : 0
+      var pos = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](parseFloat(cs.left), parseFloat(cs.top));
+      var os = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](cr.left + scroll.x, cr.top + scroll.y);
+      var br = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](cr.right, cr.bottom);
+      var tr = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](cr.right, cr.top);
+      var bl = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](cr.left, cr.bottom);
+      return {
+        offset: os,
+        topleft: os,
+        bottomright: br,
+        topright: tr,
+        bottomleft: bl,
+        pos: pos
       };
-      if (docontain && delta.angle == 0 && (!touches || touches && touches.length == 1)) {
-        var tl, tr, br, bl;
-        var anc = that.Ancestry,
-          parentT = anc.FirstParent(),
-          prect = parentT.rect,
-          inv = m.inverse(),
-          ptl = prect.topleft,
-          ptr = prect.topright,
-          pbr = prect.bottomright,
-          pbl = prect.bottomleft;
-        tl = inv.transformpoint(ptl).sub(delta.trans);
-        tr = inv.transformpoint(ptr).sub(delta.trans);
-        br = inv.transformpoint(pbr).sub(delta.trans);
-        bl = inv.transformpoint(pbl).sub(delta.trans);
-        if (!start.size) start.size = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](that._distanceBetweenPoints(tl, tr), that._distanceBetweenPoints(tl, bl));else start.size = delta.distance != 0 ? new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](that._distanceBetweenPoints(tl, tr), that._distanceBetweenPoints(tl, bl)) : start.size;
-        var csiz = that.sizes.element.initial;
-        var containment,
-          opts = that.options;
-        if (docontain == 'enclose') {
-          var enclosed = {
-            tl: that.pointInRectangle(csiz.topleft, tl, tr, br, bl),
-            tr: that.pointInRectangle(csiz.topright, tl, tr, br, bl),
-            br: that.pointInRectangle(csiz.bottomright, tl, tr, br, bl),
-            bl: that.pointInRectangle(csiz.bottomleft, tl, tr, br, bl)
-          };
-          var containcount = 0;
-          if (enclosed.tl.ok) containcount++;
-          if (enclosed.tr.ok) containcount++;
-          if (enclosed.br.ok) containcount++;
-          if (enclosed.bl.ok) containcount++;
-          var contained = containcount == 4;
-          if (!contained) {
-            var quad = that.getRotationQuadrant(start.angle);
-            switch (quad.Quad) {
-              case 0:
-                if (quad.Angle == 0) {
-                  if (!enclosed.br.ok) {
-                    var brv = csiz.bottomright.perpOnLine(tr, br).sub(csiz.bottomright),
-                      brh = csiz.bottomright.perpOnLine(bl, br).sub(csiz.bottomright);
-                    if (brv.x < 0) delta.trans = delta.trans.add(brv);
-                    if (brh.y < 0) delta.trans = delta.trans.add(brh);
-                  }
-                  if (!enclosed.tl.ok) {
-                    var tlv = csiz.topleft.perpOnLine(tl, bl),
-                      tlh = csiz.topleft.perpOnLine(tl, tr);
-                    if (tlv.x > 0) delta.trans = delta.trans.add(tlv);
-                    if (tlh.y > 0) delta.trans = delta.trans.add(tlh);
-                  }
-                } else {
-                  if (!enclosed.bl.ok) {
-                    var blv = csiz.bottomleft.perpOnLine(tl, bl).sub(csiz.bottomleft); //,
+    }
 
-                    if (blv.x > 0) delta.trans = delta.trans.add(blv);
-                  }
-                  if (!enclosed.br.ok) {
-                    var brh = csiz.bottomright.perpOnLine(bl, br).sub(csiz.bottomright);
-                    if (brh.y < 0) delta.trans = delta.trans.add(brh);
-                  }
-                  if (!enclosed.tr.ok) {
-                    var trv = csiz.topright.perpOnLine(tr, br).sub(csiz.topright); //,
-                    if (trv.x < 0) delta.trans = delta.trans.add(trv);
-                  }
-                  if (!enclosed.tl.ok) {
-                    var tlh = csiz.topleft.perpOnLine(tl, tr);
-                    if (tlh.y > 0) delta.trans = delta.trans.add(tlh);
-                  }
-                }
-                break;
-              case 3:
-                if (quad.Angle == 270) {
-                  if (!enclosed.tl.ok) {
-                    var tlh = csiz.topleft.perpOnLine(tl, bl),
-                      tlv = csiz.topleft.perpOnLine(bl, br);
-                    if (tlv.x > 0) delta.trans = delta.trans.add(tlv);
-                    if (tlh.y > 0) delta.trans = delta.trans.add(tlh);
-                  }
-                  if (!enclosed.br.ok) {
-                    var brv = csiz.bottomright.perpOnLine(tl, tr).sub(csiz.bottomright),
-                      brh = csiz.bottomright.perpOnLine(br, tr).sub(csiz.bottomright);
-                    if (brv.x < 0) delta.trans = delta.trans.add(brv);
-                    if (brh.y < 0) delta.trans = delta.trans.add(brh);
-                  }
-                } else {
-                  if (!enclosed.tl.ok) {
-                    var tlv = csiz.topleft.perpOnLine(tl, bl);
-                    if (tlv.x > 0) delta.trans = delta.trans.add(tlv);
-                  }
-                  if (!enclosed.br.ok) {
-                    var brv = csiz.bottomright.perpOnLine(tr, br).sub(csiz.bottomright);
-                    if (brv.x < 0) delta.trans = delta.trans.add(brv);
-                  }
-                  if (!enclosed.tr.ok) {
-                    var trh = csiz.topright.perpOnLine(tl, tr).sub(csiz.topright);
-                    if (trh.y > 0) delta.trans = delta.trans.add(trh);
-                  }
-                  if (!enclosed.bl.ok) {
-                    var blh = csiz.bottomleft.perpOnLine(bl, br).sub(csiz.bottomleft);
-                    if (blh.y < 0) delta.trans = delta.trans.add(blh);
-                  }
-                }
-                break;
-              case 1:
-                if (quad.Angle == 90) {
-                  // can get away with 2 perp calcs instead of 4;
-                  if (!enclosed.tl.ok) {
-                    var tlv = csiz.topleft.perpOnLine(tr, tl),
-                      tlh = csiz.topleft.perpOnLine(tr, br);
-                    if (tlv.x > 0) delta.trans = delta.trans.add(tlv);
-                    if (tlh.y > 0) delta.trans = delta.trans.add(tlh);
-                  }
-                  if (!enclosed.br.ok) {
-                    var brv = csiz.bottomright.perpOnLine(br, bl).sub(csiz.bottomright),
-                      brh = csiz.bottomright.perpOnLine(tl, bl).sub(csiz.bottomright);
-                    if (brv.x < 0) delta.trans = delta.trans.add(brv);
-                    if (brh.y < 0) delta.trans = delta.trans.add(brh);
-                  }
-                } else {
-                  if (!enclosed.tl.ok) {
-                    var tlv = csiz.topleft.perpOnLine(tr, br);
-                    if (tlv.x > 0) delta.trans = delta.trans.add(tlv);
-                  }
-                  if (!enclosed.br.ok) {
-                    var brv = csiz.bottomright.perpOnLine(tl, bl).sub(csiz.bottomright);
-                    if (brv.x < 0) delta.trans = delta.trans.add(brv);
-                  }
-                  if (!enclosed.tr.ok) {
-                    var trh = csiz.topright.perpOnLine(bl, br).sub(csiz.topright);
-                    if (trh.y > 0) delta.trans = delta.trans.add(trh);
-                  }
-                  if (!enclosed.bl.ok) {
-                    var blh = csiz.bottomleft.perpOnLine(tr, tl).sub(csiz.bottomleft);
-                    if (blh.y < 0) delta.trans = delta.trans.add(blh);
-                  }
-                }
-                break;
-              case 2:
-                if (quad.Angle == 180) {
-                  // can get away with 2 calcs instead of 4;
-                  if (!enclosed.tl.ok) {
-                    var tlv = csiz.topleft.perpOnLine(br, bl),
-                      tlh = csiz.topleft.perpOnLine(tl, bl);
-                    if (tlv.y > 0) delta.trans = delta.trans.add(tlv);
-                    if (tlh.y > 0) delta.trans = delta.trans.add(tlh);
-                  }
-                  if (!enclosed.br.ok) {
-                    var brv = csiz.bottomright.perpOnLine(tr, tl).sub(csiz.bottomright),
-                      brh = csiz.bottomright.perpOnLine(tr, br).sub(csiz.bottomright);
-                    if (brv.y < 0) delta.trans = delta.trans.add(brv);
-                    if (brh.y < 0) delta.trans = delta.trans.add(brh);
-                  }
-                }
-                if (!enclosed.tl.ok) {
-                  var tlv = csiz.topleft.perpOnLine(br, bl);
-                  if (tlv.y > 0) delta.trans = delta.trans.add(tlv);
-                }
-                if (!enclosed.br.ok) {
-                  var brv = csiz.bottomright.perpOnLine(tr, tl).sub(csiz.bottomright); //,
-                  if (brv.y < 0) delta.trans = delta.trans.add(brv);
-                }
-                if (!enclosed.tr.ok) {
-                  var trh = csiz.topright.perpOnLine(tl, bl).sub(csiz.topright);
-                  if (trh.x < 0) delta.trans = delta.trans.add(trh);
-                }
-                if (!enclosed.bl.ok) {
-                  var blh = csiz.bottomleft.perpOnLine(tr, br).sub(csiz.bottomleft);
-                  if (blh.x > 0) delta.trans = delta.trans.add(blh);
-                }
-                break;
-            }
-          }
-        }
-        if (docontain == 'cover') {
-          var enclosed = {
-            tl: that.pointInRectangle(csiz.topleft, tl, tr, br, bl),
-            tr: that.pointInRectangle(csiz.topright, tl, tr, br, bl),
-            br: that.pointInRectangle(csiz.bottomright, tl, tr, br, bl),
-            bl: that.pointInRectangle(csiz.bottomleft, tl, tr, br, bl)
-          };
-          var okcorners = 0;
-          if (!enclosed.tl.ok) okcorners++;
-          if (!enclosed.tr.ok) okcorners++;
-          if (!enclosed.br.ok) okcorners++;
-          if (!enclosed.bl.ok) okcorners++;
-          if (!enclosed.tl.ok && !enclosed.tr.ok && !enclosed.br.ok && !enclosed.bl.ok || that.lockcontain || okcorners == 3 && start.angle == 0) {
-            that.lockcontain = true;
-            var quad = that.getRotationQuadrant(start.angle);
-            switch (quad.Quad) {
-              case 0:
-                if (tr.y <= 0) delta.trans.y = delta.trans.y + tr.y;
-                if (bl.y >= csiz.bottomleft.y) delta.trans.y = delta.trans.y + (bl.y - csiz.bottomleft.y);
-                if (br.x >= csiz.bottomright.x) delta.trans.x = delta.trans.x + (br.x - csiz.bottomright.x);
-                if (tl.x <= 0) delta.trans.x = delta.trans.x + tl.x;
-                break;
-              case 1:
-                if (tl.y >= csiz.bottomleft.y) delta.trans.y = delta.trans.y + (tl.y - csiz.bottomleft.y);
-                if (bl.x >= csiz.topright.x) delta.trans.x = delta.trans.x - (csiz.topright.x - bl.x);
-                if (br.y <= 0)
-                  // works
-                  delta.trans.y = delta.trans.y + br.y;
-                if (tr.x <= 0) delta.trans.x = delta.trans.x + tr.x;
-                break;
-              case 2:
-                if (bl.y <= 0)
-                  // works
-                  delta.trans.y = delta.trans.y + bl.y;
-                if (tl.x >= csiz.bottomright.x) delta.trans.x = delta.trans.x - (csiz.bottomright.x - tl.x);
-                if (tr.y >= csiz.bottomleft.y) delta.trans.y = delta.trans.y + (tr.y - csiz.bottomleft.y);
-                if (br.x <= 0) delta.trans.x = delta.trans.x + br.x;
-                //console.log('points')
-                //console.log(tl)
-                //console.log(tr)
-                //console.log(br)
-                //console.log(bl)
-                break;
-              case 3:
-                if (tl.y <= 0)
-                  // works
-                  delta.trans.y = delta.trans.y + tl.y;
-                if (bl.x <= 0) delta.trans.x = delta.trans.x + bl.x;
-                if (br.y >= csiz.bottomright.y)
-                  // works
-                  delta.trans.y = delta.trans.y + (br.y - csiz.bottomright.y);
-                if (tr.x >= csiz.topright.x) delta.trans.x = delta.trans.x - (csiz.topright.x - tr.x);
-                break;
-            }
-          }
+    /**
+     * Sets the initial offset.  
+     */
+  }, {
+    key: "_setOffset",
+    value: function _setOffset() {
+      if (!this.offset) {
+        var too = this._getOffset(this.element, true);
+        this.offset = too.offset;
+        this.initialoffset = too.offset;
+      }
+    }
+
+    /**
+     * Convert a string representation of a CSS transformation matrix in to an Array
+     * @param {String} t The CSS transformation
+     */
+  }, {
+    key: "_cssStringToArray",
+    value: function _cssStringToArray(t) {
+      var match = t.match(/[0-9e., -]+/);
+      if (!match) return [];
+      return match[0].split(", ").map(function (v) {
+        return parseFloat(v);
+      });
+    }
+
+    /**
+     * Converts a 6 element Array in to a CSS transformation string.
+     * @param {Array} a 
+     */
+  }, {
+    key: "_arrayToCssString",
+    value: function _arrayToCssString(a) {
+      return "matrix(".concat(a.join(','), ")");
+    }
+
+    /**
+     * Creates a Matrix for the transformable element. 
+     * Cancels out any CSS that affects the offset or position of the element and converts to an equivalent CSS transformation matrix.
+     * @param {HTMLElement} el
+     */
+  }, {
+    key: "_getMatrix",
+    value: function _getMatrix(el) {
+      var elem = el || this.element;
+      var cs = getComputedStyle(elem);
+      var pcs = getComputedStyle(this.parent);
+      var t = cs.transform,
+        csTop = cs.top,
+        csLeft = cs.left,
+        marginTop = cs.marginTop,
+        marginLeft = cs.marginLeft,
+        borderTopWidth = cs.borderTopWidth,
+        borderLeftWidth = cs.borderLeftWidth;
+      var top = csTop.includes('%') ? parseFloat(pcs.height) * parseFloat(csTop) / 100 : parseFloat(csTop);
+      var left = csLeft.includes('%') ? parseFloat(pcs.width) * parseFloat(csLeft) / 100 : parseFloat(csLeft);
+      var margintop = parseFloat(marginTop);
+      var marginleft = parseFloat(marginLeft);
+      var bordertop = parseFloat(borderTopWidth);
+      var borderleft = parseFloat(borderLeftWidth);
+      var mElements;
+      if (/matrix\(-?[0-9e., -]+\)/.test(t)) {
+        mElements = this._cssStringToArray(t);
+        if (!this.InitialMatrix) {
+          this.InitialMatrix = _toConsumableArray(mElements);
         }
       }
-      if (delta.trans.nonzero() && !disableTranslate) {
-        m.translate(delta.trans);
-        doupdate = true;
-        that.delta.x += delta.trans.x;
-        that.delta.y += delta.trans.y;
+      var m = new _Matrix_js__WEBPACK_IMPORTED_MODULE_1__["default"](mElements || [1, 0, 0, 1, 0, 0]);
+      if (left || top || margintop || marginleft || bordertop || borderleft) {
+        m.translate(left || 0, top || 0);
+        m.translate(marginleft || 0, margintop || 0);
+        m.translate(borderleft || 0, bordertop || 0);
+        Object.assign(elem.style, {
+          marginTop: '0px',
+          marginLeft: '0px',
+          top: '0px',
+          left: '0px'
+        });
+        elem.style.marginTop = -(bordertop || 0) + 'px';
+        elem.style.marginLeft = -(bordertop || 0) + 'px';
+        this.matrix = m;
+        this._updateElement();
+        this.InitialMatrix = _toConsumableArray(m.elements);
       }
-      if (delta.distance != 0 && delta.distance != 1 && touches) if (touches.length == 2 && !disableZoom) {
-        m.scale(point.offset, delta.distance);
-        doupdate = true;
+      return m;
+    }
+
+    /**
+     * Sets the transition to use for transforms. 
+     * Retains any existing transition originally set by CSS
+     * @param {Boolean} bool If true will use a transition
+     */
+  }, {
+    key: "setTransition",
+    value: function setTransition(bool) {
+      if (typeof bool !== 'boolean' || this.transition === bool) return;
+      var currentSplits = this.originalTransition ? this.originalTransition.split(',') : [];
+      if (bool) {
+        currentSplits.push('transform 0.5s');
+      } else {
+        currentSplits.push('transform 0s');
       }
-      if (delta.angle != 0 && !disableRotate) {
-        m.rotateAboutPoint(point.offset, delta.angle);
-        doupdate = true;
+      this.element.style.transition = currentSplits.join(',');
+      this.transition = bool;
+    }
+
+    /**
+     * Sets the CSS transform on the element.
+     */
+  }, {
+    key: "_updateElement",
+    value: function _updateElement() {
+      this.element.style.transform = "matrix(".concat(this.matrix.elements.join(','), ")");
+    }
+
+    /**
+     * Adds the current matrix to the undo stack.
+     */
+  }, {
+    key: "_pushhistory",
+    value: function _pushhistory() {
+      this.matrix.save();
+    }
+
+    /**
+     * Sets the matrix property on this instance and applies the CSS.
+     * @param {Matrix} m
+     */
+  }, {
+    key: "_setMatrix",
+    value: function _setMatrix(m) {
+      this.matrix = m;
+      this._updateElement();
+    }
+
+    /**
+     * Gets the window coordinates of a mouse or touch event.
+     * Also gets the angle and centre point between two touches
+     * * @param {Event} e
+     * @param {Array} touches
+     */
+  }, {
+    key: "_getPageXY",
+    value: function _getPageXY(e, touches) {
+      var xy, ang, p1, p2;
+      if (touches) {
+        if (touches.length === 2) {
+          xy = this._getMiddle(touches);
+          ang = this._getRotation(touches);
+          p1 = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[0].pageX, touches[0].pageY);
+          p2 = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[1].pageX, touches[1].pageY);
+        } else {
+          xy = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[0].pageX, touches[0].pageY);
+          ang = this.matrix.rotation();
+        }
+      } else {
+        xy = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](e.pageX, e.pageY);
+        ang = this.matrix.rotation();
       }
-      if (doupdate) that._updateElement(m);
-      that.start.angle = point.angle;
-      if (that.events.move) that.trigger('move', e);
-      return false;
-    },
-    _dostart = function _dostart(e) {
-      if (that.options.disabled === true) return false;
-      if (that.startedresize || that.startedrotate) return false;
-      if (document.querySelectorAll('.transformable-active').length == 0) that.element.classList.add('transformable-active');
-      if (that.options.type == 'rotator-box') {
-        var rb = e.target.closest('svg');
-        if (rb && !rb.classList.contains('transformable-svg-anchor')) {
-          return false;
-        } else e.stopPropagation();
+      return {
+        point: xy,
+        angle: ang,
+        p1: p1,
+        p2: p2
+      };
+    }
+
+    /**
+     * Gets offset (point in element coordinate space), 
+     * window coordinates of the event and angle, distance and centre between two touches.
+     * @param {Event} e
+     * @param {Array} touches
+     */
+  }, {
+    key: "_getPoint2",
+    value: function _getPoint2(e, touches) {
+      var dat = this._getPageXY(e, touches);
+      var anc = this.Ancestry;
+      var pars = anc.GetParents();
+      var op = anc.OffsetFromPoint(dat.point, pars);
+      var dist = dat.p1 && dat.p2 ? this._distanceBetweenPoints(anc.OffsetFromPoint(dat.p1, pars), anc.OffsetFromPoint(dat.p2, pars)) : 0;
+      var deltaXY = null;
+      if (typeof e.deltaX !== 'undefined') {
+        deltaXY = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](e.deltaX, e.deltaY);
       }
+      return {
+        offset: op,
+        pageXY: dat.point,
+        pageX: dat.point.x,
+        pageY: dat.point.y,
+        angle: dat.angle,
+        distance: dist,
+        deltaXY: deltaXY
+      };
+    }
+
+    /**
+     * Calculates the distance between two points
+     * @param {Point} a First point
+     * @param {Point} b Second point
+     */
+  }, {
+    key: "_distanceBetweenPoints",
+    value: function _distanceBetweenPoints(a, b) {
+      var prop = a.pageX ? {
+        x: 'pageX',
+        y: 'pageY'
+      } : {
+        x: 'x',
+        y: 'y'
+      };
+      return Math.sqrt(Math.pow(Math.abs(b[prop.x] - a[prop.x]), 2) + Math.pow(Math.abs(b[prop.y] - a[prop.y]), 2));
+    }
+
+    /**
+     * Gets the centre point between two touches
+     * @param {Array} touches
+     */
+  }, {
+    key: "_getMiddle",
+    value: function _getMiddle(touches) {
+      var _touches = _slicedToArray(touches, 2),
+        touch1 = _touches[0],
+        touch2 = _touches[1];
+      var mx = (touch2.pageX - touch1.pageX) / 2 + touch1.pageX;
+      var my = (touch2.pageY - touch1.pageY) / 2 + touch1.pageY;
+      return new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](mx, my);
+    }
+
+    /**
+     * Gets distance between two touch points (in the window) relative to the element.
+     * @param {Array} touches
+     * @param {Array} pars
+     */
+  }, {
+    key: "_getDistance2",
+    value: function _getDistance2(touches, pars) {
+      var anc = this.Ancestry;
+      var parentElements = pars || anc.GetParents();
+      var t1 = anc.OffsetFromPoint(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[0].pageX, touches[0].pageY), parentElements);
+      var t2 = anc.OffsetFromPoint(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[1].pageX, touches[1].pageY), parentElements);
+      return this._distanceBetweenPoints(t1, t2);
+    }
+
+    /**
+     * Gets the angle in degrees between two touch points
+     * @param {Array} touches
+     * @param {Boolean} norm Optional: Normalise to be 0-365 degrees
+     */
+  }, {
+    key: "_getRotation",
+    value: function _getRotation(touches, norm) {
+      var r = Math.atan2((touches[0].pageY || touches[0].y) - (touches[1].pageY || touches[1].y), (touches[0].pageX || touches[0].x) - (touches[1].pageX || touches[1].x)) * 180 / Math.PI;
+      return norm ? this.matrix.normaldegree(r) : r;
+    }
+
+    /**
+     * Snaps the rotation to a multiple of 15 degrees if within 3 degrees of a multiple of 15 degrees.
+     */
+  }, {
+    key: "snapRotation",
+    value: function snapRotation() {
+      var _this$options$disable;
+      if ((_this$options$disable = this.options.disable) !== null && _this$options$disable !== void 0 && _this$options$disable.rotate) return;
+      var r = this.matrix.rotation();
+      var m = r - 15 * Math.round(r / 15);
+      var am = Math.abs(m);
+      var siz = this.sizes.element.initial;
+      this.setTransition(true);
+      if (am <= 3 && am > 0) {
+        var pt = this.lastrotationpoint || new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](siz.width / 2, siz.height / 2);
+        this.rotate(pt, -m);
+        this.lastlastrotationpoint = undefined;
+        this._pushhistory();
+      }
+      r = this.matrix.rotation();
+      var msg;
+      switch (Math.abs(Math.round(r * 10) / 10)) {
+        case 0:
+        case 180:
+          msg = 'Horizontal';
+          break;
+        case 90:
+          msg = 'Vertical';
+          break;
+        default:
+          msg = "Rotation: ".concat(Math.round(r * 10) / 10, "&deg;");
+      }
+      this.showMessage(msg, 'sticky', 2000);
+    }
+
+    /**
+     * Writes info to the console
+     * @param {String} m
+     * @param {any} c Not implemented
+     * @param {any} t Not implemented
+     */
+  }, {
+    key: "showMessage",
+    value: function showMessage(m, c, t) {
+      console.log(m);
+    }
+
+    /**
+     * Gets the centre point of the element in window coordinates
+     */
+  }, {
+    key: "_findCentreInWindow",
+    value: function _findCentreInWindow() {
+      var prect = this._getRect(this.parent);
+      return new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](prect.left + prect.width / 2, prect.top + prect.height / 2);
+    }
+
+    /**
+     * Centres the element in the middle of its parent element
+     * @param {Boolean} transition Optional
+     * @param {Array} pars Optional but should always be supplied
+     */
+  }, {
+    key: "centreinparent",
+    value: function centreinparent(transition, pars) {
+      var was = this.transition;
+      this.setTransition(transition);
+      var parentElements = pars || this.Ancestry.GetParents();
+      var pcs = getComputedStyle(this.parent);
+      var parentCentre = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](parseFloat(pcs.width) / 2, parseFloat(pcs.height) / 2);
+      var centreOnThis = this.matrix.inverse().transformpoint(parentCentre);
+      this.translate(centreOnThis.sub(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this.sizes.element.initial.width / 2, this.sizes.element.initial.height / 2)));
+      this.setTransition(was);
+    }
+
+    /**
+     * Find out if point p is within the rectangle defined by points a,b,c,d
+     * @param {Point} p
+     * @param {Point} a
+     * @param {Point} b
+     * @param {Point} c
+     * @param {Point} d
+     */
+  }, {
+    key: "pointInRectangle",
+    value: function pointInRectangle(p, a, b, c, d) {
+      var ab = b.sub(a);
+      var ap = p.sub(a);
+      var bc = c.sub(b);
+      var bp = p.sub(b);
+      var dot_abap = ab.dot(ap);
+      var dot_abab = ab.dot(ab);
+      var dot_bcbp = bc.dot(bp);
+      var dot_bcbc = bc.dot(bc);
+      return {
+        dot_abap: dot_abap,
+        dot_abab: dot_abab,
+        dot_bcbp: dot_bcbp,
+        dot_bcbc: dot_bcbc,
+        ok: 0 <= dot_abap && Math.round(dot_abap * 10) / 10 <= Math.round(dot_abab * 10) / 10 && 0 <= dot_bcbp && Math.round(dot_bcbp * 10) / 10 <= Math.round(dot_bcbc * 10) / 10
+      };
+    }
+
+    /**
+     * Triggers an event named n. 
+     * In the handler, this will refer to the Transformable instance.
+     * The handler will receive the transformable element as first argument and a real event object as the second argument.
+     * @param {String} n
+     * @param {Event} event Pass in a real event object if you have one
+     */
+  }, {
+    key: "trigger",
+    value: function trigger(n, event) {
+      if (typeof this.events[n] === "function") {
+        this.events[n].call(this, this.element, event);
+      }
+    }
+
+    /**
+     * Gets the points data needed to make rotation handles work
+     * @param {Event} e
+     * @param {Array} pars
+     */
+  }, {
+    key: "_getRotatorPoints",
+    value: function _getRotatorPoints(e, pars) {
+      var anc = this.Ancestry;
+      var parentElements = pars || anc.GetParents();
+      anc._setoffset();
       var touches = e.touches;
-      that.start = that._getPoint2(e, touches);
-      var ww = that.sizes.window;
-      if (that.start.pageX < 40 || that.start.pageX > ww.width - 40)
-        // don't translate if history navigation can happen from swiping at the edges of webpage.  e.g. on a touch device
-        {
+      var rpoint = touches ? new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[0].pageX, touches[0].pageY) : new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](e.pageX, e.pageY);
+      var apoint = this.anchor.TL;
+      var angle = Math.round(this._getRotation([apoint.add(anc.scroll), rpoint], false) * 100) / 100;
+      return {
+        deltaXY: null,
+        offset: anc.OffsetFromPoint(rpoint, parentElements),
+        pageXY: rpoint,
+        pageX: rpoint.x,
+        pageY: rpoint.y,
+        angle: angle,
+        distance: 0
+      };
+    }
+
+    /**
+     * Attaches events for rotation interactions with rotation handles
+     * @param {HTMLElement} hdl The element to use as a rotation handle
+     */
+  }, {
+    key: "_addRotateEvents",
+    value: function _addRotateEvents(hdl) {
+      var _this3 = this;
+      var _dostart = function _dostart(e) {
+        if (_this3.options.disabled || _this3.startedresize) return;
+        if (document.querySelectorAll('.transformable-active').length == 0) _this3.element.classList.add('transformable-active');
+        var m = _this3.matrix;
+        _this3.origrotate = {
+          trans: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](m.elements[4], m.elements[5]),
+          angle: m.rotation(true),
+          scale: m.scaling()
+        };
+        var touches = e.touches;
+        if ((touches === null || touches === void 0 ? void 0 : touches.length) === 2) if (touches[0].target && touches[1].target) if (touches[0].target !== touches[1].target) {
+          console.log('Two active elements not supported');
+          return false;
+        }
+        _this3.anchor = _this3.anchor || {};
+        _this3.anchor.clientRect = _this3._getRect(_this3.element.querySelector('.transformable-anchor-point'));
+        _this3.anchor.TL = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](_this3.anchor.clientRect.left, _this3.anchor.clientRect.top);
+        _this3.startrotate = _this3._getRotatorPoints(e);
+        _this3.startrotate.scale = _this3.origrotate.scale;
+        _this3.startedrotate = true;
+        _this3.draggingrotate = false;
+        _this3.setTransition(false);
+        e.stopPropagation();
+        if (e.type === 'mousedown') {
+          _this3.on(document.body, 'mousemove.transformable', _domove);
+          _this3.on(document.body, 'mouseup.transformable dragend.transformable', _dostop);
+        }
+      };
+      var _domove = function _domove(e) {
+        var _e$touches;
+        if (!_this3.startedrotate) return;
+        _this3.draggingrotate = true;
+        e.preventDefault();
+        e.stopPropagation();
+        if (((_e$touches = e.touches) === null || _e$touches === void 0 ? void 0 : _e$touches.length) === 2) return;
+        var point = _this3._getRotatorPoints(e);
+        var delta = {
+          angle: Math.round((point.angle - _this3.startrotate.angle) * 100) / 100
+        };
+        if (delta.angle !== 0) {
+          if (_this3.parent !== _this3.options.rotatetarget.element) {
+            _this3.matrix.rotateAboutPoint(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0), delta.angle);
+            _this3._updateElement();
+          }
+          if (_this3.options.rotatetarget instanceof Transformable) {
+            _this3.options.rotatetarget.rotate(_this3.anchor.TL.add(_this3.Ancestry.scroll), delta.angle, false, true);
+          }
+        }
+        _this3.startrotate.angle = point.angle;
+      };
+      var _dostop = function _dostop(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        _this3.element.classList.remove('transformable-active');
+        _this3.startedrotate = false;
+        _this3.draggingrotate = false;
+        _this3.off(document.body, 'mouseup.transformable dragend.transformable');
+        if (_this3.options.rotatetarget instanceof Transformable) {
+          if (_this3.options.rotatetarget.events.stop) _this3.options.rotatetarget.trigger('stop', e);
+          _this3.options.rotatetarget.snapRotation();
+        }
+        if (_this3.events.stop) _this3.trigger('stop', e);
+        _this3.snapRotation();
+      };
+      this.on(hdl, 'mousedown.transformable touchstart.transformable', _dostart);
+      this.on(hdl, 'touchmove.transformable', _domove);
+      this.on(hdl, 'touchend.transformable', _dostop);
+    }
+
+    /**
+     * Attaches events for resize interactions with resize handles
+     * @param {HTMLElement} tlb Top left button/handle used for moving the element
+     * @param {HTMLElement} brb Bottom right button/handle for resizing the element's width/height
+     */
+  }, {
+    key: "_addResizeEvents",
+    value: function _addResizeEvents(tlb, brb) {
+      var _this4 = this;
+      var _dostart = function _dostart(e) {
+        var _this4$contained;
+        if (!document.querySelector('.transformable-active')) {
+          _this4.element.classList.add('transformable-active');
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        var m = _this4.matrix;
+        _this4.origresize = {
+          trans: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](m.elements[4], m.elements[5]),
+          angle: m.rotation(),
+          scale: m.scaling()
+        };
+        _this4.startresize = _this4._getPoint2(e, e.touches);
+        _this4.startresize.scale = _this4.origresize.scale;
+        _this4.startedresize = true;
+        _this4.draggingresize = false;
+        var cs = getComputedStyle(_this4.element);
+        _this4.h = parseFloat(cs.height);
+        _this4.w = parseFloat(cs.width);
+        _this4.contained = (_this4$contained = _this4.contained) !== null && _this4$contained !== void 0 ? _this4$contained : true;
+        _this4.trigger('startresize', e);
+        _this4.setTransition(false);
+        if (e.type === 'mousedown') {
+          _this4.on(document.body, 'mousemove.transformable', _domove);
+          _this4.on(document.body, 'mouseup.transformable dragend.transformable', _dostop2);
+        }
+      };
+      var _domove = function _domove(e) {
+        var _e$touches2;
+        if (!_this4.element.classList.contains('transformable-active') || !_this4.startedresize) return;
+        _this4.draggingresize = true;
+        e.preventDefault();
+        e.stopPropagation();
+        if (((_e$touches2 = e.touches) === null || _e$touches2 === void 0 ? void 0 : _e$touches2.length) === 2) return;
+        var point = _this4._getPoint2(e, e.touches);
+        var start = _this4.startresize;
+        var delta = {
+          trans: point.offset.sub(_this4.startresize.offset),
+          angle: Math.round((point.angle - start.angle) * 100) / 100,
+          distance: start.distance != 0 ? Math.round(point.distance / ((start.distance + point.distance) / 2) * 1000) / 1000 : 0
+        };
+        if (delta.trans.nonzero()) {
+          var cs = getComputedStyle(_this4.element);
+          var h = parseFloat(cs.height);
+          var w = parseFloat(cs.width);
+          var dw = _this4.w - w;
+          var dh = _this4.h - h;
+          var neww = w + delta.trans.x + dw;
+          var newh = h + delta.trans.y + dh;
+          _this4.element.style.width = "".concat(neww, "px");
+          _this4.element.style.height = "".concat(newh, "px");
+          _this4.sizes.element.initial.bottomright = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](neww, newh);
+          _this4.sizes.element.initial.topright.x = neww;
+          _this4.sizes.element.initial.bottomleft.y = newh;
+          _this4.sizes.element.initial.width = neww;
+          _this4.sizes.element.initial.height = newh;
+        }
+        _this4.startresize.angle = point.angle;
+      };
+      var _dostop2 = function _dostop() {
+        _this4.off(document.body, 'mousemove.transformable', _domove);
+        _this4.off(document.body, 'mouseup.transformable dragend.transformable', _dostop2);
+        if (_this4.options.disabled) return;
+        _this4.element.classList.remove('transformable-active');
+        _this4.startedresize = false;
+        _this4.draggingresize = false;
+      };
+      this.on(brb, 'mousedown.transformable', _dostart);
+      this.on(brb, 'touchstart.transformable', _dostart);
+      this.on(brb, 'touchmove.transformable', _domove);
+      this.on(brb, 'touchend.transformable', _dostop2);
+    }
+
+    /**
+     * Gets the quadrant based on angle r and wether the angle is horizontal or vertical
+     * @param {Number} r
+     */
+  }, {
+    key: "getRotationQuadrant",
+    value: function getRotationQuadrant(r) {
+      var rot = (r !== null && r !== void 0 ? r : this.matrix.rotation()) % 360;
+      var normalizedRot = rot < 0 ? rot + 360 : rot;
+      return {
+        Angle: normalizedRot,
+        Quad: Math.floor(normalizedRot / 90),
+        Horiz: normalizedRot === 0 || normalizedRot === 180,
+        Vert: normalizedRot === 90 || normalizedRot === 270
+      };
+    }
+
+    /**
+     * Attaches events for scaling, rotating and moving elements. 
+     * Calculates and applies containment too.
+     */
+  }, {
+    key: "_addEvents",
+    value: function _addEvents() {
+      var _this5 = this,
+        _this$options$disable2;
+      if (typeof this.events.transition === 'function') {
+        this.element.addEventListener('transitionend', this.events.transition);
+      }
+      var _dostart = function _dostart(e) {
+        if (_this5.options.disabled || _this5.startedresize || _this5.startedrotate) return;
+        if (!document.querySelector('.transformable-active')) {
+          _this5.element.classList.add('transformable-active');
+        }
+        if (_this5.options.type === 'rotator-box') {
+          var rb = e.target.closest('svg');
+          if (rb && !rb.classList.contains('transformable-svg-anchor')) return false;else e.stopPropagation();
+        }
+        var touches = e.touches;
+        _this5.start = _this5._getPoint2(e, touches);
+        var ww = _this5.sizes.window;
+        if (_this5.start.pageX < 40 || _this5.start.pageX > ww.width - 40) {
+          // don't translate if history navigation can happen from swiping at the edges of webpage.  e.g. on a touch device
           console.log('edge cancel.');
           return false;
         }
-      that.delta = {
-        x: 0,
-        y: 0
+        _this5.delta = {
+          x: 0,
+          y: 0
+        };
+        if ((touches === null || touches === void 0 ? void 0 : touches.length) === 2) if (touches[0].target && touches[1].target) if (touches[0].target !== touches[1].target) {
+          console.log('Two active elements not supported');
+          return false;
+        }
+        var m = _this5.matrix;
+        _this5.orig = {
+          trans: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](m.elements[4], m.elements[5]),
+          angle: m.rotation(),
+          scale: m.scaling()
+        };
+        _this5.start.scale = _this5.orig.scale;
+        _this5.started = true;
+        _this5.dragging = false;
+        if (_this5.events.start) _this5.trigger('start', e);
+        _this5.setTransition(false);
+        if (e.type === 'mousedown') {
+          _this5.on(document.body, 'mousemove.transformable', _domove);
+          _this5.on(document.body, 'mouseup.transformable dragend.transformable', _dostop3);
+        }
       };
-      if (touches && touches.length == 2) if (touches[0].target && touches[1].target) if (touches[0].target !== touches[1].target) {
-        console.log('Two active elements not supported');
+      var _domove = function _domove(e) {
+        if (_this5.options.disabled || !_this5.element.classList.contains('transformable-active') || !_this5.started || _this5.startedresize || _this5.startedrotate) return false;
+        _this5.dragging = true;
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Note: The logic for containment in this method is extremely complex and has been kept as close to the original as possible during refactoring.
+        // Modernizing it further would require a deep re-architecture of the containment algorithm itself.
+        var touches = e.touches;
+        var doupdate = false;
+        if ((touches === null || touches === void 0 ? void 0 : touches.touches.length) == 2) if (touches[0].target && touches[1].target) if (touches[0].target !== touches[1].target) {
+          console.log('Two active elements not supported');
+          return false;
+        }
+        var m = _this5.matrix;
+        var disable = _this5.options.disable;
+        var docontain = _this5.options && _this5.options.contain;
+        var disableZoom = (disable === null || disable === void 0 ? void 0 : disable.zoom) || (disable === null || disable === void 0 ? void 0 : disable.scale);
+        var disableRotate = disable === null || disable === void 0 ? void 0 : disable.rotate;
+        var disableTranslate = disable === null || disable === void 0 ? void 0 : disable.translate;
+        var point = _this5._getPoint2(e, touches);
+        var orig = _this5.orig;
+        var start = _this5.start;
+        var delta = {
+          trans: point.offset.sub(start.offset),
+          angle: Math.round((point.angle - start.angle) * 100) / 100,
+          distance: start.distance !== 0 ? Math.round(point.distance / ((start.distance + point.distance) / 2) * 1000) / 1000 : 0
+        };
+        var that = _this5;
+        if (docontain && delta.angle == 0 && (!touches || touches && touches.length == 1)) {
+          var tl, tr, br, bl;
+          var anc = that.Ancestry,
+            parentT = anc.FirstParent(),
+            prect = parentT.rect,
+            inv = m.inverse(),
+            ptl = prect.topleft,
+            ptr = prect.topright,
+            pbr = prect.bottomright,
+            pbl = prect.bottomleft;
+          tl = inv.transformpoint(ptl).sub(delta.trans);
+          tr = inv.transformpoint(ptr).sub(delta.trans);
+          br = inv.transformpoint(pbr).sub(delta.trans);
+          bl = inv.transformpoint(pbl).sub(delta.trans);
+          if (!start.size) start.size = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](that._distanceBetweenPoints(tl, tr), that._distanceBetweenPoints(tl, bl));else start.size = delta.distance != 0 ? new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](that._distanceBetweenPoints(tl, tr), that._distanceBetweenPoints(tl, bl)) : start.size;
+          var csiz = that.sizes.element.initial;
+          var containment,
+            opts = that.options;
+          if (docontain == 'enclose') {
+            var enclosed = {
+              tl: that.pointInRectangle(csiz.topleft, tl, tr, br, bl),
+              tr: that.pointInRectangle(csiz.topright, tl, tr, br, bl),
+              br: that.pointInRectangle(csiz.bottomright, tl, tr, br, bl),
+              bl: that.pointInRectangle(csiz.bottomleft, tl, tr, br, bl)
+            };
+            var containcount = 0;
+            if (enclosed.tl.ok) containcount++;
+            if (enclosed.tr.ok) containcount++;
+            if (enclosed.br.ok) containcount++;
+            if (enclosed.bl.ok) containcount++;
+            var contained = containcount == 4;
+            if (!contained) {
+              var quad = that.getRotationQuadrant(start.angle);
+              switch (quad.Quad) {
+                case 0:
+                  if (quad.Angle == 0) {
+                    if (!enclosed.br.ok) {
+                      var brv = csiz.bottomright.perpOnLine(tr, br).sub(csiz.bottomright),
+                        brh = csiz.bottomright.perpOnLine(bl, br).sub(csiz.bottomright);
+                      if (brv.x < 0) delta.trans = delta.trans.add(brv);
+                      if (brh.y < 0) delta.trans = delta.trans.add(brh);
+                    }
+                    if (!enclosed.tl.ok) {
+                      var tlv = csiz.topleft.perpOnLine(tl, bl),
+                        tlh = csiz.topleft.perpOnLine(tl, tr);
+                      if (tlv.x > 0) delta.trans = delta.trans.add(tlv);
+                      if (tlh.y > 0) delta.trans = delta.trans.add(tlh);
+                    }
+                  } else {
+                    if (!enclosed.bl.ok) {
+                      var blv = csiz.bottomleft.perpOnLine(tl, bl).sub(csiz.bottomleft); //,
+
+                      if (blv.x > 0) delta.trans = delta.trans.add(blv);
+                    }
+                    if (!enclosed.br.ok) {
+                      var brh = csiz.bottomright.perpOnLine(bl, br).sub(csiz.bottomright);
+                      if (brh.y < 0) delta.trans = delta.trans.add(brh);
+                    }
+                    if (!enclosed.tr.ok) {
+                      var trv = csiz.topright.perpOnLine(tr, br).sub(csiz.topright); //,
+                      if (trv.x < 0) delta.trans = delta.trans.add(trv);
+                    }
+                    if (!enclosed.tl.ok) {
+                      var tlh = csiz.topleft.perpOnLine(tl, tr);
+                      if (tlh.y > 0) delta.trans = delta.trans.add(tlh);
+                    }
+                  }
+                  break;
+                case 3:
+                  if (quad.Angle == 270) {
+                    if (!enclosed.tl.ok) {
+                      var tlh = csiz.topleft.perpOnLine(tl, bl),
+                        tlv = csiz.topleft.perpOnLine(bl, br);
+                      if (tlv.x > 0) delta.trans = delta.trans.add(tlv);
+                      if (tlh.y > 0) delta.trans = delta.trans.add(tlh);
+                    }
+                    if (!enclosed.br.ok) {
+                      var brv = csiz.bottomright.perpOnLine(tl, tr).sub(csiz.bottomright),
+                        brh = csiz.bottomright.perpOnLine(br, tr).sub(csiz.bottomright);
+                      if (brv.x < 0) delta.trans = delta.trans.add(brv);
+                      if (brh.y < 0) delta.trans = delta.trans.add(brh);
+                    }
+                  } else {
+                    if (!enclosed.tl.ok) {
+                      var tlv = csiz.topleft.perpOnLine(tl, bl);
+                      if (tlv.x > 0) delta.trans = delta.trans.add(tlv);
+                    }
+                    if (!enclosed.br.ok) {
+                      var brv = csiz.bottomright.perpOnLine(tr, br).sub(csiz.bottomright);
+                      if (brv.x < 0) delta.trans = delta.trans.add(brv);
+                    }
+                    if (!enclosed.tr.ok) {
+                      var trh = csiz.topright.perpOnLine(tl, tr).sub(csiz.topright);
+                      if (trh.y > 0) delta.trans = delta.trans.add(trh);
+                    }
+                    if (!enclosed.bl.ok) {
+                      var blh = csiz.bottomleft.perpOnLine(bl, br).sub(csiz.bottomleft);
+                      if (blh.y < 0) delta.trans = delta.trans.add(blh);
+                    }
+                  }
+                  break;
+                case 1:
+                  if (quad.Angle == 90) {
+                    // can get away with 2 perp calcs instead of 4;
+                    if (!enclosed.tl.ok) {
+                      var tlv = csiz.topleft.perpOnLine(tr, tl),
+                        tlh = csiz.topleft.perpOnLine(tr, br);
+                      if (tlv.x > 0) delta.trans = delta.trans.add(tlv);
+                      if (tlh.y > 0) delta.trans = delta.trans.add(tlh);
+                    }
+                    if (!enclosed.br.ok) {
+                      var brv = csiz.bottomright.perpOnLine(br, bl).sub(csiz.bottomright),
+                        brh = csiz.bottomright.perpOnLine(tl, bl).sub(csiz.bottomright);
+                      if (brv.x < 0) delta.trans = delta.trans.add(brv);
+                      if (brh.y < 0) delta.trans = delta.trans.add(brh);
+                    }
+                  } else {
+                    if (!enclosed.tl.ok) {
+                      var tlv = csiz.topleft.perpOnLine(tr, br);
+                      if (tlv.x > 0) delta.trans = delta.trans.add(tlv);
+                    }
+                    if (!enclosed.br.ok) {
+                      var brv = csiz.bottomright.perpOnLine(tl, bl).sub(csiz.bottomright);
+                      if (brv.x < 0) delta.trans = delta.trans.add(brv);
+                    }
+                    if (!enclosed.tr.ok) {
+                      var trh = csiz.topright.perpOnLine(bl, br).sub(csiz.topright);
+                      if (trh.y > 0) delta.trans = delta.trans.add(trh);
+                    }
+                    if (!enclosed.bl.ok) {
+                      var blh = csiz.bottomleft.perpOnLine(tr, tl).sub(csiz.bottomleft);
+                      if (blh.y < 0) delta.trans = delta.trans.add(blh);
+                    }
+                  }
+                  break;
+                case 2:
+                  if (quad.Angle == 180) {
+                    // can get away with 2 calcs instead of 4;
+                    if (!enclosed.tl.ok) {
+                      var tlv = csiz.topleft.perpOnLine(br, bl),
+                        tlh = csiz.topleft.perpOnLine(tl, bl);
+                      if (tlv.y > 0) delta.trans = delta.trans.add(tlv);
+                      if (tlh.y > 0) delta.trans = delta.trans.add(tlh);
+                    }
+                    if (!enclosed.br.ok) {
+                      var brv = csiz.bottomright.perpOnLine(tr, tl).sub(csiz.bottomright),
+                        brh = csiz.bottomright.perpOnLine(tr, br).sub(csiz.bottomright);
+                      if (brv.y < 0) delta.trans = delta.trans.add(brv);
+                      if (brh.y < 0) delta.trans = delta.trans.add(brh);
+                    }
+                  }
+                  if (!enclosed.tl.ok) {
+                    var tlv = csiz.topleft.perpOnLine(br, bl);
+                    if (tlv.y > 0) delta.trans = delta.trans.add(tlv);
+                  }
+                  if (!enclosed.br.ok) {
+                    var brv = csiz.bottomright.perpOnLine(tr, tl).sub(csiz.bottomright); //,
+                    if (brv.y < 0) delta.trans = delta.trans.add(brv);
+                  }
+                  if (!enclosed.tr.ok) {
+                    var trh = csiz.topright.perpOnLine(tl, bl).sub(csiz.topright);
+                    if (trh.x < 0) delta.trans = delta.trans.add(trh);
+                  }
+                  if (!enclosed.bl.ok) {
+                    var blh = csiz.bottomleft.perpOnLine(tr, br).sub(csiz.bottomleft);
+                    if (blh.x > 0) delta.trans = delta.trans.add(blh);
+                  }
+                  break;
+              }
+            }
+          }
+          if (docontain == 'cover') {
+            var enclosed = {
+              tl: that.pointInRectangle(csiz.topleft, tl, tr, br, bl),
+              tr: that.pointInRectangle(csiz.topright, tl, tr, br, bl),
+              br: that.pointInRectangle(csiz.bottomright, tl, tr, br, bl),
+              bl: that.pointInRectangle(csiz.bottomleft, tl, tr, br, bl)
+            };
+            var okcorners = 0;
+            if (!enclosed.tl.ok) okcorners++;
+            if (!enclosed.tr.ok) okcorners++;
+            if (!enclosed.br.ok) okcorners++;
+            if (!enclosed.bl.ok) okcorners++;
+            if (!enclosed.tl.ok && !enclosed.tr.ok && !enclosed.br.ok && !enclosed.bl.ok || that.lockcontain || okcorners == 3 && start.angle == 0) {
+              that.lockcontain = true;
+              var quad = that.getRotationQuadrant(start.angle);
+              switch (quad.Quad) {
+                case 0:
+                  if (tr.y <= 0) delta.trans.y = delta.trans.y + tr.y;
+                  if (bl.y >= csiz.bottomleft.y) delta.trans.y = delta.trans.y + (bl.y - csiz.bottomleft.y);
+                  if (br.x >= csiz.bottomright.x) delta.trans.x = delta.trans.x + (br.x - csiz.bottomright.x);
+                  if (tl.x <= 0) delta.trans.x = delta.trans.x + tl.x;
+                  break;
+                case 1:
+                  if (tl.y >= csiz.bottomleft.y) delta.trans.y = delta.trans.y + (tl.y - csiz.bottomleft.y);
+                  if (bl.x >= csiz.topright.x) delta.trans.x = delta.trans.x - (csiz.topright.x - bl.x);
+                  if (br.y <= 0)
+                    // works
+                    delta.trans.y = delta.trans.y + br.y;
+                  if (tr.x <= 0) delta.trans.x = delta.trans.x + tr.x;
+                  break;
+                case 2:
+                  if (bl.y <= 0)
+                    // works
+                    delta.trans.y = delta.trans.y + bl.y;
+                  if (tl.x >= csiz.bottomright.x) delta.trans.x = delta.trans.x - (csiz.bottomright.x - tl.x);
+                  if (tr.y >= csiz.bottomleft.y) delta.trans.y = delta.trans.y + (tr.y - csiz.bottomleft.y);
+                  if (br.x <= 0) delta.trans.x = delta.trans.x + br.x;
+                  //console.log('points')
+                  //console.log(tl)
+                  //console.log(tr)
+                  //console.log(br)
+                  //console.log(bl)
+                  break;
+                case 3:
+                  if (tl.y <= 0)
+                    // works
+                    delta.trans.y = delta.trans.y + tl.y;
+                  if (bl.x <= 0) delta.trans.x = delta.trans.x + bl.x;
+                  if (br.y >= csiz.bottomright.y)
+                    // works
+                    delta.trans.y = delta.trans.y + (br.y - csiz.bottomright.y);
+                  if (tr.x >= csiz.topright.x) delta.trans.x = delta.trans.x - (csiz.topright.x - tr.x);
+                  break;
+              }
+            }
+          }
+        }
+        if (delta.trans.nonzero() && !disableTranslate) {
+          m.translate(delta.trans);
+          doupdate = true;
+          that.delta.x += delta.trans.x;
+          that.delta.y += delta.trans.y;
+        }
+        if (delta.distance != 0 && delta.distance != 1 && touches) if (touches.length == 2 && !disableZoom) {
+          m.scale(point.offset, delta.distance);
+          doupdate = true;
+        }
+        if (delta.angle != 0 && !disableRotate) {
+          m.rotateAboutPoint(point.offset, delta.angle);
+          doupdate = true;
+        }
+        if (doupdate) that._updateElement(m);
+        that.start.angle = point.angle;
+        if (that.events.move) that.trigger('move', e);
         return false;
-      }
-      var m = that.matrix;
-      that.orig = {
-        trans: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](m.elements[4], m.elements[5]),
-        angle: m.rotation(),
-        scale: m.scaling()
       };
-      that.start.scale = that.orig.scale;
-      that.started = true;
-      that.dragging = false;
-      if (that.events.start) that.trigger('start', e);
-      that.setTransition(false);
-      if (e.type == 'mousedown') {
-        var bodee = document.querySelector('body');
-        that.on(bodee, 'mousemove.transformable', _domove);
-        that.on(bodee, 'mouseup.transformable dragend.transformable', _dostop4);
-      }
-    },
-    _dostop4 = function _dostop(e) {
-      var bodee = document.querySelector('body');
-      that.off(bodee, 'mousemove.transformable', _domove);
-      that.off(bodee, 'mouseup.transformable dragend.transformable', _dostop4);
-      that.element.classList.remove('transformable-active');
-      that.element.classList.remove('transformable-reset');
-      if (that.options.disabled === true) return false;
-      that.lockcontain = false;
-      if (that.started === true && that.dragging === true) {
-        that._pushhistory();
-        that.snapRotation();
-      }
-      if (that.started === true && that.dragging === false) if (that.events.tap) that.trigger('tap', e);
-      that.dragging = false;
-      that.started = false;
-      if (that.events.stop) that.trigger('stop', e);
-      that.setTransition(true);
-      var rb = that.rotatorBox,
-        tlb = that.resizertl,
-        brb = that.resizerbr;
-      if (rb) {
-        var nsc = that.matrix.scaling();
-        rb.scale(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0), 1 / rb.matrix.scaling() * (1 / nsc));
-      }
-      if (tlb && brb) {
-        var nscc = nsc || that.matrix.scaling(); //,
+      var _dostop3 = function _dostop(e) {
+        _this5.off(document.body, 'mousemove.transformable', _domove);
+        _this5.off(document.body, 'mouseup.transformable dragend.transformable', _dostop3);
+        _this5.element.classList.remove('transformable-active', 'transformable-reset');
+        if (_this5.options.disabled) return false;
+        _this5.lockcontain = false;
+        if (_this5.started && _this5.dragging) {
+          _this5._pushhistory();
+          _this5.snapRotation();
+        }
+        if (_this5.started && !_this5.dragging) {
+          _this5.trigger('tap', e);
+        }
+        _this5.dragging = false;
+        _this5.started = false;
+        if (_this5.events.stop) _this5.trigger('stop', e);
+        _this5.setTransition(true);
 
-        tlb.style.transform = 'scale(' + 1 / nscc + ')';
-        brb.style.transform = 'scale(' + 1 / nscc + ')';
-      }
-    },
-    _dowheelzoom = function _dowheelzoom(e) {
-      if (that.options.disabled === true) return false;
-      if (that.startedresize || that.startedrotate) return false;
-      if (that.options.type == 'rotator-box') return false;
-      e.preventDefault();
-      e.stopPropagation();
-      var now = Date.now(),
-        dmw = that.lastwheelmove ? now - that.lastwheelmove : 150;
-      if (dmw < 150 && navigator.userAgent.indexOf('Mac') > -1) return false;
-      if (document.querySelectorAll('.transformable-active').length == 0) that.element.classList.add('transformable-active');
-      if (that.rotatorBox) that.rotatorBox.parent.classList.add('transformable-wheel-active');
-      if (that._wheelTimer) clearTimeout(that._wheelTimer);
-      var point = that._getPoint2(e),
-        m = that.matrix,
-        s = m.scaling(),
-        ds,
-        sy = 0.05,
-        acc = point.deltaXY.y < 0 ? 1 : -1;
-      that.setTransition(true);
-      if (point.deltaXY.y != 0) {
-        ds = 1 + sy * acc;
-        m.scale(point.offset, ds);
-        that._updateElement();
-        //console.log(ds);
-      }
-      ;
-      that.element.classList.remove('transformable-active');
-      that._wheelTimer = setTimeout(function () {
-        that._pushhistory();
-        if (that.rotatorBox) that.rotatorBox.parent.classList.remove('transformable-wheel-active');
-      }, 750);
-      that.lastwheelmove = now;
-    };
-  that.on(el, 'mousedown.transformable', _dostart);
-  that.on(el, 'touchstart.transformable', _dostart);
-  that.on(el, 'touchmove.transformable', _domove);
-  that.on(el, 'touchend.transformable', _dostop4);
-  that.on(el, 'scroll.transformable', function (e) {
-    console.log('tried scroll');
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-  });
-  if (!this.options.disable || this.options.disable && !this.options.disable.wheel) if (navigator.userAgent.indexOf('Mac OS') == -1)
-    // some issues with wild zoom on magic mouse, so turn it off
-    addWheelListener(el, _dowheelzoom);
-};
+        // Scale handles on stop
 
+        var that = _this5;
+        var rb = that.rotatorBox,
+          tlb = that.resizertl,
+          brb = that.resizerbr;
+        if (rb) {
+          var nsc = that.matrix.scaling();
+          rb.scale(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0), 1 / rb.matrix.scaling() * (1 / nsc));
+        }
+        if (tlb && brb) {
+          var nscc = nsc || that.matrix.scaling(); //,
+
+          tlb.style.transform = 'scale(' + 1 / nscc + ')';
+          brb.style.transform = 'scale(' + 1 / nscc + ')';
+        }
+      };
+      var _dowheelzoom = function _dowheelzoom(e) {
+        if (_this5.options.disabled || _this5.startedresize || _this5.startedrotate || _this5.options.type === 'rotator-box') return false;
+        e.preventDefault();
+        e.stopPropagation();
+        var now = Date.now();
+        var dmw = _this5.lastwheelmove ? now - _this5.lastwheelmove : 150;
+        if (dmw < 150 && navigator.userAgent.includes('Mac')) return false;
+        if (!document.querySelector('.transformable-active')) {
+          _this5.element.classList.add('transformable-active');
+        }
+        if (_this5.rotatorBox) {
+          _this5.rotatorBox.parent.classList.add('transformable-wheel-active');
+        }
+        if (_this5._wheelTimer) clearTimeout(_this5._wheelTimer);
+        var point = _this5._getPoint2(e);
+        var m = _this5.matrix;
+        _this5.setTransition(true);
+        if (point.deltaXY.y !== 0) {
+          var acc = point.deltaXY.y < 0 ? 1 : -1;
+          var ds = 1 + 0.05 * acc;
+          m.scale(point.offset, ds);
+          _this5._updateElement();
+        }
+        _this5.element.classList.remove('transformable-active');
+        _this5._wheelTimer = setTimeout(function () {
+          _this5._pushhistory();
+          if (_this5.rotatorBox) {
+            _this5.rotatorBox.parent.classList.remove('transformable-wheel-active');
+          }
+        }, 750);
+        _this5.lastwheelmove = now;
+      };
+      this.on(this.element, 'mousedown.transformable', _dostart);
+      this.on(this.element, 'touchstart.transformable', _dostart);
+      this.on(this.element, 'touchmove.transformable', _domove);
+      this.on(this.element, 'touchend.transformable', _dostop3);
+      this.on(this.element, 'scroll.transformable', function (e) {
+        console.log('tried scroll');
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      });
+      if (!this.options.disable || (_this$options$disable2 = this.options.disable) !== null && _this$options$disable2 !== void 0 && _this$options$disable2.wheel) if (!navigator.userAgent.includes('Mac OS'))
+        // some issues with wild zoom on magic mouse, so turn it off
+        addWheelListener(this.element, _dowheelzoom);
+    }
+
+    /**
+     * attaches events to an element
+     * @param {HTMLElement} el The element to attach the event to
+     * @param {String} event Type of event with optional namespace. E.g. touchstart.mynamespace
+     * @param {Function} func Handler function
+     * @param {Object} opts Options to use when attaching the event
+     */
+  }, {
+    key: "on",
+    value: function on(el, event, func, opts) {
+      //const events = event.split(' ');
+      //for (const evt of events) {
+      //    const [ev, ns] = evt.split('.');
+      //    el.addEventListener(ev, func, opts || false);
+
+      //    Transformable.Handlers.Namespaces[evt] = Transformable.Handlers.Namespaces[evt] || [];
+      //    if (ns) Transformable.Handlers.Namespaces[ns] = Transformable.Handlers.Namespaces[ns] || [];
+
+      //    const handler = { event: ev, func, opts: opts || false };
+      //    Transformable.Handlers.Namespaces[evt].push(handler);
+      //    if (ns) Transformable.Handlers.Namespaces[ns].push(handler);
+      //}
+
+      var events = event.split(' '),
+        i,
+        sp,
+        ev,
+        ns,
+        pl;
+      for (i = 0; i < events.length; i++) {
+        sp = events[i].split('.'), ev = sp[0], ns = sp.length > 1 ? sp[1] : false;
+        el.addEventListener(ev, func, opts || false);
+        if (!Transformable.Handlers.Namespaces[event]) Transformable.Handlers.Namespaces[event] = [];
+        if (ns) if (!Transformable.Handlers.Namespaces[ns]) Transformable.Handlers.Namespaces[ns] = [];
+        pl = Transformable.Handlers.Namespaces[event].push({
+          event: ev,
+          func: func,
+          opts: opts || false
+        });
+        if (ns) Transformable.Handlers.Namespaces[ns].push(Transformable.Handlers.Namespaces[event][pl - 1]);
+      }
+    }
+
+    /**
+     * Removes an event previously added with .on(...)
+     * @param {HTMLElement} el The element to remove the event from
+     * @param {String} event Handler function to remove
+     * @param {Object} opts Options to use when removing the event
+     */
+  }, {
+    key: "off",
+    value: function off(el, event, opts) {
+      var handlers = Transformable.Handlers.Namespaces[event];
+      if (handlers) {
+        var _iterator = _createForOfIteratorHelper(handlers),
+          _step;
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var handler = _step.value;
+            el.removeEventListener(handler.event, handler.func, handler.opts || false);
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      }
+    }
+
+    /**
+     * Resets/updates the instance.
+     */
+  }, {
+    key: "Refresh",
+    value: function Refresh() {
+      this.sizes = undefined;
+      this.setInitialSizes();
+      this.Ancestry.Refresh();
+    }
+  }]);
+}();
+/**
+ * A store/lookup of all transformable instances.
+ * Each transformable element is given a data attribute for its id in this lookup.
+ */
+_defineProperty(Transformable, "Instance", []);
 /**
  * Datastore for any namespaced events attached to elements by .on(....)
  */
-_Transformable.Handlers = {
+_defineProperty(Transformable, "Handlers", {
   Namespaces: {}
-};
-
-/**
- * attaches events to an element
- * @param {HtmlElement} el The element to attach the event to
- * @param {String} event Type of event with optional namespace. E.g. touchstart.mynamespace
- * @param {Function} func Handler function
- * @param {Object} opts Options to use when attaching the event
- */
-_Transformable.prototype.on = function (el, event, func, opts) {
-  var events = event.split(' '),
-    i,
-    sp,
-    ev,
-    ns,
-    pl;
-  for (i = 0; i < events.length; i++) {
-    sp = events[i].split('.'), ev = sp[0], ns = sp.length > 1 ? sp[1] : false;
-    el.addEventListener(ev, func, opts || false);
-    if (!_Transformable.Handlers.Namespaces[event]) _Transformable.Handlers.Namespaces[event] = [];
-    if (ns) if (!_Transformable.Handlers.Namespaces[ns]) _Transformable.Handlers.Namespaces[ns] = [];
-    pl = _Transformable.Handlers.Namespaces[event].push({
-      event: ev,
-      func: func,
-      opts: opts || false
-    });
-    if (ns) _Transformable.Handlers.Namespaces[ns].push(_Transformable.Handlers.Namespaces[event][pl - 1]);
-  }
-};
-
-/**
- * REmoves an event previously added with .on(...)
- * @param {HtmlElement} el The element to remove the event from
- * @param {any} event Handler function to remove
- * @param {any} opts Options to use when removing the event
- */
-_Transformable.prototype.off = function (el, event, opts) {
-  var x = _Transformable.Handlers.Namespaces[event],
-    tv;
-  if (x) for (var i = 0; i < x.length; i++) {
-    tv = x[i];
-    el.removeEventListener(tv.event, tv.func, tv.opts);
-  }
-};
-
-/**
- * Resets/updates the instance.
- */
-_Transformable.prototype.Refresh = function () {
-  this.sizes = undefined;
-  this.setInitialSizes();
-  this.Ancestry.Refresh();
-}; // <--- dont forget this semicolon, it will break the next closure if missing
+});
+;
 (function () {
-  var timer, rtimer;
+  var timer;
+  var refreshtransformables = function refreshtransformables() {
+    document.querySelectorAll('.transformable').forEach(function (v) {
+      var i = v.getAttribute('data-transformable-id');
+      var t = i ? Transformable.Instance[i] : null;
+      if (t instanceof Transformable) {
+        t.Refresh();
+      }
+    });
+  };
   window.addEventListener('resize', function () {
     clearTimeout(timer);
     timer = setTimeout(refreshtransformables, 150);
   });
-  //window.addEventListener('scroll', function () {
-  //    clearTimeout(rtimer);
-  //    rtimer = setTimeout(refreshtransformables, 150);
-  //});
-
-  var refreshtransformables = function refreshtransformables() {
-    // do stuff
-    var ts = document.querySelectorAll('.transformable').forEach(function (v, i) {
-      var i = v.getAttribute('data-transformable-id'),
-        t = i ? _Transformable.Instance[i] : false;
-      if (t instanceof _Transformable) t.Refresh();
-    });
-  };
-})(); // end
-
+})();
 // Ensure Transformable is available as a global for UMD/browser builds
 if (typeof window !== 'undefined') {
-  window.Transformable = _Transformable;
+  window.Transformable = Transformable;
 }
-/* harmony default export */ __webpack_exports__["default"] = (_Transformable);
+/* harmony default export */ __webpack_exports__["default"] = (Transformable);
 }();
 __webpack_exports__ = __webpack_exports__["default"];
 /******/ 	return __webpack_exports__;
