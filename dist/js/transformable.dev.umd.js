@@ -10,49 +10,306 @@
 })(this, function() {
 return /******/ (function() { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
+/******/ 	// The require scope
+/******/ 	var __webpack_require__ = {};
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
 
-/***/ "./src/css/transformable.css":
-/*!***********************************!*\
-  !*** ./src/css/transformable.css ***!
-  \***********************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "default": function() { return /* binding */ transformable; }
+});
 
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./src/js/Ancestry.js":
-/*!****************************!*\
-  !*** ./src/js/Ancestry.js ***!
-  \****************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Matrix_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Matrix.js */ "./src/js/Matrix.js");
-/* harmony import */ var _Point_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Point.js */ "./src/js/Point.js");
+;// ./src/js/Point.js
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var Point = /*#__PURE__*/function () {
+  function Point(x) {
+    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
+    _classCallCheck(this, Point);
+    this.x = x;
+    this.y = y;
+  }
+  return _createClass(Point, [{
+    key: "scale",
+    value: function scale(factor) {
+      return new Point(this.x * factor, this.y * factor);
+    }
+  }, {
+    key: "round",
+    value: function round() {
+      var precision = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var factor = precision ? Math.pow(10, precision) : 1;
+      return new Point(Math.round(this.x * factor) / factor, Math.round(this.y * factor) / factor);
+    }
+  }, {
+    key: "sub",
+    value: function sub(p) {
+      return new Point(this.x - p.x, this.y - p.y);
+    }
+  }, {
+    key: "add",
+    value: function add(p) {
+      return new Point(this.x + p.x, this.y + p.y);
+    }
+  }, {
+    key: "mult",
+    value: function mult(p) {
+      return new Point(this.x * p.x, this.y * p.y);
+    }
+  }, {
+    key: "divide",
+    value: function divide(p) {
+      return new Point(this.x / p.x, this.y / p.y);
+    }
+  }, {
+    key: "nonzero",
+    value: function nonzero() {
+      return this.x !== 0 || this.y !== 0;
+    }
+  }, {
+    key: "equals",
+    value: function equals(p) {
+      return this.x === p.x && this.y === p.y;
+    }
+  }, {
+    key: "moreoreq",
+    value: function moreoreq(p) {
+      return {
+        x: this.x >= p.x,
+        y: this.y >= p.y
+      };
+    }
+  }, {
+    key: "lessoreq",
+    value: function lessoreq(p) {
+      return {
+        x: this.x <= p.x,
+        y: this.y <= p.y
+      };
+    }
+  }, {
+    key: "dot",
+    value: function dot(p) {
+      return this.x * p.x + this.y * p.y;
+    }
+  }, {
+    key: "perpOnLine",
+    value: function perpOnLine(p1, p2) {
+      var k = ((p2.y - p1.y) * (this.x - p1.x) - (p2.x - p1.x) * (this.y - p1.y)) / (Math.pow(p2.y - p1.y, 2) + Math.pow(p2.x - p1.x, 2));
+      var x4 = this.x - k * (p2.y - p1.y);
+      var y4 = this.y + k * (p2.x - p1.x);
+      return new Point(x4, y4);
+    }
+  }, {
+    key: "mag",
+    value: function mag() {
+      return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+
+    // toPos() {
+    //   return new Pos(this.x, this.y);
+    // }
+  }]);
+}();
+/* harmony default export */ var js_Point = (Point);
+;// ./src/js/Matrix.js
+
+var _Matrix = function Matrix(a) {
+  if (a == null || typeof a == 'undefined') return _Matrix.Identity();
+  if (a instanceof Array) {
+    this.elements = a.slice(0);
+  } else {
+    if (a instanceof _Matrix) {
+      this.elements = a.elements.slice(0);
+    } else {
+      if (arguments.length == 6) {
+        this.elements = [];
+        var i = 0;
+        while (i < arguments.length) this.elements.push(arguments[i++]);
+      } else throw new Error("Can't create Matrix from supplied arguments. Array of 6 elements, Matrix or nothing only.");
+    }
+  }
+  this.history = {
+    undo: [],
+    redo: []
+  };
+  return this;
+};
+_Matrix.Identity = function () {
+  return new _Matrix([1, 0, 0, 1, 0, 0]);
+};
+_Matrix.prototype = {
+  transformpoint: function transformpoint(pt) {
+    var m = this.elements;
+    return new js_Point(pt.x * m[0] + pt.y * m[2] + m[4], pt.x * m[1] + pt.y * m[3] + m[5]);
+  },
+  multiply: function multiply(els) {
+    var me = this.elements;
+    var a1 = me[0],
+      b1 = me[1],
+      c1 = me[2],
+      d1 = me[3],
+      e1 = me[4],
+      f1 = me[5],
+      a2 = els[0],
+      b2 = els[1],
+      c2 = els[2],
+      d2 = els[3],
+      e2 = els[4],
+      f2 = els[5];
+
+    /* matrix order (canvas compatible):
+    * ace
+    * bdf
+    * 001
+    */
+    this.elements = [a1 * a2 + c1 * b2, b1 * a2 + d1 * b2, a1 * c2 + c1 * d2, b1 * c2 + d1 * d2, a1 * e2 + c1 * f2 + e1, b1 * e2 + d1 * f2 + f1];
+    return this;
+  },
+  elementsequal: function elementsequal(a, b) {
+    if (!a || !b) return false;
+    return a[0] == b[0] && a[1] == b[1] && a[2] == b[2] && a[3] == b[3] && a[4] == b[4] && a[5] == b[5];
+  },
+  save: function save(els) {
+    var h = this.history,
+      last,
+      k = typeof els === 'string' ? els : false;
+    if (!els || k) els = this.elements;
+    last = h.undo[h.undo.length - 1];
+    if (!this.elementsequal(els, last)) {
+      var l = h.undo.push(els.slice(0));
+      h.redo = [];
+      if (k) h.undo[k] = h.undo[l - 1];
+    } else if (k) {
+      h.undo[k] = last;
+    }
+  },
+  undo: function undo(k) {
+    var h = this.history.undo,
+      len = h.length,
+      cur = h.pop(),
+      prev = typeof k == 'string' ? h[k] : h[h.length - 1];
+    if (cur) this.history.redo.unshift(cur);
+    this.elements = prev ? prev.slice(0) : this.identity();
+  },
+  redo: function redo() {
+    var h = this.history.redo,
+      len = h.length,
+      cur = h.pop(),
+      prev = h[h.length - 1];
+    if (cur) this.history.undo.unshift(cur);
+    this.elements = prev ? prev.slice(0) : this.identity();
+  },
+  reset: function reset() {
+    this.elements = this.identity();
+    return this;
+  },
+  determinant: function determinant() {
+    var m = this.elements;
+    return m[0] * m[3] - m[1] * m[2];
+  },
+  inverse: function inverse() {
+    var me = this.elements,
+      m = this.identity(),
+      dt = this.determinant();
+    if (dt < 1e-14) throw "Matrix not invertible.";
+    m[0] = me[3] / dt;
+    m[1] = -me[1] / dt;
+    m[2] = -me[2] / dt;
+    m[3] = me[0] / dt;
+    m[4] = (me[2] * me[5] - me[3] * me[4]) / dt;
+    m[5] = -(me[0] * me[5] - me[1] * me[4]) / dt;
+    return new _Matrix(m);
+  },
+  invert: function invert() {
+    return this.multiply(this.inverse().elements);
+  },
+  identity: function identity() {
+    return [1, 0, 0, 1, 0, 0];
+  },
+  isIdentity: function isIdentity() {
+    var m = this.elements;
+    return m[0] === 1 && m[1] === 0 && m[2] === 0 && m[3] === 1 && m[4] === 0 && m[5] === 0;
+  },
+  translate: function translate(x, y) {
+    if (x instanceof js_Point && !y) return this.multiply([1, 0, 0, 1, x.x, x.y]);
+    return this.multiply([1, 0, 0, 1, x, y]);
+  },
+  scale: function scale(pt, s) {
+    this.multiply([s, 0, 0, s, 0, 0]);
+    var dp = pt.sub(pt.scale(s)).scale(1 / s); // keep pt in same place after scale from origin
+    return this.translate(dp);
+  },
+  rotateAboutPoint: function rotateAboutPoint(pt, a) {
+    var r = a * Math.PI / 180;
+    return this.multiply([Math.cos(r), Math.sin(r), -Math.sin(r), Math.cos(r), pt.x - Math.cos(r) * pt.x - -Math.sin(r) * pt.y, pt.y - Math.sin(r) * pt.x - Math.cos(r) * pt.y]);
+  },
+  rotate: function rotate(a, b) {
+    if (a instanceof js_Point) return this.rotateAboutPoint(a, b);
+    var r = a * Math.PI / 180;
+    return this.multiply([Math.cos(r), Math.sin(r), -Math.sin(r), Math.cos(r), 0, 0]);
+  },
+  normaldegree: function normaldegree(r) {
+    return r < 0 ? r + 360 : r;
+  },
+  rotation: function rotation(norm) {
+    var l = this.elements,
+      r = Math.atan2(l[1], l[0]) * 180 / Math.PI;
+    return norm ? this.normaldegree(r) : r;
+  },
+  scaling: function scaling() {
+    return Math.sqrt(Math.pow(this.elements[0], 2) + Math.pow(this.elements[1], 2));
+  },
+  translation: function translation() {
+    return new js_Point(this.elements[4], this.elements[5]);
+  }
+};
+/* harmony default export */ var Matrix = (_Matrix);
+;// ./src/js/Ancestry.js
+function Ancestry_typeof(o) { "@babel/helpers - typeof"; return Ancestry_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, Ancestry_typeof(o); }
+function Ancestry_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function Ancestry_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, Ancestry_toPropertyKey(o.key), o); } }
+function Ancestry_createClass(e, r, t) { return r && Ancestry_defineProperties(e.prototype, r), t && Ancestry_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function Ancestry_toPropertyKey(t) { var i = Ancestry_toPrimitive(t, "string"); return "symbol" == Ancestry_typeof(i) ? i : i + ""; }
+function Ancestry_toPrimitive(t, r) { if ("object" != Ancestry_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != Ancestry_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 var Ancestry = /*#__PURE__*/function () {
   function Ancestry(self) {
-    _classCallCheck(this, Ancestry);
+    Ancestry_classCallCheck(this, Ancestry);
     this.Items = [];
     this._add(self, self.element);
     this.Self = self;
     this._init();
   }
-  return _createClass(Ancestry, [{
+  return Ancestry_createClass(Ancestry, [{
     key: "_getScroll",
     value: function _getScroll() {
-      return new _Point_js__WEBPACK_IMPORTED_MODULE_1__["default"](window.pageXOffset || document.documentElement.scrollLeft, window.pageYOffset || document.documentElement.scrollTop);
+      return new js_Point(window.pageXOffset || document.documentElement.scrollLeft, window.pageYOffset || document.documentElement.scrollTop);
     }
 
     /**
@@ -69,13 +326,13 @@ var Ancestry = /*#__PURE__*/function () {
       var w = parseFloat(cs.width);
       var h = parseFloat(cs.height);
       return {
-        offset: new _Point_js__WEBPACK_IMPORTED_MODULE_1__["default"](left || 0, top || 0),
+        offset: new js_Point(left || 0, top || 0),
         width: w,
         height: h,
-        topleft: new _Point_js__WEBPACK_IMPORTED_MODULE_1__["default"](0, 0),
-        topright: new _Point_js__WEBPACK_IMPORTED_MODULE_1__["default"](w, 0),
-        bottomright: new _Point_js__WEBPACK_IMPORTED_MODULE_1__["default"](w, h),
-        bottomleft: new _Point_js__WEBPACK_IMPORTED_MODULE_1__["default"](0, h)
+        topleft: new js_Point(0, 0),
+        topright: new js_Point(w, 0),
+        bottomright: new js_Point(w, h),
+        bottomleft: new js_Point(0, h)
       };
     }
 
@@ -208,9 +465,9 @@ var Ancestry = /*#__PURE__*/function () {
             pt = Transformable.Instance[tid];
             if (pt) this._add(pt);
           } else {
-            var om = has ? new _Matrix_js__WEBPACK_IMPORTED_MODULE_0__["default"](this.Self._cssStringToArray(t)) : false;
+            var om = has ? new Matrix(this.Self._cssStringToArray(t)) : false;
             if (has || top != 0 || left != 0 || margintop != 0 || marginleft != 0 || el.classList.contains('transformable')) {
-              nm = new _Matrix_js__WEBPACK_IMPORTED_MODULE_0__["default"]();
+              nm = new Matrix();
               nm.translate(left || 0, top || 0).translate(marginleft || 0, margintop || 0);
               if (om) nm.multiply(om.elements);
               var prect = this.GetElementSize(el.parentNode);
@@ -237,7 +494,7 @@ var Ancestry = /*#__PURE__*/function () {
       this.scroll = this._getScroll();
       if (this.offset) return;
       var cur, i;
-      var trans = new _Matrix_js__WEBPACK_IMPORTED_MODULE_0__["default"]();
+      var trans = new Matrix();
       for (i = 0; i < this.Items.length; i++) trans.translate(this.Items[i].matrix.translation());
       for (i = 0; i < this.Items.length; i++) {
         cur = this.Items[i];
@@ -264,7 +521,7 @@ var Ancestry = /*#__PURE__*/function () {
           transformable: t
         });
       }
-      if (t instanceof _Matrix_js__WEBPACK_IMPORTED_MODULE_0__["default"]) {
+      if (t instanceof Matrix) {
         this.Items.unshift({
           matrix: t,
           element: el,
@@ -335,7 +592,7 @@ var Ancestry = /*#__PURE__*/function () {
   }, {
     key: "GetMatrix",
     value: function GetMatrix() {
-      var mat = _Matrix_js__WEBPACK_IMPORTED_MODULE_0__["default"].Identity();
+      var mat = Matrix.Identity();
       this.Items.forEach(function (v, i) {
         mat.multiply(v.matrix.elements);
       });
@@ -354,7 +611,7 @@ var Ancestry = /*#__PURE__*/function () {
       this._setoffset();
       var op = p,
         cur,
-        mat = _Matrix_js__WEBPACK_IMPORTED_MODULE_0__["default"].Identity().translate(this.offset);
+        mat = Matrix.Identity().translate(this.offset);
       for (var i = 0; i < pars.length; i++) {
         cur = pars[i];
         mat.multiply(cur.Matrix.elements);
@@ -365,330 +622,9 @@ var Ancestry = /*#__PURE__*/function () {
     }
   }]);
 }();
-/* harmony default export */ __webpack_exports__["default"] = (Ancestry);
-
-/***/ }),
-
-/***/ "./src/js/Matrix.js":
-/*!**************************!*\
-  !*** ./src/js/Matrix.js ***!
-  \**************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Point_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Point.js */ "./src/js/Point.js");
-
-var _Matrix = function Matrix(a) {
-  if (a == null || typeof a == 'undefined') return _Matrix.Identity();
-  if (a instanceof Array) {
-    this.elements = a.slice(0);
-  } else {
-    if (a instanceof _Matrix) {
-      this.elements = a.elements.slice(0);
-    } else {
-      if (arguments.length == 6) {
-        this.elements = [];
-        var i = 0;
-        while (i < arguments.length) this.elements.push(arguments[i++]);
-      } else throw new Error("Can't create Matrix from supplied arguments. Array of 6 elements, Matrix or nothing only.");
-    }
-  }
-  this.history = {
-    undo: [],
-    redo: []
-  };
-  return this;
-};
-_Matrix.Identity = function () {
-  return new _Matrix([1, 0, 0, 1, 0, 0]);
-};
-_Matrix.prototype = {
-  transformpoint: function transformpoint(pt) {
-    var m = this.elements;
-    return new _Point_js__WEBPACK_IMPORTED_MODULE_0__["default"](pt.x * m[0] + pt.y * m[2] + m[4], pt.x * m[1] + pt.y * m[3] + m[5]);
-  },
-  multiply: function multiply(els) {
-    var me = this.elements;
-    var a1 = me[0],
-      b1 = me[1],
-      c1 = me[2],
-      d1 = me[3],
-      e1 = me[4],
-      f1 = me[5],
-      a2 = els[0],
-      b2 = els[1],
-      c2 = els[2],
-      d2 = els[3],
-      e2 = els[4],
-      f2 = els[5];
-
-    /* matrix order (canvas compatible):
-    * ace
-    * bdf
-    * 001
-    */
-    this.elements = [a1 * a2 + c1 * b2, b1 * a2 + d1 * b2, a1 * c2 + c1 * d2, b1 * c2 + d1 * d2, a1 * e2 + c1 * f2 + e1, b1 * e2 + d1 * f2 + f1];
-    return this;
-  },
-  elementsequal: function elementsequal(a, b) {
-    if (!a || !b) return false;
-    return a[0] == b[0] && a[1] == b[1] && a[2] == b[2] && a[3] == b[3] && a[4] == b[4] && a[5] == b[5];
-  },
-  save: function save(els) {
-    var h = this.history,
-      last,
-      k = typeof els === 'string' ? els : false;
-    if (!els || k) els = this.elements;
-    last = h.undo[h.undo.length - 1];
-    if (!this.elementsequal(els, last)) {
-      var l = h.undo.push(els.slice(0));
-      h.redo = [];
-      if (k) h.undo[k] = h.undo[l - 1];
-    } else if (k) {
-      h.undo[k] = last;
-    }
-  },
-  undo: function undo(k) {
-    var h = this.history.undo,
-      len = h.length,
-      cur = h.pop(),
-      prev = typeof k == 'string' ? h[k] : h[h.length - 1];
-    if (cur) this.history.redo.unshift(cur);
-    this.elements = prev ? prev.slice(0) : this.identity();
-  },
-  redo: function redo() {
-    var h = this.history.redo,
-      len = h.length,
-      cur = h.pop(),
-      prev = h[h.length - 1];
-    if (cur) this.history.undo.unshift(cur);
-    this.elements = prev ? prev.slice(0) : this.identity();
-  },
-  reset: function reset() {
-    this.elements = this.identity();
-    return this;
-  },
-  determinant: function determinant() {
-    var m = this.elements;
-    return m[0] * m[3] - m[1] * m[2];
-  },
-  inverse: function inverse() {
-    var me = this.elements,
-      m = this.identity(),
-      dt = this.determinant();
-    if (dt < 1e-14) throw "Matrix not invertible.";
-    m[0] = me[3] / dt;
-    m[1] = -me[1] / dt;
-    m[2] = -me[2] / dt;
-    m[3] = me[0] / dt;
-    m[4] = (me[2] * me[5] - me[3] * me[4]) / dt;
-    m[5] = -(me[0] * me[5] - me[1] * me[4]) / dt;
-    return new _Matrix(m);
-  },
-  invert: function invert() {
-    return this.multiply(this.inverse().elements);
-  },
-  identity: function identity() {
-    return [1, 0, 0, 1, 0, 0];
-  },
-  isIdentity: function isIdentity() {
-    var m = this.elements;
-    return m[0] === 1 && m[1] === 0 && m[2] === 0 && m[3] === 1 && m[4] === 0 && m[5] === 0;
-  },
-  translate: function translate(x, y) {
-    if (x instanceof _Point_js__WEBPACK_IMPORTED_MODULE_0__["default"] && !y) return this.multiply([1, 0, 0, 1, x.x, x.y]);
-    return this.multiply([1, 0, 0, 1, x, y]);
-  },
-  scale: function scale(pt, s) {
-    this.multiply([s, 0, 0, s, 0, 0]);
-    var dp = pt.sub(pt.scale(s)).scale(1 / s); // keep pt in same place after scale from origin
-    return this.translate(dp);
-  },
-  rotateAboutPoint: function rotateAboutPoint(pt, a) {
-    var r = a * Math.PI / 180;
-    return this.multiply([Math.cos(r), Math.sin(r), -Math.sin(r), Math.cos(r), pt.x - Math.cos(r) * pt.x - -Math.sin(r) * pt.y, pt.y - Math.sin(r) * pt.x - Math.cos(r) * pt.y]);
-  },
-  rotate: function rotate(a, b) {
-    if (a instanceof _Point_js__WEBPACK_IMPORTED_MODULE_0__["default"]) return this.rotateAboutPoint(a, b);
-    var r = a * Math.PI / 180;
-    return this.multiply([Math.cos(r), Math.sin(r), -Math.sin(r), Math.cos(r), 0, 0]);
-  },
-  normaldegree: function normaldegree(r) {
-    return r < 0 ? r + 360 : r;
-  },
-  rotation: function rotation(norm) {
-    var l = this.elements,
-      r = Math.atan2(l[1], l[0]) * 180 / Math.PI;
-    return norm ? this.normaldegree(r) : r;
-  },
-  scaling: function scaling() {
-    return Math.sqrt(Math.pow(this.elements[0], 2) + Math.pow(this.elements[1], 2));
-  },
-  translation: function translation() {
-    return new _Point_js__WEBPACK_IMPORTED_MODULE_0__["default"](this.elements[4], this.elements[5]);
-  }
-};
-/* harmony default export */ __webpack_exports__["default"] = (_Matrix);
-
-/***/ }),
-
-/***/ "./src/js/Point.js":
-/*!*************************!*\
-  !*** ./src/js/Point.js ***!
-  \*************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
-function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
-function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-var Point = /*#__PURE__*/function () {
-  function Point(x) {
-    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
-    _classCallCheck(this, Point);
-    this.x = x;
-    this.y = y;
-  }
-  return _createClass(Point, [{
-    key: "scale",
-    value: function scale(factor) {
-      return new Point(this.x * factor, this.y * factor);
-    }
-  }, {
-    key: "round",
-    value: function round() {
-      var precision = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var factor = precision ? Math.pow(10, precision) : 1;
-      return new Point(Math.round(this.x * factor) / factor, Math.round(this.y * factor) / factor);
-    }
-  }, {
-    key: "sub",
-    value: function sub(p) {
-      return new Point(this.x - p.x, this.y - p.y);
-    }
-  }, {
-    key: "add",
-    value: function add(p) {
-      return new Point(this.x + p.x, this.y + p.y);
-    }
-  }, {
-    key: "mult",
-    value: function mult(p) {
-      return new Point(this.x * p.x, this.y * p.y);
-    }
-  }, {
-    key: "divide",
-    value: function divide(p) {
-      return new Point(this.x / p.x, this.y / p.y);
-    }
-  }, {
-    key: "nonzero",
-    value: function nonzero() {
-      return this.x !== 0 || this.y !== 0;
-    }
-  }, {
-    key: "equals",
-    value: function equals(p) {
-      return this.x === p.x && this.y === p.y;
-    }
-  }, {
-    key: "moreoreq",
-    value: function moreoreq(p) {
-      return {
-        x: this.x >= p.x,
-        y: this.y >= p.y
-      };
-    }
-  }, {
-    key: "lessoreq",
-    value: function lessoreq(p) {
-      return {
-        x: this.x <= p.x,
-        y: this.y <= p.y
-      };
-    }
-  }, {
-    key: "dot",
-    value: function dot(p) {
-      return this.x * p.x + this.y * p.y;
-    }
-  }, {
-    key: "perpOnLine",
-    value: function perpOnLine(p1, p2) {
-      var k = ((p2.y - p1.y) * (this.x - p1.x) - (p2.x - p1.x) * (this.y - p1.y)) / (Math.pow(p2.y - p1.y, 2) + Math.pow(p2.x - p1.x, 2));
-      var x4 = this.x - k * (p2.y - p1.y);
-      var y4 = this.y + k * (p2.x - p1.x);
-      return new Point(x4, y4);
-    }
-  }, {
-    key: "mag",
-    value: function mag() {
-      return Math.sqrt(this.x * this.x + this.y * this.y);
-    }
-
-    // toPos() {
-    //   return new Pos(this.x, this.y);
-    // }
-  }]);
-}();
-/* harmony default export */ __webpack_exports__["default"] = (Point);
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	!function() {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = function(exports) {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
-!function() {
-/*!*********************************!*\
-  !*** ./src/js/transformable.js ***!
-  \*********************************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _css_transformable_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../css/transformable.css */ "./src/css/transformable.css");
-/* harmony import */ var _Matrix_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Matrix.js */ "./src/js/Matrix.js");
-/* harmony import */ var _Ancestry_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Ancestry.js */ "./src/js/Ancestry.js");
-/* harmony import */ var _Point_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Point.js */ "./src/js/Point.js");
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+/* harmony default export */ var js_Ancestry = (Ancestry);
+;// ./src/js/transformable.js
+function transformable_typeof(o) { "@babel/helpers - typeof"; return transformable_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, transformable_typeof(o); }
 function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -700,12 +636,12 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
-function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
-function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function transformable_classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function transformable_defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, transformable_toPropertyKey(o.key), o); } }
+function transformable_createClass(e, r, t) { return r && transformable_defineProperties(e.prototype, r), t && transformable_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _defineProperty(e, r, t) { return (r = transformable_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function transformable_toPropertyKey(t) { var i = transformable_toPrimitive(t, "string"); return "symbol" == transformable_typeof(i) ? i : i + ""; }
+function transformable_toPrimitive(t, r) { if ("object" != transformable_typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != transformable_typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 
@@ -773,7 +709,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     }
   };
 })(window, document);
-var Transformable = /*#__PURE__*/function () {
+var transformable_Transformable = /*#__PURE__*/function () {
   /**
    * Constructor
    * @param {HTMLElement} el
@@ -782,7 +718,7 @@ var Transformable = /*#__PURE__*/function () {
   function Transformable(el) {
     var _opts$attachevents;
     var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    _classCallCheck(this, Transformable);
+    transformable_classCallCheck(this, Transformable);
     this.element = el.length ? el[0] : el;
     this.options = opts;
     this.element.classList.add('transformable');
@@ -806,8 +742,8 @@ var Transformable = /*#__PURE__*/function () {
       if (Array.isArray(opts.matrix) && opts.matrix.length === 6) {
         opts.matrix[4] *= cscale.x;
         opts.matrix[5] *= cscale.y;
-        this._setMatrix(new _Matrix_js__WEBPACK_IMPORTED_MODULE_1__["default"](opts.matrix));
-      } else if (opts.matrix instanceof _Matrix_js__WEBPACK_IMPORTED_MODULE_1__["default"]) {
+        this._setMatrix(new Matrix(opts.matrix));
+      } else if (opts.matrix instanceof Matrix) {
         opts.matrix.elements[4] *= cscale.x;
         opts.matrix.elements[5] *= cscale.y;
         this._setMatrix(opts.matrix);
@@ -815,7 +751,7 @@ var Transformable = /*#__PURE__*/function () {
     }
     this.matrix = this._getMatrix();
     this.originalTransition = this._getOriginalTransition();
-    this.Ancestry = new _Ancestry_js__WEBPACK_IMPORTED_MODULE_2__["default"](this);
+    this.Ancestry = new js_Ancestry(this);
     this._setOffset();
     this.Ancestry._setoffset();
     this.dragging = false;
@@ -846,7 +782,7 @@ var Transformable = /*#__PURE__*/function () {
    * Gets any existing CSS transition that exists on the element.
    * It will be merged with transition changes to preserve existing effects
    */
-  return _createClass(Transformable, [{
+  return transformable_createClass(Transformable, [{
     key: "_getOriginalTransition",
     value: function _getOriginalTransition() {
       var t = getComputedStyle(this.element).transition;
@@ -1025,10 +961,10 @@ var Transformable = /*#__PURE__*/function () {
     key: "rotate",
     value: function rotate(p, a, trans, inwindow) {
       var rotationPoint = p;
-      if (!(rotationPoint instanceof _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"]) || !rotationPoint) {
+      if (!(rotationPoint instanceof js_Point) || !rotationPoint) {
         rotationPoint = this.Ancestry.OffsetFromPoint(this._findCentreInWindow());
       }
-      if (rotationPoint instanceof _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"] && inwindow) {
+      if (rotationPoint instanceof js_Point && inwindow) {
         rotationPoint = this.Ancestry.OffsetFromPoint(rotationPoint);
       }
       this.matrix.rotate(rotationPoint, a);
@@ -1047,7 +983,7 @@ var Transformable = /*#__PURE__*/function () {
     key: "straighten",
     value: function straighten() {
       var r = this.matrix.rotation();
-      this.rotate(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this.sizes.element.initial.width / 2, this.sizes.element.initial.height / 2), -r, true);
+      this.rotate(new js_Point(this.sizes.element.initial.width / 2, this.sizes.element.initial.height / 2), -r, true);
       return this;
     }
 
@@ -1057,7 +993,7 @@ var Transformable = /*#__PURE__*/function () {
   }, {
     key: "fittoparent",
     value: function fittoparent() {
-      var sz = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this.sizes.element.initial.width, this.sizes.element.initial.height);
+      var sz = new js_Point(this.sizes.element.initial.width, this.sizes.element.initial.height);
       var anc = this.Ancestry;
       var pars = anc.GetParents();
       var parentT = anc.FirstParent();
@@ -1066,10 +1002,10 @@ var Transformable = /*#__PURE__*/function () {
       var tl = m.transformpoint(pr.topleft);
       var tr = m.transformpoint(pr.topright);
       var bl = m.transformpoint(pr.bottomleft);
-      var psiz = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this._distanceBetweenPoints(tl, tr), this._distanceBetweenPoints(tl, bl));
+      var psiz = new js_Point(this._distanceBetweenPoints(tl, tr), this._distanceBetweenPoints(tl, bl));
       var sc = psiz.divide(sz);
       var scale = Math.min(sc.x, sc.y);
-      this.scale(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0, 0), scale);
+      this.scale(new js_Point(0, 0), scale);
       this.centreinparent(true, pars);
       this.straighten();
       return this;
@@ -1082,7 +1018,7 @@ var Transformable = /*#__PURE__*/function () {
   }, {
     key: "filltoparent",
     value: function filltoparent() {
-      var sz = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this.sizes.element.initial.width, this.sizes.element.initial.height);
+      var sz = new js_Point(this.sizes.element.initial.width, this.sizes.element.initial.height);
       var anc = this.Ancestry;
       var pars = anc.GetParents();
       var parentT = anc.FirstParent();
@@ -1091,10 +1027,10 @@ var Transformable = /*#__PURE__*/function () {
       var tl = m.transformpoint(pr.topleft);
       var tr = m.transformpoint(pr.topright);
       var bl = m.transformpoint(pr.bottomleft);
-      var psiz = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this._distanceBetweenPoints(tl, tr), this._distanceBetweenPoints(tl, bl));
+      var psiz = new js_Point(this._distanceBetweenPoints(tl, tr), this._distanceBetweenPoints(tl, bl));
       var sc = psiz.divide(sz);
       var scale = Math.max(sc.x, sc.y);
-      this.scale(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0, 0), scale);
+      this.scale(new js_Point(0, 0), scale);
       this.centreinparent(true, pars);
       this.straighten();
       return this;
@@ -1189,13 +1125,13 @@ var Transformable = /*#__PURE__*/function () {
       this.sizes = {
         element: {
           initial: {
-            offset: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](l, t),
+            offset: new js_Point(l, t),
             width: w,
             height: h,
-            topleft: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0, 0),
-            topright: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](w, 0),
-            bottomright: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](w, h),
-            bottomleft: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0, h)
+            topleft: new js_Point(0, 0),
+            topright: new js_Point(w, 0),
+            bottomright: new js_Point(w, h),
+            bottomleft: new js_Point(0, h)
           }
         },
         window: {
@@ -1214,11 +1150,11 @@ var Transformable = /*#__PURE__*/function () {
       var cr = this._getRect(el);
       var scroll = this.Ancestry._getScroll();
       var cs = getComputedStyle(el);
-      var pos = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](parseFloat(cs.left), parseFloat(cs.top));
-      var os = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](cr.left + scroll.x, cr.top + scroll.y);
-      var br = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](cr.right, cr.bottom);
-      var tr = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](cr.right, cr.top);
-      var bl = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](cr.left, cr.bottom);
+      var pos = new js_Point(parseFloat(cs.left), parseFloat(cs.top));
+      var os = new js_Point(cr.left + scroll.x, cr.top + scroll.y);
+      var br = new js_Point(cr.right, cr.bottom);
+      var tr = new js_Point(cr.right, cr.top);
+      var bl = new js_Point(cr.left, cr.bottom);
       return {
         offset: os,
         topleft: os,
@@ -1297,7 +1233,7 @@ var Transformable = /*#__PURE__*/function () {
           this.InitialMatrix = _toConsumableArray(mElements);
         }
       }
-      var m = new _Matrix_js__WEBPACK_IMPORTED_MODULE_1__["default"](mElements || [1, 0, 0, 1, 0, 0]);
+      var m = new Matrix(mElements || [1, 0, 0, 1, 0, 0]);
       if (left || top || margintop || marginleft || bordertop || borderleft) {
         m.translate(left || 0, top || 0);
         m.translate(marginleft || 0, margintop || 0);
@@ -1379,14 +1315,14 @@ var Transformable = /*#__PURE__*/function () {
         if (touches.length === 2) {
           xy = this._getMiddle(touches);
           ang = this._getRotation(touches);
-          p1 = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[0].pageX, touches[0].pageY);
-          p2 = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[1].pageX, touches[1].pageY);
+          p1 = new js_Point(touches[0].pageX, touches[0].pageY);
+          p2 = new js_Point(touches[1].pageX, touches[1].pageY);
         } else {
-          xy = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[0].pageX, touches[0].pageY);
+          xy = new js_Point(touches[0].pageX, touches[0].pageY);
           ang = this.matrix.rotation();
         }
       } else {
-        xy = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](e.pageX, e.pageY);
+        xy = new js_Point(e.pageX, e.pageY);
         ang = this.matrix.rotation();
       }
       return {
@@ -1413,7 +1349,7 @@ var Transformable = /*#__PURE__*/function () {
       var dist = dat.p1 && dat.p2 ? this._distanceBetweenPoints(anc.OffsetFromPoint(dat.p1, pars), anc.OffsetFromPoint(dat.p2, pars)) : 0;
       var deltaXY = null;
       if (typeof e.deltaX !== 'undefined') {
-        deltaXY = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](e.deltaX, e.deltaY);
+        deltaXY = new js_Point(e.deltaX, e.deltaY);
       }
       return {
         offset: op,
@@ -1456,7 +1392,7 @@ var Transformable = /*#__PURE__*/function () {
         touch2 = _touches[1];
       var mx = (touch2.pageX - touch1.pageX) / 2 + touch1.pageX;
       var my = (touch2.pageY - touch1.pageY) / 2 + touch1.pageY;
-      return new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](mx, my);
+      return new js_Point(mx, my);
     }
 
     /**
@@ -1469,8 +1405,8 @@ var Transformable = /*#__PURE__*/function () {
     value: function _getDistance2(touches, pars) {
       var anc = this.Ancestry;
       var parentElements = pars || anc.GetParents();
-      var t1 = anc.OffsetFromPoint(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[0].pageX, touches[0].pageY), parentElements);
-      var t2 = anc.OffsetFromPoint(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[1].pageX, touches[1].pageY), parentElements);
+      var t1 = anc.OffsetFromPoint(new js_Point(touches[0].pageX, touches[0].pageY), parentElements);
+      var t2 = anc.OffsetFromPoint(new js_Point(touches[1].pageX, touches[1].pageY), parentElements);
       return this._distanceBetweenPoints(t1, t2);
     }
 
@@ -1500,7 +1436,7 @@ var Transformable = /*#__PURE__*/function () {
       var siz = this.sizes.element.initial;
       this.setTransition(true);
       if (am <= 3 && am > 0) {
-        var pt = this.lastrotationpoint || new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](siz.width / 2, siz.height / 2);
+        var pt = this.lastrotationpoint || new js_Point(siz.width / 2, siz.height / 2);
         this.rotate(pt, -m);
         this.lastlastrotationpoint = undefined;
         this._pushhistory();
@@ -1540,7 +1476,7 @@ var Transformable = /*#__PURE__*/function () {
     key: "_findCentreInWindow",
     value: function _findCentreInWindow() {
       var prect = this._getRect(this.parent);
-      return new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](prect.left + prect.width / 2, prect.top + prect.height / 2);
+      return new js_Point(prect.left + prect.width / 2, prect.top + prect.height / 2);
     }
 
     /**
@@ -1555,9 +1491,9 @@ var Transformable = /*#__PURE__*/function () {
       this.setTransition(transition);
       var parentElements = pars || this.Ancestry.GetParents();
       var pcs = getComputedStyle(this.parent);
-      var parentCentre = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](parseFloat(pcs.width) / 2, parseFloat(pcs.height) / 2);
+      var parentCentre = new js_Point(parseFloat(pcs.width) / 2, parseFloat(pcs.height) / 2);
       var centreOnThis = this.matrix.inverse().transformpoint(parentCentre);
-      this.translate(centreOnThis.sub(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](this.sizes.element.initial.width / 2, this.sizes.element.initial.height / 2)));
+      this.translate(centreOnThis.sub(new js_Point(this.sizes.element.initial.width / 2, this.sizes.element.initial.height / 2)));
       this.setTransition(was);
     }
 
@@ -1616,7 +1552,7 @@ var Transformable = /*#__PURE__*/function () {
       var parentElements = pars || anc.GetParents();
       anc._setoffset();
       var touches = e.touches;
-      var rpoint = touches ? new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](touches[0].pageX, touches[0].pageY) : new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](e.pageX, e.pageY);
+      var rpoint = touches ? new js_Point(touches[0].pageX, touches[0].pageY) : new js_Point(e.pageX, e.pageY);
       var apoint = this.anchor.TL;
       var angle = Math.round(this._getRotation([apoint.add(anc.scroll), rpoint], false) * 100) / 100;
       return {
@@ -1643,7 +1579,7 @@ var Transformable = /*#__PURE__*/function () {
         if (document.querySelectorAll('.transformable-active').length == 0) _this3.element.classList.add('transformable-active');
         var m = _this3.matrix;
         _this3.origrotate = {
-          trans: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](m.elements[4], m.elements[5]),
+          trans: new js_Point(m.elements[4], m.elements[5]),
           angle: m.rotation(true),
           scale: m.scaling()
         };
@@ -1654,7 +1590,7 @@ var Transformable = /*#__PURE__*/function () {
         }
         _this3.anchor = _this3.anchor || {};
         _this3.anchor.clientRect = _this3._getRect(_this3.element.querySelector('.transformable-anchor-point'));
-        _this3.anchor.TL = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](_this3.anchor.clientRect.left, _this3.anchor.clientRect.top);
+        _this3.anchor.TL = new js_Point(_this3.anchor.clientRect.left, _this3.anchor.clientRect.top);
         _this3.startrotate = _this3._getRotatorPoints(e);
         _this3.startrotate.scale = _this3.origrotate.scale;
         _this3.startedrotate = true;
@@ -1679,7 +1615,7 @@ var Transformable = /*#__PURE__*/function () {
         };
         if (delta.angle !== 0) {
           if (_this3.parent !== _this3.options.rotatetarget.element) {
-            _this3.matrix.rotateAboutPoint(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0), delta.angle);
+            _this3.matrix.rotateAboutPoint(new js_Point(0), delta.angle);
             _this3._updateElement();
           }
           if (_this3.options.rotatetarget instanceof Transformable) {
@@ -1725,7 +1661,7 @@ var Transformable = /*#__PURE__*/function () {
         e.stopPropagation();
         var m = _this4.matrix;
         _this4.origresize = {
-          trans: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](m.elements[4], m.elements[5]),
+          trans: new js_Point(m.elements[4], m.elements[5]),
           angle: m.rotation(),
           scale: m.scaling()
         };
@@ -1768,7 +1704,7 @@ var Transformable = /*#__PURE__*/function () {
           var newh = h + delta.trans.y + dh;
           _this4.element.style.width = "".concat(neww, "px");
           _this4.element.style.height = "".concat(newh, "px");
-          _this4.sizes.element.initial.bottomright = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](neww, newh);
+          _this4.sizes.element.initial.bottomright = new js_Point(neww, newh);
           _this4.sizes.element.initial.topright.x = neww;
           _this4.sizes.element.initial.bottomleft.y = newh;
           _this4.sizes.element.initial.width = neww;
@@ -1846,7 +1782,7 @@ var Transformable = /*#__PURE__*/function () {
         }
         var m = _this5.matrix;
         _this5.orig = {
-          trans: new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](m.elements[4], m.elements[5]),
+          trans: new js_Point(m.elements[4], m.elements[5]),
           angle: m.rotation(),
           scale: m.scaling()
         };
@@ -1903,7 +1839,7 @@ var Transformable = /*#__PURE__*/function () {
           tr = inv.transformpoint(ptr).sub(delta.trans);
           br = inv.transformpoint(pbr).sub(delta.trans);
           bl = inv.transformpoint(pbl).sub(delta.trans);
-          if (!start.size) start.size = new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](that._distanceBetweenPoints(tl, tr), that._distanceBetweenPoints(tl, bl));else start.size = delta.distance != 0 ? new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](that._distanceBetweenPoints(tl, tr), that._distanceBetweenPoints(tl, bl)) : start.size;
+          if (!start.size) start.size = new js_Point(that._distanceBetweenPoints(tl, tr), that._distanceBetweenPoints(tl, bl));else start.size = delta.distance != 0 ? new js_Point(that._distanceBetweenPoints(tl, tr), that._distanceBetweenPoints(tl, bl)) : start.size;
           var csiz = that.sizes.element.initial;
           var containment,
             opts = that.options;
@@ -2162,7 +2098,7 @@ var Transformable = /*#__PURE__*/function () {
           brb = that.resizerbr;
         if (rb) {
           var nsc = that.matrix.scaling();
-          rb.scale(new _Point_js__WEBPACK_IMPORTED_MODULE_3__["default"](0), 1 / rb.matrix.scaling() * (1 / nsc));
+          rb.scale(new js_Point(0), 1 / rb.matrix.scaling() * (1 / nsc));
         }
         if (tlb && brb) {
           var nscc = nsc || that.matrix.scaling(); //,
@@ -2303,11 +2239,11 @@ var Transformable = /*#__PURE__*/function () {
  * A store/lookup of all transformable instances.
  * Each transformable element is given a data attribute for its id in this lookup.
  */
-_defineProperty(Transformable, "Instance", []);
+_defineProperty(transformable_Transformable, "Instance", []);
 /**
  * Datastore for any namespaced events attached to elements by .on(....)
  */
-_defineProperty(Transformable, "Handlers", {
+_defineProperty(transformable_Transformable, "Handlers", {
   Namespaces: {}
 });
 ;
@@ -2316,8 +2252,8 @@ _defineProperty(Transformable, "Handlers", {
   var refreshtransformables = function refreshtransformables() {
     document.querySelectorAll('.transformable').forEach(function (v) {
       var i = v.getAttribute('data-transformable-id');
-      var t = i ? Transformable.Instance[i] : null;
-      if (t instanceof Transformable) {
+      var t = i ? transformable_Transformable.Instance[i] : null;
+      if (t instanceof transformable_Transformable) {
         t.Refresh();
       }
     });
@@ -2329,10 +2265,9 @@ _defineProperty(Transformable, "Handlers", {
 })();
 // Ensure Transformable is available as a global for UMD/browser builds
 if (typeof window !== 'undefined') {
-  window.Transformable = Transformable;
+  window.Transformable = transformable_Transformable;
 }
-/* harmony default export */ __webpack_exports__["default"] = (Transformable);
-}();
+/* harmony default export */ var transformable = (transformable_Transformable);
 __webpack_exports__ = __webpack_exports__["default"];
 /******/ 	return __webpack_exports__;
 /******/ })()
