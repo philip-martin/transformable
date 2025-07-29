@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "name": "transformable",
-  "description": "A JavaScript library for transformable UI elements.",
+  "description": "A JavaScript library for transforming HTML elements.",
   "main": "dist/js/transformable.umd.js",
   "module": "dist/js/transformable.esm.js",
   "exports": {
@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "webpack --mode production",
+    "build:dev": "webpack --config webpack.config.js --env dev",
     "start": "webpack --watch"
   },
   "author": "Phil Martin",
@@ -28,7 +29,8 @@
     "mini-css-extract-plugin": "^2.7.6",
     "style-loader": "^3.3.4",
     "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "terser-webpack-plugin": "^5.3.10"
   },
   "files": [
     "dist/"

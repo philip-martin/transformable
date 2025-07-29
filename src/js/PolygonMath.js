@@ -1,30 +1,39 @@
 ﻿import Size from './Size.js';
 import Point from './Point.js';
 
-var PolygonMath = {
-    fitWithin: function (w, h, dw, dh) {
-        var a = w / h,
-            da = dw / dh,
-            ns = da > a ? new Size(dh * a, dh) : new Size(dw, dw / a);
-        return ns;
-    },
-    clamp: function (v, min, max) {
-        return Math.min(max, Math.max(min, v));
-    },
-    rotatePoly: function (points, deg, o) {
-        for (var i = 0; i < points.length; i++)
-            points[i] = this.rotatePoint(points[i], o, deg);
-        return points;
-    },
-    rotatePoint: function (p, o, deg) {
-        var rx = (Math.cos(deg * Math.PI / 180) * (p.x - o.x)) - (Math.sin(deg * Math.PI / 180) * (p.y - o.y)) + o.x;
-        var ry = (Math.sin(deg * Math.PI / 180) * (p.x - o.x)) + (Math.cos(deg * Math.PI / 180) * (p.y - o.y)) + o.y;
-        return new Point(rx, ry);
-    },
-    zoomRotate: function (points, deg) {
+class PolygonMath {
+  static fitWithin(w, h, dw, dh) {
+    const a = w / h;
+    const da = dw / dh;
+    return da > a ? new Size(dh * a, dh) : new Size(dw, dw / a);
+  }
 
-    },
-    normaliseAngle: function (deg) { var a = deg % 360; if (a < 0) a += 360; return a; }
+  static clamp(v, min, max) {
+    return Math.min(max, Math.max(min, v));
+  }
+
+  static rotatePoly(points, deg, o) {
+    return points.map(p => this.rotatePoint(p, o, deg));
+  }
+
+  static rotatePoint(p, o, deg) {
+    const rad = deg * Math.PI / 180;
+    const cos = Math.cos(rad);
+    const sin = Math.sin(rad);
+    const rx = cos * (p.x - o.x) - sin * (p.y - o.y) + o.x;
+    const ry = sin * (p.x - o.x) + cos * (p.y - o.y) + o.y;
+    return new Point(rx, ry);
+  }
+
+  static zoomRotate(points, deg) {
+    // Not implemented
+  }
+
+  static normaliseAngle(deg) {
+    let a = deg % 360;
+    if (a < 0) a += 360;
+    return a;
+  }
 }
 
 export default PolygonMath;
