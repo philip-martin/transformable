@@ -10,7 +10,7 @@ Transformable elements can be nested within each other and the depth/position/of
 
 You also get undo/redo history and can save snapshots to go to specific named transform states.
 
-View the [Demo](https://philip-martin.github.io/transformable/solution/demo/index.html) to see how flexible it can be.
+View the [Demo](https://philip-martin.github.io/transformable/demo/index.html) to see how flexible it can be.
 
 ## Loading
 
